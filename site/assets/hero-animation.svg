@@ -1,0 +1,321 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340">
+  <defs>
+    <!-- Glow filter for lightning -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for energy orb -->
+    <filter id="orbGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle spark glow -->
+    <filter id="sparkGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Radial bg glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="35%">
+      <stop offset="0%" stop-color="rgba(99,102,241,0.08)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Background */
+    .bg { fill: #fafaf8; }
+    .bg-glow { fill: url(#bgGlow); }
+
+    /* Logo */
+    .logo-main { fill: #1a1a1a; }
+
+    /* Lightning bolts */
+    .bolt {
+      fill: none;
+      stroke: #6366f1;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: url(#glow);
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+
+    .bolt-1 { animation: strike 4s ease-in-out infinite; }
+    .bolt-2 { animation: strike 4s ease-in-out 0.3s infinite; opacity: 0.7; }
+    .bolt-3 { animation: strike 4s ease-in-out 0.6s infinite; opacity: 0.5; }
+    .bolt-4 { animation: strike 4s ease-in-out 0.15s infinite; opacity: 0.8; }
+    .bolt-5 { animation: strike 4s ease-in-out 0.45s infinite; opacity: 0.6; }
+    .bolt-6 { animation: strike 4s ease-in-out 0.75s infinite; opacity: 0.4; }
+
+    @keyframes strike {
+      0% { stroke-dashoffset: 120; opacity: 0; }
+      5% { opacity: 0; }
+      8% { stroke-dashoffset: 0; opacity: 1; }
+      12% { opacity: 0.8; }
+      25% { stroke-dashoffset: -120; opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* Sparks */
+    .spark {
+      fill: #6366f1;
+      filter: url(#sparkGlow);
+    }
+
+    .spark-1 { animation: scatter1 4s ease-out infinite; }
+    .spark-2 { animation: scatter2 4s ease-out 0.15s infinite; }
+    .spark-3 { animation: scatter3 4s ease-out 0.3s infinite; }
+    .spark-4 { animation: scatter4 4s ease-out 0.1s infinite; }
+    .spark-5 { animation: scatter5 4s ease-out 0.25s infinite; }
+    .spark-6 { animation: scatter6 4s ease-out 0.4s infinite; }
+    .spark-7 { animation: scatter7 4s ease-out 0.2s infinite; }
+    .spark-8 { animation: scatter8 4s ease-out 0.35s infinite; }
+
+    @keyframes scatter1 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(-30px, -25px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter2 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(25px, -30px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter3 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(-20px, 28px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter4 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(35px, 15px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter5 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(-15px, -35px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter6 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(20px, 32px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter7 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(-35px, 10px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes scatter8 {
+      0% { transform: translate(0,0); opacity: 0; }
+      8% { opacity: 1; }
+      20% { transform: translate(30px, -20px); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* Electric arcs */
+    .arc {
+      fill: none;
+      stroke: #818cf8;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      filter: url(#sparkGlow);
+      opacity: 0;
+    }
+
+    .arc-1 { animation: flicker 4s ease-in-out infinite; }
+    .arc-2 { animation: flicker 4s ease-in-out 0.5s infinite; }
+    .arc-3 { animation: flicker 4s ease-in-out 1s infinite; }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 0; }
+      10% { opacity: 0.7; }
+      12% { opacity: 0.3; }
+      14% { opacity: 0.9; }
+      18% { opacity: 0; }
+      50% { opacity: 0; }
+      52% { opacity: 0.5; }
+      53% { opacity: 0.2; }
+      55% { opacity: 0.8; }
+      58% { opacity: 0; }
+    }
+
+    /* Energy orb behind logo */
+    .energy-orb {
+      fill: rgba(99, 102, 241, 0.1);
+      filter: url(#orbGlow);
+      animation: orbPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { r: 40; opacity: 0.3; }
+      25% { r: 55; opacity: 0.15; }
+      50% { r: 45; opacity: 0.25; }
+      75% { r: 50; opacity: 0.2; }
+    }
+
+    /* Governed state indicator */
+    .governed-ring {
+      fill: none;
+      stroke: #10b981;
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+      opacity: 0;
+      animation: governedPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes governedPulse {
+      0%, 30% { opacity: 0; }
+      40% { opacity: 0.4; r: 65; }
+      60% { opacity: 0.6; r: 68; }
+      80% { opacity: 0.3; r: 72; }
+      100% { opacity: 0; }
+    }
+
+    /* Status text */
+    .status-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      text-anchor: middle;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status-governed {
+      fill: #10b981;
+      opacity: 0;
+      animation: showGoverned 4s ease-in-out infinite;
+    }
+
+    @keyframes showGoverned {
+      0%, 30% { opacity: 0; }
+      40%, 80% { opacity: 0.7; }
+      90%, 100% { opacity: 0; }
+    }
+
+    .status-active {
+      fill: #6366f1;
+      opacity: 0;
+      animation: showActive 4s ease-in-out infinite;
+    }
+
+    @keyframes showActive {
+      0% { opacity: 0; }
+      5%, 25% { opacity: 0.7; }
+      30%, 100% { opacity: 0; }
+    }
+
+    /* Red pulse for violation */
+    .violation-ring {
+      fill: none;
+      stroke: #ef4444;
+      stroke-width: 2;
+      opacity: 0;
+      animation: violationPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes violationPulse {
+      0%, 5% { opacity: 0; r: 50; }
+      8% { opacity: 0.6; r: 50; }
+      15% { opacity: 0; r: 80; }
+      100% { opacity: 0; }
+    }
+
+    /* Subtle grid pattern */
+    .grid-line {
+      stroke: rgba(99, 102, 241, 0.06);
+      stroke-width: 1;
+    }
+  </style>
+
+  <!-- Background -->
+  <rect class="bg" width="600" height="340" rx="12"/>
+
+  <!-- Subtle grid pattern -->
+  <g>
+    <line class="grid-line" x1="0" y1="85" x2="600" y2="85"/>
+    <line class="grid-line" x1="0" y1="170" x2="600" y2="170"/>
+    <line class="grid-line" x1="0" y1="255" x2="600" y2="255"/>
+    <line class="grid-line" x1="150" y1="0" x2="150" y2="340"/>
+    <line class="grid-line" x1="300" y1="0" x2="300" y2="340"/>
+    <line class="grid-line" x1="450" y1="0" x2="450" y2="340"/>
+  </g>
+
+  <!-- Background glow -->
+  <rect class="bg-glow" width="600" height="340"/>
+
+  <!-- Logo group centered -->
+  <g transform="translate(300, 155)">
+
+    <!-- Energy orb behind logo -->
+    <circle class="energy-orb" cx="0" cy="0" r="45"/>
+
+    <!-- Violation ring -->
+    <circle class="violation-ring" cx="0" cy="0" r="50"/>
+
+    <!-- Governed ring -->
+    <circle class="governed-ring" cx="0" cy="0" r="65"/>
+
+    <!-- Lightning bolts (Chidori) -->
+    <polyline class="bolt bolt-1" points="-80,-50 -55,-30 -65,-25 -40,-5 -50,0 -25,20"/>
+    <polyline class="bolt bolt-2" points="80,-45 60,-28 68,-22 45,-8 52,-2 30,15"/>
+    <polyline class="bolt bolt-3" points="-70,50 -48,35 -55,30 -32,18 -38,14 -18,2"/>
+    <polyline class="bolt bolt-4" points="75,48 55,33 62,28 42,16 48,12 28,2"/>
+    <polyline class="bolt bolt-5" points="-10,-80 -5,-55 -12,-48 -2,-30 -8,-25 0,-8"/>
+    <polyline class="bolt bolt-6" points="10,80 5,58 12,52 4,35 9,30 2,12"/>
+
+    <!-- Spark particles -->
+    <circle class="spark spark-1" cx="-5" cy="-8" r="1.5"/>
+    <circle class="spark spark-2" cx="5" cy="-5" r="1.5"/>
+    <circle class="spark spark-3" cx="-8" cy="5" r="1.5"/>
+    <circle class="spark spark-4" cx="8" cy="3" r="1.5"/>
+    <circle class="spark spark-5" cx="0" cy="-10" r="1"/>
+    <circle class="spark spark-6" cx="3" cy="8" r="1"/>
+    <circle class="spark spark-7" cx="-6" cy="0" r="1"/>
+    <circle class="spark spark-8" cx="6" cy="-3" r="1"/>
+
+    <!-- Electric arcs -->
+    <path class="arc arc-1" d="M-35,-25 Q-20,-35 -10,-20 Q0,-30 10,-18"/>
+    <path class="arc arc-2" d="M25,15 Q35,25 28,35 Q38,30 32,42"/>
+    <path class="arc arc-3" d="M-30,20 Q-18,28 -22,38 Q-12,30 -15,42"/>
+
+    <!-- Altrace Logo (dark on light bg) -->
+    <g transform="scale(0.65)">
+      <path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" class="logo-main" fill-rule="evenodd"/>
+      <polygon points="-68,50 -60,28 85,-32" class="logo-main"/>
+    </g>
+  </g>
+
+  <!-- Status text -->
+  <text class="status-text status-active" x="300" y="265">evaluating request</text>
+  <text class="status-text status-governed" x="300" y="265">governed</text>
+
+  <!-- Corner labels -->
+  <text x="20" y="25" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" opacity="0.6">altrace proxy</text>
+  <text x="580" y="25" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" text-anchor="end" opacity="0.6">14-stage chain</text>
+  <text x="20" y="330" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" opacity="0.6">network layer</text>
+  <text x="580" y="330" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" text-anchor="end" opacity="0.6">enforcement</text>
+</svg>

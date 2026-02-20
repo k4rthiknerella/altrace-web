@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — Altrace</title>
+  <meta name="description" content="Altrace governs what your agents are authorized to do — and enforces it. At the network layer in Kubernetes. At the credential layer everywhere else.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="product.html" class="nav-link">Product</a>
+        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="request-access.html" class="btn btn-primary btn-nav">Request Access</a>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="about.html">About</a>
+    <a href="request-access.html">Request Access</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content hero-centered">
+      <h1 class="fade-in">The Authority Plane for AI Agents</h1>
+      <p class="section-subtitle fade-in fade-in-delay-1">Altrace governs what your agents are authorized to do — and enforces it. At the network layer in Kubernetes. At the credential layer everywhere else. Every decision recorded, every delegation contract enforced, every violation surfaced immediately.</p>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE: TWO ENFORCEMENT LAYERS -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Architecture</p>
+        <h2 class="section-title">Two Enforcement Layers, One Control Plane</h2>
+      </div>
+      <div class="fade-in" style="max-width: 900px; margin: 0 auto;">
+        <div class="dual-arch">
+          <!-- Left lane: Kubernetes -->
+          <div class="dual-arch-lane">
+            <div class="dual-arch-lane-title">Kubernetes</div>
+            <div class="dual-arch-box agent">Agent Process</div>
+            <div class="dual-arch-arrow">&darr; all traffic forced</div>
+            <div class="dual-arch-box enforcement">Altrace Sidecar</div>
+            <div class="dual-arch-arrow">&darr; governed</div>
+            <div class="dual-arch-box provider-box">LLM Provider</div>
+          </div>
+
+          <!-- Divider -->
+          <div class="dual-arch-divider">
+            <div class="dual-arch-divider-label">Same control plane</div>
+          </div>
+
+          <!-- Right lane: All environments -->
+          <div class="dual-arch-lane">
+            <div class="dual-arch-lane-title">All Environments</div>
+            <div class="dual-arch-box agent">Agent (any env)</div>
+            <div class="dual-arch-arrow">&darr; uses virtual key</div>
+            <div class="dual-arch-box credential">Credential Layer</div>
+            <div class="dual-arch-arrow">&darr; governed</div>
+            <div class="dual-arch-box provider-box">LLM Provider</div>
+          </div>
+
+          <!-- Shared control plane -->
+          <div class="dual-arch-shared">
+            <div class="dual-arch-shared-item">Kill Switch</div>
+            <div class="dual-arch-shared-item">Delegation Contracts</div>
+            <div class="dual-arch-shared-item">Audit Trail</div>
+            <div class="dual-arch-shared-item">Budget Controls</div>
+          </div>
+        </div>
+        <p style="margin-top: var(--sp-4); text-align: center; max-width: 720px; margin-left: auto; margin-right: auto;">In Kubernetes, agents have no route around governance — traffic is forced through the sidecar at the network level. In all environments, credential-based enforcement governs LLM access. Both paths feed the same control plane: same kill switch, same audit trail, same delegation contracts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 1: KILL SWITCH -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>Bounded-latency kill switch</h2>
+          <p>In Kubernetes deployments, the kill switch blocks new LLM requests within 1 millisecond and terminates active tunnels within 1.2 seconds. Kill state persists through restarts and power loss. Maximum cost overrun is bounded to $100 regardless of agent behavior.</p>
+          <p>The kill switch operates at three granularities: global (all agents), team (all agents in a team), and individual agent. Graduated enforcement escalates automatically through five levels: warning, throttle, quarantine, block, and kill.</p>
+          <div class="tech-box">
+            In Kubernetes: network-level enforcement, agents cannot bypass. In Docker/advisory mode: best-effort enforcement via proxy routing.
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">altrace &mdash; enforcement.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-time">14:23:00</span> <span class="t-label t-warn">WARN</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">80%</span> <span class="t-key">level=</span><span class="t-value">WARNING</span></div>
+            <div class="terminal-line"><span class="t-time">14:23:12</span> <span class="t-label t-warn">WARN</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">100%</span> <span class="t-key">level=</span><span class="t-value">SOFT_LIMIT</span></div>
+            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">120%</span> <span class="t-key">level=</span><span class="t-value">HARD_LIMIT</span></div>
+            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-kill">KILL</span> <span class="t-key">scope=</span><span class="t-value">agent</span> <span class="t-key">persist=</span><span class="t-value">true</span></div>
+            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-info">INFO</span> <span class="t-key">new_requests=</span><span class="t-value">blocked</span> <span class="t-key">tunnels=</span><span class="t-value">draining</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 2: DELEGATION ENFORCEMENT -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid reverse fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>Authority that can only attenuate, never escalate</h2>
+          <p>When an orchestrator delegates to a worker agent, Altrace enforces that the worker's authority is a strict subset of what it was granted. Budget limits, model access, tool permissions, data classification, time windows, rate limits, and geographic constraints — all governed by cryptographically signed delegation contracts.</p>
+          <p>This isn't policy-enforced. It's mathematically enforced. Authority attenuation makes escalation structurally impossible, not just prohibited.</p>
+          <div class="tech-box">
+            Content-blind: Altrace never reads the content of prompts or responses. Only boolean governance labels flow through the system — your data stays with your agents.
+          </div>
+        </div>
+        <div class="delegation-visual">
+          <div class="delegation-chain">
+            <div class="delegation-node">
+              <div class="delegation-badge operator">Operator</div>
+              <div class="delegation-perms">
+                <span class="delegation-perm">gpt-4o</span>
+                <span class="delegation-perm">claude-sonnet</span>
+                <span class="delegation-perm">$500/day</span>
+                <span class="delegation-perm">tools: all</span>
+                <span class="delegation-perm">PII: allowed</span>
+              </div>
+            </div>
+            <div class="delegation-arrow">delegates &darr; authority attenuated</div>
+            <div class="delegation-node">
+              <div class="delegation-badge orchestrator">Orchestrator</div>
+              <div class="delegation-perms">
+                <span class="delegation-perm">gpt-4o</span>
+                <span class="delegation-perm revoked">claude-sonnet</span>
+                <span class="delegation-perm">$200/day</span>
+                <span class="delegation-perm">tools: search, db-read</span>
+                <span class="delegation-perm revoked">PII: allowed</span>
+              </div>
+            </div>
+            <div class="delegation-arrow">delegates &darr; authority attenuated</div>
+            <div class="delegation-node">
+              <div class="delegation-badge worker">Worker Agent</div>
+              <div class="delegation-perms">
+                <span class="delegation-perm">gpt-4o</span>
+                <span class="delegation-perm revoked">claude-sonnet</span>
+                <span class="delegation-perm">$50/day</span>
+                <span class="delegation-perm">tools: search</span>
+                <span class="delegation-perm revoked">PII: allowed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 3: CAUSAL AUDIT TRAIL -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>Every decision. Immutable. Attributable.</h2>
+          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 14-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
+          <p>When an auditor asks what happened, you don't search through prompt logs. You have causal records: which agent, what it tried to do, which governance rule was evaluated, and the outcome — with full attribution chain.</p>
+          <div class="tech-box">
+            EU AI Act Art. 52 requires transparency in automated decisions. Altrace produces machine-readable decision reasons for every governance action.
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">altrace &mdash; audit-trail.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-time">14:22:58</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">research-1</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">gpt-4o</span> <span class="t-key">cost=</span><span class="t-cost">$0.032</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">chain=</span><span class="t-value">14/14 passed</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-7f3a</span></div>
+            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:00</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">claude-opus</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (3/14)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">model_not_in_delegation_allowlist</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-2b91</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS -->
+  <section class="integration-section">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Integrations</p>
+        <h2>Works with your stack</h2>
+        <div class="logo-grid">
+          <div class="logo-item">Anthropic</div>
+          <div class="logo-item">OpenAI</div>
+          <div class="logo-item">Kubernetes</div>
+          <div class="logo-item">Docker</div>
+        </div>
+        <p style="color: var(--text-secondary); margin-top: var(--sp-3);">Deploy as a sidecar in Kubernetes. Connect via credentials anywhere. No SDK changes. No agent code modifications required.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">See it in action</h2>
+      <p class="fade-in fade-in-delay-1">Request early access and we'll walk you through a live demo.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="about.html">About</a>
+          <a href="request-access.html">Request Access</a>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <a href="https://www.linkedin.com/in/rishi-ganupa/" target="_blank" rel="noopener">Rishi Ganupa — LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">Karthik Nerella — LinkedIn</a>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

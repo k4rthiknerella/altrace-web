@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Altrace — Prompts Don't Enforce. Networks Do.</title>
+  <meta name="description" content="Prompt guardrails are instructions, not enforcement. Altrace governs at the network layer — enforcement that operates below the application.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="product.html" class="nav-link">Product</a>
+        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="request-access.html" class="btn btn-primary btn-nav">Request Access</a>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="about.html">About</a>
+    <a href="request-access.html">Request Access</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content hero-centered">
+      <h1 class="fade-in">Prompts don't enforce. Networks do.</h1>
+      <p class="section-subtitle fade-in fade-in-delay-1">Why the governance layer for AI agents must operate below the application — at the infrastructure level.</p>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM WITH GUARDRAILS -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="fade-in" style="max-width: 720px;">
+        <p class="section-label">The Structural Problem</p>
+        <h2 style="margin-bottom: var(--sp-4);">Prompt guardrails are instructions, not enforcement.</h2>
+        <p>Prompt-level restrictions tell the model what not to do. But when an AI agent is jailbroken, confused, or creatively operating outside its intended behavior, those instructions disappear. The agent has no awareness of budget constraints, delegation boundaries, or data classification policies. It sees tokens, not governance.</p>
+        <p>This isn't a criticism of any specific product. It's a structural limitation of application-layer governance. Autonomous agents need constraints that operate at a layer they cannot control — the network layer. The same way firewalls don't ask packets for permission, governance infrastructure shouldn't ask agents to comply.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGULATORY PRESSURE -->
+  <section>
+    <div class="container">
+      <div class="fade-in" style="max-width: 720px;">
+        <p class="section-label">The Regulatory Moment</p>
+        <h2 style="margin-bottom: var(--sp-4);">EU AI Act Art. 14 deadline: August 2, 2026.</h2>
+        <p>Article 14 of the EU AI Act requires demonstrable human oversight for high-risk AI systems. Organizations deploying autonomous agents that can't demonstrate enforcement-grade oversight — not just monitoring, not just logging, but actual enforcement with machine-readable decision records — face compliance exposure.</p>
+        <p>Altrace produces tamper-evident audit records for every governance decision. Every delegation contract is cryptographically signed. Every kill switch activation is logged with causal context and machine-readable reason codes. This makes compliance provable, not just claimable.</p>
+        <div class="callout-box">
+          <strong>Art. 14</strong> requires human oversight. <strong>Art. 9</strong> requires risk management. <strong>Art. 52</strong> requires transparency in automated decisions. Altrace addresses all three at the infrastructure layer — with enforcement records that auditors can verify.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ENFORCEMENT, NOT MONITORING -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">The Category Difference</p>
+        <h2 class="section-title">Why enforcement, not monitoring</h2>
+      </div>
+      <div class="fade-in" style="max-width: 900px; margin: 0 auto;">
+        <div class="enforce-table">
+          <div class="enforce-row enforce-row-header">
+            <div class="enforce-cell header theirs">Monitoring Tools</div>
+            <div class="enforce-cell header ours">Altrace</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Tell you what happened after the fact</div>
+            <div class="enforce-cell ours-cell">Stop it before it happens</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Log that an agent exceeded its budget</div>
+            <div class="enforce-cell ours-cell">Block the request that would exceed it</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Surface anomalies for human review</div>
+            <div class="enforce-cell ours-cell">Enforce policy without a human in the loop</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Require you to read logs to understand a violation</div>
+            <div class="enforce-cell ours-cell">Produce a machine-readable audit record at the moment of enforcement</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Observe the agent</div>
+            <div class="enforce-cell ours-cell">Govern it</div>
+          </div>
+        </div>
+        <p class="enforce-closer fade-in">Monitoring tells you what went wrong. <strong>Altrace prevents it.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITIVE POSITIONING -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">How We're Different</p>
+        <h2 class="section-title">Not another monitoring tool</h2>
+      </div>
+      <div class="comparison-table fade-in">
+        <div class="comparison-row">
+          <div class="card comparison-card theirs">
+            <p class="comparison-label theirs">Application Layer</p>
+            <h4>Prompt-based restrictions</h4>
+            <p style="margin-top: var(--sp-2);">Instructions to the model. Vulnerable to jailbreaking, prompt injection, and agent confusion. Not auditable as enforcement because the model chose to comply — it wasn't forced to.</p>
+          </div>
+          <div class="card comparison-card ours">
+            <p class="comparison-label ours">Altrace</p>
+            <h4>Network-layer enforcement</h4>
+            <p style="margin-top: var(--sp-2);">In Kubernetes, enforcement happens at the network level. The agent's request is evaluated before it reaches the LLM. If the governance chain blocks it, the request never arrives. The agent's prompt is irrelevant.</p>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="card comparison-card theirs">
+            <p class="comparison-label theirs">Application Layer</p>
+            <h4>Tool-permission governance</h4>
+            <p style="margin-top: var(--sp-2);">Governs which tools an agent calls. But the agent can still reach the LLM directly, and tool execution happens outside the governance boundary. Permissions are checked, but execution is ungoverned.</p>
+          </div>
+          <div class="card comparison-card ours">
+            <p class="comparison-label ours">Altrace</p>
+            <h4>LLM-access governance</h4>
+            <p style="margin-top: var(--sp-2);">Governs whether the agent can reach the LLM at all. In Kubernetes, there is no route around the governance proxy. Budget, model access, tool permissions, and delegation authority are all enforced before the request reaches the provider.</p>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="card comparison-card theirs">
+            <p class="comparison-label theirs">Application Layer</p>
+            <h4>Monitoring and alerting</h4>
+            <p style="margin-top: var(--sp-2);">Observes agent behavior and alerts when something looks wrong. By the time a human responds, the damage — overspend, data exposure, unauthorized model access — has already happened.</p>
+          </div>
+          <div class="card comparison-card ours">
+            <p class="comparison-label ours">Altrace</p>
+            <h4>Automated enforcement with human override</h4>
+            <p style="margin-top: var(--sp-2);">Governance rules are enforced automatically on every request. Graduated 5-level enforcement escalates from warnings to full kill. Operators receive structured alerts and can override — but enforcement doesn't wait for them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Ready to move beyond prompts?</h2>
+      <p class="fade-in fade-in-delay-1">Request early access and see enforcement-grade governance in action.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="about.html">About</a>
+          <a href="request-access.html">Request Access</a>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <a href="https://www.linkedin.com/in/rishi-ganupa/" target="_blank" rel="noopener">Rishi Ganupa — LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">Karthik Nerella — LinkedIn</a>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

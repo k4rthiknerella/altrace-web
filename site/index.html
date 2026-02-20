@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Altrace — The Authority Layer for AI Agents</title>
+  <meta name="description" content="Altrace governs AI agent access to LLMs at the network layer. Credential authority, bounded-latency kill, and tamper-evident audit — enforced below the application.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="product.html" class="nav-link">Product</a>
+        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="request-access.html" class="btn btn-primary btn-nav">Request Access</a>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="about.html">About</a>
+    <a href="request-access.html">Request Access</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1 class="fade-in">Your AI agents are one bad request away.</h1>
+          <p class="hero-sub fade-in fade-in-delay-1">From a compliance violation. A data breach. A six-figure cloud bill.</p>
+          <p class="hero-body fade-in fade-in-delay-2">Altrace is the control plane for AI agent authority. What they can access, what they can spend, what they can do — enforced at the infrastructure layer. In Kubernetes, agents have no route around it. And every decision is recorded.</p>
+          <div class="hero-ctas fade-in fade-in-delay-3">
+            <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+            <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
+          </div>
+        </div>
+        <div class="fade-in fade-in-delay-2">
+          <img src="assets/hero-animation.svg" alt="Altrace governance animation — an AI agent request is intercepted, evaluated, and governed" width="600" height="340" style="width:100%;height:auto;border-radius:12px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="proof-bar" style="padding: 0;">
+    <div class="container" style="padding-top: var(--sp-5); padding-bottom: var(--sp-5);">
+      <div class="stats-bar fade-in">
+        <div class="stat-item">
+          <div class="stat-number">17.2x</div>
+          <div class="stat-desc">Error amplification in multi-agent systems</div>
+          <div class="stat-source">DeepMind, 2024</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Aug 2, 2026</div>
+          <div class="stat-desc">EU AI Act Art. 14 deadline for mandatory human oversight</div>
+          <div class="stat-source">Regulation (EU) 2024/1689</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&lt;1ms</div>
+          <div class="stat-desc">New-request block latency in Kubernetes deployments</div>
+          <div class="stat-source">Kubernetes deployments</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEAR: WHAT GOES WRONG -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">The Risk Is Real</p>
+        <h2 class="section-title">Multi-agent systems amplify errors. Governance shrinks them.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card card-accent-top stat-card fade-in">
+          <div class="stat-value" style="font-size: 1.5rem;">Runaway Spend</div>
+          <p class="stat-label">An agent hits a loop, burns through your LLM budget in minutes. Without cost governance, there's no circuit breaker — just a bill.</p>
+        </div>
+        <div class="card card-accent-top stat-card fade-in fade-in-delay-1">
+          <div class="stat-value" style="font-size: 1.5rem;">Authority Escalation</div>
+          <p class="stat-label">A worker agent inherits its orchestrator's full authority. One delegation mistake, and a subordinate agent can access models and tools it was never meant to touch.</p>
+        </div>
+        <div class="card card-accent-top stat-card fade-in fade-in-delay-2">
+          <div class="stat-value" style="font-size: 1.5rem;">Audit Gap</div>
+          <p class="stat-label">When something goes wrong, you need to know what happened, which agent did it, and why the system allowed it. Prompt logs don't answer those questions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE BAD OPTIONS -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">The Problem</p>
+        <h2 class="section-title">Most teams are stuck choosing between bad options</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card bad-option fade-in">
+          <div class="bad-option-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">&#x2715;</div>
+          <h4 class="bad-option-title">Prompt Guardrails</h4>
+          <p class="bad-option-body">Instructions to the model, not enforcement. A jailbroken, confused, or creatively autonomous agent ignores them. They're suggestions — not controls.</p>
+        </div>
+        <div class="card bad-option fade-in fade-in-delay-1">
+          <div class="bad-option-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">&#x23F3;</div>
+          <h4 class="bad-option-title">Manual Review</h4>
+          <p class="bad-option-body">Doesn't scale. If you're running 50 agents making hundreds of LLM calls per hour, a human in the loop becomes a human in the way.</p>
+        </div>
+        <div class="card bad-option fade-in fade-in-delay-2">
+          <div class="bad-option-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">&#x26A0;</div>
+          <h4 class="bad-option-title">Do Nothing</h4>
+          <p class="bad-option-body">Wait until a breach, a compliance finding, or a runaway agent makes the decision for you. By then, the damage is done.</p>
+        </div>
+      </div>
+      <div class="fourth-option fade-in">
+        <p>There's a fourth option.</p>
+        <div class="altrace-large">
+          Altrace <span class="arrow">&darr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW ALTRACE WORKS -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Product</p>
+        <h2 class="section-title">How Altrace Works</h2>
+      </div>
+
+      <div class="fade-in">
+        <div class="steps-nav">
+          <button class="step-tab active" data-step="step-kill">Kill Switch</button>
+          <button class="step-tab" data-step="step-delegation">Authority Contracts</button>
+          <button class="step-tab" data-step="step-audit">Causal Audit Trail</button>
+        </div>
+
+        <div id="step-kill" class="step-content active">
+          <div class="step-text">
+            <h3>Cut LLM access for any agent within 1.2 seconds</h3>
+            <p>In Kubernetes deployments, one API call blocks all new LLM requests for a team or individual agent. The kill switch is enforced at the network layer — the agent process has no route to bypass it. Kill state persists through restarts and power loss.</p>
+            <div class="tech-box" style="margin-top: var(--sp-3);">
+              Maximum cost overrun bounded to $100 worst-case, regardless of agent behavior.
+            </div>
+          </div>
+          <div class="terminal">
+            <div class="terminal-header">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="terminal-title">altrace &mdash; kill-switch.log</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line"><span class="t-time">14:23:01</span> <span class="t-label t-kill">KILL</span> <span class="t-key">agent=</span><span class="t-agent">data-pipeline-worker-3</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:01</span> <span class="t-label t-info">INFO</span> <span class="t-key">reason=</span><span class="t-reason">budget_hard_limit_exceeded</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:01</span> <span class="t-label t-block">BLOCK</span> <span class="t-key">new_requests=</span><span class="t-value">dropped</span> <span class="t-key">latency=</span><span class="t-cost">0.4ms</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:02</span> <span class="t-label t-block">BLOCK</span> <span class="t-key">active_tunnels=</span><span class="t-value">terminated</span> <span class="t-key">latency=</span><span class="t-cost">1.1s</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:02</span> <span class="t-label t-info">INFO</span> <span class="t-key">state=</span><span class="t-value">persisted</span> <span class="t-key">notify=</span><span class="t-value">slack,pagerduty</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:02</span> <span class="t-label t-warn">WARN</span> <span class="t-key">in_flight=</span><span class="t-value">3 requests completing</span> <span class="t-key">max_overrun=</span><span class="t-cost">$6.00</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="step-delegation" class="step-content">
+          <div class="step-text">
+            <h3>Authority can only shrink, never grow</h3>
+            <p>When an orchestrator delegates to a worker agent, Altrace enforces that the worker's authority is a strict subset of what it was granted. Budget, model access, tool permissions, data classification — all attenuated through delegation contracts. This is mathematically enforced, not policy-enforced.</p>
+            <div class="tech-box" style="margin-top: var(--sp-3);">
+              Authority flows down, never escalates. Enforced at the infrastructure layer, not by prompt.
+            </div>
+          </div>
+          <div class="delegation-visual">
+            <div class="delegation-chain">
+              <div class="delegation-node">
+                <div class="delegation-badge operator">Operator</div>
+                <div class="delegation-perms">
+                  <span class="delegation-perm">gpt-4o</span>
+                  <span class="delegation-perm">claude-sonnet</span>
+                  <span class="delegation-perm">$500/day</span>
+                  <span class="delegation-perm">tools: all</span>
+                </div>
+              </div>
+              <div class="delegation-arrow">attenuates to</div>
+              <div class="delegation-node">
+                <div class="delegation-badge orchestrator">Orchestrator</div>
+                <div class="delegation-perms">
+                  <span class="delegation-perm">gpt-4o</span>
+                  <span class="delegation-perm revoked">claude-sonnet</span>
+                  <span class="delegation-perm">$200/day</span>
+                  <span class="delegation-perm">tools: search, db-read</span>
+                </div>
+              </div>
+              <div class="delegation-arrow">attenuates to</div>
+              <div class="delegation-node">
+                <div class="delegation-badge worker">Worker</div>
+                <div class="delegation-perms">
+                  <span class="delegation-perm">gpt-4o</span>
+                  <span class="delegation-perm revoked">claude-sonnet</span>
+                  <span class="delegation-perm">$50/day</span>
+                  <span class="delegation-perm">tools: search</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="step-audit" class="step-content">
+          <div class="step-text">
+            <h3>Every enforcement decision recorded and attributable</h3>
+            <p>Altrace records every governance decision in a tamper-evident audit log. Request ID, agent identity, which stage in the decision chain produced the result, and the machine-readable reason code. When an auditor asks what happened, you have the answer — with causal context, not just timestamps.</p>
+          </div>
+          <div class="terminal">
+            <div class="terminal-header">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="terminal-title">altrace &mdash; audit.log</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line"><span class="t-time">14:22:58</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">research-agent-1</span> <span class="t-key">model=</span><span class="t-model">gpt-4o</span> <span class="t-key">cost=</span><span class="t-cost">$0.032</span></div>
+              <div class="terminal-line"><span class="t-time">14:22:59</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">research-agent-1</span> <span class="t-key">model=</span><span class="t-model">gpt-4o</span> <span class="t-key">cost=</span><span class="t-cost">$0.028</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:00</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">data-pipeline-worker-3</span> <span class="t-key">model=</span><span class="t-model">claude-opus</span></div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">reason=</span><span class="t-reason">model_not_in_allowlist</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:01</span> <span class="t-label t-warn">WARN</span> <span class="t-agent">data-pipeline-worker-3</span> <span class="t-key">budget=</span><span class="t-cost">$198.40/$200.00</span></div>
+              <div class="terminal-line"><span class="t-time">14:23:01</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">data-pipeline-worker-3</span> <span class="t-key">reason=</span><span class="t-reason">budget_soft_limit</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLACK MOMENT -->
+  <section class="slack-section">
+    <div class="container">
+      <div class="slack-grid">
+        <div class="fade-in">
+          <p class="section-label">Operator Control</p>
+          <h2>When an agent violates policy, your team knows immediately.</h2>
+          <p style="margin-top: var(--sp-3);">Altrace fires a structured alert to Slack with full context — agent ID, violation reason, affected budget, and a one-click kill switch. No log diving. No incident post-mortem at 2am.</p>
+        </div>
+        <div class="fade-in fade-in-delay-1">
+          <div class="slack-mock">
+            <div class="slack-mock-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z"/></svg>
+              <span>#altrace-alerts</span>
+            </div>
+            <div class="slack-mock-body">
+              <div class="slack-msg">
+                <div class="slack-avatar">A</div>
+                <div class="slack-msg-content">
+                  <div><span class="slack-msg-name">Altrace</span> <span class="slack-msg-time">2:23 PM</span></div>
+                  <div class="slack-attachment">
+                    <div class="slack-field"><span class="slack-field-label">Agent:</span> <span class="slack-field-value">data-pipeline-worker-3</span></div>
+                    <div class="slack-field"><span class="slack-field-label">Violation:</span> <span class="slack-field-value">budget_hard_limit_exceeded</span></div>
+                    <div class="slack-field"><span class="slack-field-label">Spend:</span> <span class="slack-field-value">$204.20 / $200.00 limit</span></div>
+                    <div class="slack-field"><span class="slack-field-label">Action:</span> <span class="slack-field-value">Kill switch activated</span></div>
+                    <div class="slack-btn-row">
+                      <span class="slack-btn">View Details</span>
+                      <span class="slack-btn danger">Confirm Kill</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Compliance</p>
+        <h2 class="section-title">Built for the Regulatory Moment</h2>
+      </div>
+      <div class="grid-4">
+        <div class="card compliance-item fade-in">
+          <div class="compliance-icon">&#x1F3DB;</div>
+          <div>
+            <h4>EU AI Act Art. 14</h4>
+            <p>Human oversight enforcement with machine-readable decision reasons</p>
+          </div>
+        </div>
+        <div class="card compliance-item fade-in fade-in-delay-1">
+          <div class="compliance-icon">&#x1F512;</div>
+          <div>
+            <h4>NIST SP 800-53</h4>
+            <p>Access control and security attribute governance</p>
+          </div>
+        </div>
+        <div class="card compliance-item fade-in fade-in-delay-2">
+          <div class="compliance-icon">&#x1F3E5;</div>
+          <div>
+            <h4>HIPAA / PCI DSS</h4>
+            <p>Content-blind governance — your data never leaves your infrastructure</p>
+          </div>
+        </div>
+        <div class="card compliance-item fade-in fade-in-delay-3">
+          <div class="compliance-icon">&#x2705;</div>
+          <div>
+            <h4>SOC 2 Type II</h4>
+            <p>In progress</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Ready to govern your agents?</h2>
+      <p class="fade-in fade-in-delay-1">Request early access. We're onboarding a limited number of enterprise teams.</p>
+      <form id="cta-form" class="cta-form fade-in fade-in-delay-2">
+        <input type="email" placeholder="Work email" required>
+        <button type="submit" class="btn btn-primary">Request Access</button>
+      </form>
+      <p class="cta-subtext fade-in fade-in-delay-3">We respond within 24 hours.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="about.html">About</a>
+          <a href="request-access.html">Request Access</a>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <a href="https://www.linkedin.com/in/rishi-ganupa/" target="_blank" rel="noopener">Rishi Ganupa — LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">Karthik Nerella — LinkedIn</a>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
