@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.env.*
+*.local.yaml
+.claude/
+*.pem
+*.key
+node_modules/
