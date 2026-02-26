@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dashboard — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Dashboard</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Row 1: 4 stat panels -->
+      <div class="grid-4" style="margin-bottom: var(--sp-4);">
+        <div class="panel" id="panel-fleet">
+          <div class="panel-header"><span class="panel-title">Fleet</span></div>
+          <div class="panel-value" id="fleet-active"><span class="skeleton skeleton-value"></span></div>
+          <div class="panel-sub">active of <span id="fleet-total">--</span> sidecars</div>
+        </div>
+
+        <div class="panel" id="panel-kill">
+          <div class="panel-header"><span class="panel-title">Kill State</span></div>
+          <div class="panel-value" id="kill-status"><span class="skeleton skeleton-value"></span></div>
+          <div class="panel-sub" id="kill-detail"></div>
+        </div>
+
+        <div class="panel" id="panel-policy">
+          <div class="panel-header"><span class="panel-title">Policy</span></div>
+          <div class="panel-value" id="policy-version"><span class="skeleton skeleton-value"></span></div>
+          <div class="panel-sub"><span id="policy-acked">--</span> / <span id="policy-total">--</span> acknowledged</div>
+        </div>
+
+        <div class="panel" id="panel-cost">
+          <div class="panel-header"><span class="panel-title">Cost (24h)</span></div>
+          <div class="panel-value" id="cost-total"><span class="skeleton skeleton-value"></span></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Budget + Decisions -->
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Budget Utilization</span></div>
+          <div id="budget-chart" class="bar-chart"></div>
+          <div id="budget-empty" class="empty-state" style="display:none;">No budget data available.</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Decisions (24h)</span></div>
+          <div id="decisions-chart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('dashboard');
+
+    async function loadDashboard() {
+      try {
+        const resp = await authFetch('/api/v1/dashboard');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+
+        // Fleet
+        const f = data.fleet || {};
+        document.getElementById('fleet-active').textContent = f.active ?? '--';
+        document.getElementById('fleet-total').textContent = f.total_sidecars ?? '--';
+
+        // Kill state
+        const k = data.kill_switch || {};
+        const teamKills = (k.active_team_kills || []).length;
+        const agentKills = (k.active_agent_kills || []).length;
+        const killEl = document.getElementById('kill-status');
+        const killDetail = document.getElementById('kill-detail');
+
+        if (k.global) {
+          killEl.innerHTML = '<span class="badge badge-killed">GLOBAL KILL</span>';
+          killDetail.textContent = 'All traffic halted';
+        } else if (teamKills + agentKills > 0) {
+          killEl.innerHTML = '<span class="badge badge-warn">ACTIVE</span>';
+          killDetail.textContent = teamKills + ' team, ' + agentKills + ' agent';
+        } else {
+          killEl.innerHTML = '<span class="badge badge-active">CLEAR</span>';
+          killDetail.textContent = 'No active kill switches';
+        }
+
+        // Policy
+        const p = data.policy || {};
+        document.getElementById('policy-version').textContent = p.current_version ? 'v' + p.current_version : '--';
+        const rollout = p.rollout || {};
+        document.getElementById('policy-acked').textContent = rollout.acknowledged ?? '--';
+        document.getElementById('policy-total').textContent = rollout.total ?? '--';
+
+        // Cost 24h
+        const c = data.cost_24h || {};
+        document.getElementById('cost-total').textContent = formatUSD(c.total_usd);
+
+        // Budget
+        const budgetTeams = (data.budget || {}).teams || [];
+        const budgetChart = document.getElementById('budget-chart');
+        const budgetEmpty = document.getElementById('budget-empty');
+
+        if (budgetTeams.length === 0) {
+          budgetChart.innerHTML = '';
+          budgetEmpty.style.display = 'block';
+        } else {
+          budgetEmpty.style.display = 'none';
+          budgetChart.innerHTML = budgetTeams.map(t => {
+            const pct = t.allocated_usd > 0 ? (t.used_usd / t.allocated_usd * 100) : 0;
+            const color = pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent';
+            return `
+              <div class="bar-row">
+                <span class="bar-label">${escapeHtml(t.team)}</span>
+                <div class="bar-track"><div class="bar-fill ${color}" style="width:${Math.min(pct, 100)}%"></div></div>
+                <span class="bar-value">${formatUSD(t.used_usd)}</span>
+                <span class="bar-pct">${Math.round(pct)}%</span>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Decisions 24h
+        const d = data.decisions_24h || {};
+        const total = (d.allow || 0) + (d.block || 0) + (d.kill || 0) + (d.warn || 0);
+        const decisionsEl = document.getElementById('decisions-chart');
+
+        if (total === 0) {
+          decisionsEl.innerHTML = '<div class="empty-state">No decisions recorded.</div>';
+        } else {
+          const items = [
+            { label: 'Allow', value: d.allow || 0, color: 'bar-fill-success' },
+            { label: 'Block', value: d.block || 0, color: 'bar-fill-danger' },
+            { label: 'Kill', value: d.kill || 0, color: 'bar-fill-danger' },
+            { label: 'Warn', value: d.warn || 0, color: 'bar-fill-warning' }
+          ];
+          const maxVal = Math.max(...items.map(i => i.value));
+          decisionsEl.innerHTML = '<div class="bar-chart">' + items.map(i => {
+            const pct = maxVal > 0 ? (i.value / maxVal * 100) : 0;
+            return `
+              <div class="bar-row">
+                <span class="bar-label">${i.label}</span>
+                <div class="bar-track"><div class="bar-fill ${i.color}" style="width:${pct}%"></div></div>
+                <span class="bar-value" style="color: var(--text-secondary);">${i.value.toLocaleString()}</span>
+              </div>
+            `;
+          }).join('') + '</div>';
+        }
+
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load dashboard: ' + err.message, 'error');
+        }
+      }
+    }
+
+    loadDashboard();
+    startAutoRefresh(loadDashboard, 30000);
+    connectSSE();
+
+    onSSE('kill_switch', loadDashboard);
+    onSSE('policy_update', loadDashboard);
+  </script>
+</body>
+</html>

@@ -18,7 +18,9 @@
       <div class="nav-links">
         <a href="product.html" class="nav-link">Product</a>
         <a href="why-altrace.html" class="nav-link">Why Altrace</a>
-        <a href="about.html" class="nav-link">About</a>
+        <a href="compliance-public.html" class="nav-link">Compliance</a>
+        <a href="request-access.html" class="nav-link">Request Access</a>
+        <a href="/login" class="nav-link">Console</a>
       </div>
       <button class="nav-hamburger" aria-label="Toggle menu">
         <span></span>
@@ -37,8 +39,9 @@
   <div class="nav-mobile">
     <a href="product.html">Product</a>
     <a href="why-altrace.html">Why Altrace</a>
-    <a href="about.html">About</a>
+    <a href="compliance-public.html">Compliance</a>
     <a href="request-access.html">Request Access</a>
+    <a href="/login">Console</a>
   </div>
 
   <!-- HERO -->
@@ -104,6 +107,7 @@
         <div>
           <p class="section-label">Capability</p>
           <h2>Bounded-latency kill switch</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C003</span><span class="fw-badge fw-enforced">C006</span></div>
           <p>In Kubernetes deployments, the kill switch blocks new LLM requests within 1 millisecond and terminates active tunnels within 1.2 seconds. Kill state persists through restarts and power loss. Maximum cost overrun is bounded to $100 regardless of agent behavior.</p>
           <p>The kill switch operates at three granularities: global (all agents), team (all agents in a team), and individual agent. Graduated enforcement escalates automatically through five levels: warning, throttle, quarantine, block, and kill.</p>
           <div class="tech-box">
@@ -136,6 +140,7 @@
         <div>
           <p class="section-label">Capability</p>
           <h2>Authority that can only attenuate, never escalate</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E005</span><span class="fw-badge fw-enforced">B004</span><span class="fw-badge fw-enforced">B006</span></div>
           <p>When an orchestrator delegates to a worker agent, Altrace enforces that the worker's authority is a strict subset of what it was granted. Budget limits, model access, tool permissions, data classification, time windows, rate limits, and geographic constraints — all governed by cryptographically signed delegation contracts.</p>
           <p>This isn't policy-enforced. It's mathematically enforced. Authority attenuation makes escalation structurally impossible, not just prohibited.</p>
           <div class="tech-box">
@@ -189,6 +194,7 @@
         <div>
           <p class="section-label">Capability</p>
           <h2>Every decision. Immutable. Attributable.</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E004</span><span class="fw-badge fw-enforced">E008</span><span class="fw-badge fw-enforced">D003</span></div>
           <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 14-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
           <p>When an auditor asks what happened, you don't search through prompt logs. You have causal records: which agent, what it tried to do, which governance rule was evaluated, and the outcome — with full attribution chain.</p>
           <div class="tech-box">
@@ -261,13 +267,11 @@
           <h4>Product</h4>
           <a href="product.html">How It Works</a>
           <a href="why-altrace.html">Why Altrace</a>
-          <a href="about.html">About</a>
+          <a href="compliance-public.html">Compliance</a>
           <a href="request-access.html">Request Access</a>
         </div>
         <div class="footer-links">
           <h4>Connect</h4>
-          <a href="https://www.linkedin.com/in/rishi-ganupa/" target="_blank" rel="noopener">Rishi Ganupa — LinkedIn</a>
-          <a href="https://www.linkedin.com/in/nerella-karthik" target="_blank" rel="noopener">Karthik Nerella — LinkedIn</a>
           <a href="mailto:hello@altrace.io">hello@altrace.io</a>
         </div>
       </div>

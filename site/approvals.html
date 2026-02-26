@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Approvals — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=2">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Approvals</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Pending count -->
+      <div class="panel" style="margin-bottom: var(--sp-4);">
+        <div class="panel-header"><span class="panel-title">Pending Approvals</span></div>
+        <div style="display: flex; align-items: baseline; gap: var(--sp-2);">
+          <span class="panel-value" id="pending-count"><span class="skeleton skeleton-value"></span></span>
+          <span class="badge badge-warn" id="pending-badge" style="display: none;">NEEDS ATTENTION</span>
+        </div>
+      </div>
+
+      <!-- Approvals table -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <div class="panel-header" style="padding: var(--sp-3) var(--sp-4);">
+          <span class="panel-title">Approval Queue</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Team</th>
+                <th>Agent</th>
+                <th>Tool</th>
+                <th>Reason</th>
+                <th>Requested</th>
+                <th>Expires</th>
+                <th>Decision</th>
+              </tr>
+            </thead>
+            <tbody id="approval-body">
+              <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('approvals');
+
+    let approvalsData = [];
+    let approvalsAvailable = true;
+
+    async function loadApprovals() {
+      try {
+        const resp = await authFetch('/api/v1/approvals');
+        if (resp.status === 404) {
+          approvalsAvailable = false;
+          document.getElementById('pending-count').textContent = '--';
+          document.getElementById('pending-badge').style.display = 'none';
+          document.getElementById('approval-body').innerHTML =
+            '<tr><td colspan="8" class="empty-state">Approval queue requires hub aggregation (not yet available).</td></tr>';
+          return;
+        }
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        approvalsData = data.approvals || [];
+        renderApprovals();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load approvals: ' + err.message, 'error');
+        }
+      }
+    }
+
+    function renderApprovals() {
+      const pending = approvalsData.filter(a => a.status === 'pending');
+      const pendingCount = pending.length;
+
+      document.getElementById('pending-count').textContent = pendingCount;
+      const badge = document.getElementById('pending-badge');
+      badge.style.display = pendingCount > 0 ? '' : 'none';
+
+      const tbody = document.getElementById('approval-body');
+      if (approvalsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No approvals in queue.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = approvalsData.map(a => {
+        const isPending = a.status === 'pending';
+        const toolName = a.metadata?.tool_name || a.tool || '--';
+        const expiresAt = a.expires_at;
+        let expiresHtml = relativeTime(expiresAt);
+
+        // Highlight if expiring soon (< 5 minutes)
+        if (isPending && expiresAt) {
+          const remaining = new Date(expiresAt).getTime() - Date.now();
+          if (remaining > 0 && remaining < 300000) {
+            expiresHtml = '<span style="color: var(--danger);">' + expiresHtml + '</span>';
+          }
+        }
+
+        let decisionHtml;
+        if (isPending) {
+          decisionHtml = `
+            <div style="display: flex; gap: 6px;">
+              <button class="btn-approve role-write-only" onclick="event.stopPropagation(); approveRequest('${escapeHtml(a.id)}')">Approve</button>
+              <button class="btn-cancel role-write-only" onclick="event.stopPropagation(); denyRequest('${escapeHtml(a.id)}')">Deny</button>
+            </div>
+          `;
+        } else {
+          const statusUpper = (a.status || '').toUpperCase();
+          if (a.status === 'approved') {
+            decisionHtml = '<span class="badge badge-active">APPROVED</span>';
+          } else if (a.status === 'denied') {
+            decisionHtml = '<span class="badge badge-killed">DENIED</span>';
+          } else {
+            decisionHtml = '<span class="badge badge-inactive">' + escapeHtml(statusUpper) + '</span>';
+          }
+        }
+
+        return `
+          <tr>
+            <td class="mono" style="font-size: 0.75rem;">${escapeHtml((a.id || '').substring(0, 12))}</td>
+            <td class="mono">${escapeHtml(a.team || '--')}</td>
+            <td class="mono">${escapeHtml(a.agent_id || '--')}</td>
+            <td><span class="badge badge-inactive">${escapeHtml(toolName)}</span></td>
+            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(a.reason || '--')}</td>
+            <td>${relativeTime(a.requested_at || a.created_at)}</td>
+            <td>${expiresHtml}</td>
+            <td>${decisionHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function approveRequest(id) {
+      const session = getSession();
+      showConfirmDialog(
+        'Approve Request',
+        'Approve this tool execution request?',
+        'Approve',
+        async () => {
+          try {
+            const resp = await authFetch('/api/v1/approvals/' + encodeURIComponent(id) + '/approve', {
+              method: 'POST',
+              body: JSON.stringify({
+                decided_by: (session && session.org) || 'console',
+                reason: 'Approved via console'
+              })
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            showToast('Request approved', 'success');
+            loadApprovals();
+          } catch (err) {
+            showToast('Approve failed: ' + err.message, 'error');
+          }
+        }
+      );
+    }
+
+    function denyRequest(id) {
+      const session = getSession();
+      showConfirmDialog(
+        'Deny Request',
+        'Deny this tool execution request?',
+        'Deny',
+        async () => {
+          try {
+            const resp = await authFetch('/api/v1/approvals/' + encodeURIComponent(id) + '/deny', {
+              method: 'POST',
+              body: JSON.stringify({
+                decided_by: (session && session.org) || 'console',
+                reason: 'Denied via console'
+              })
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            showToast('Request denied', 'success');
+            loadApprovals();
+          } catch (err) {
+            showToast('Deny failed: ' + err.message, 'error');
+          }
+        }
+      );
+    }
+
+    loadApprovals();
+    startAutoRefresh(loadApprovals, 10000);
+    connectSSE();
+    onSSE('approval_required', loadApprovals);
+  </script>
+</body>
+</html>

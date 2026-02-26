@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cost Analytics — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Cost Analytics</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Window selector (24h only — time-windowed endpoint planned for future) -->
+      <div class="window-selector" id="window-selector">
+        <button class="window-btn" data-window="1h" disabled title="Requires time-windowed cost endpoint">1h</button>
+        <button class="window-btn" data-window="6h" disabled title="Requires time-windowed cost endpoint">6h</button>
+        <button class="window-btn active" data-window="24h">24h</button>
+        <button class="window-btn" data-window="168h" disabled title="Requires time-windowed cost endpoint">7d</button>
+      </div>
+
+      <!-- Total cost -->
+      <div class="panel" style="margin-bottom: var(--sp-4);">
+        <div class="panel-header"><span class="panel-title">Total Spend</span></div>
+        <div class="panel-value" id="cost-total"><span class="skeleton skeleton-value"></span></div>
+        <div class="panel-sub">Last 24 hours</div>
+      </div>
+
+      <!-- By model / By team -->
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">By Model</span></div>
+          <div id="chart-model" class="bar-chart"></div>
+          <div id="chart-model-empty" class="empty-state" style="display:none;">No cost data.</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">By Team</span></div>
+          <div id="chart-team" class="bar-chart"></div>
+          <div id="chart-team-empty" class="empty-state" style="display:none;">No cost data.</div>
+        </div>
+      </div>
+
+      <!-- Budget utilization (from main dashboard endpoint) -->
+      <div class="panel" style="margin-top: var(--sp-4);">
+        <div class="panel-header"><span class="panel-title">Budget Utilization</span></div>
+        <div style="overflow-x: auto;">
+          <table class="data-table" id="budget-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Used</th>
+                <th>Allocated</th>
+                <th>Utilization</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="budget-body">
+              <tr><td colspan="5" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('cost');
+
+    async function loadCostData() {
+      try {
+        const resp = await authFetch('/api/v1/dashboard');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+
+        // Total cost from cost_24h
+        const cost = data.cost_24h || {};
+        document.getElementById('cost-total').textContent = formatUSD(cost.total_usd);
+
+        // By model (if hub provides breakdown)
+        const byModel = cost.by_model || {};
+        const modelChart = document.getElementById('chart-model');
+        const modelEmpty = document.getElementById('chart-model-empty');
+        if (Object.keys(byModel).length === 0) {
+          modelChart.innerHTML = '';
+          modelEmpty.style.display = 'block';
+        } else {
+          modelEmpty.style.display = 'none';
+          renderBarChart(modelChart, byModel, 'bar-fill-accent');
+        }
+
+        // By team (if hub provides breakdown)
+        const byTeam = cost.by_team || {};
+        const teamChart = document.getElementById('chart-team');
+        const teamEmpty = document.getElementById('chart-team-empty');
+        if (Object.keys(byTeam).length === 0) {
+          teamChart.innerHTML = '';
+          teamEmpty.style.display = 'block';
+        } else {
+          teamEmpty.style.display = 'none';
+          renderBarChart(teamChart, byTeam, 'bar-fill-accent');
+        }
+
+        // Budget utilization
+        const teams = (data.budget || {}).teams || [];
+        const tbody = document.getElementById('budget-body');
+
+        if (teams.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No budget data.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = teams.map(t => {
+          const pct = t.allocated_usd > 0 ? Math.round(t.used_usd / t.allocated_usd * 100) : 0;
+          let statusBadge;
+          if (pct > 90) statusBadge = '<span class="badge badge-killed">CRITICAL</span>';
+          else if (pct > 75) statusBadge = '<span class="badge badge-warn">WARNING</span>';
+          else statusBadge = '<span class="badge badge-active">OK</span>';
+
+          return `
+            <tr>
+              <td class="mono">${escapeHtml(t.team)}</td>
+              <td class="mono">${formatUSD(t.used_usd)}</td>
+              <td class="mono">${formatUSD(t.allocated_usd)}</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="bar-track" style="height: 8px; flex: 1;">
+                    <div class="bar-fill ${pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent'}" style="width: ${Math.min(pct, 100)}%; height: 100%;"></div>
+                  </div>
+                  <span style="font-family: var(--font-mono); font-size: 0.75rem; min-width: 36px; text-align: right;">${pct}%</span>
+                </div>
+              </td>
+              <td>${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load cost data: ' + err.message, 'error');
+        }
+      }
+    }
+
+    loadCostData();
+    startAutoRefresh(loadCostData, 30000);
+    connectSSE();
+  </script>
+</body>
+</html>

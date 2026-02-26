@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>VirtualKeys — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=3">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">VirtualKeys</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Summary panels -->
+      <div class="grid-4" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Total Keys</span></div>
+          <div class="panel-value" id="vk-total"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Active</span></div>
+          <div class="panel-value" id="vk-active" style="color: var(--success);"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">With Budget</span></div>
+          <div class="panel-value" id="vk-budgeted"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Budget Exhausted</span></div>
+          <div class="panel-value" id="vk-exhausted" style="color: var(--danger);"><span class="skeleton skeleton-value"></span></div>
+        </div>
+      </div>
+
+      <!-- Issue new key button -->
+      <div style="margin-bottom: var(--sp-4);">
+        <button class="btn btn-primary btn-nav role-admin-only" id="issue-btn" onclick="showIssueForm()">Issue New Key</button>
+      </div>
+
+      <!-- Issue form (hidden) -->
+      <div class="inline-form" id="issue-form" style="display: none;">
+        <div class="panel-title" style="margin-bottom: var(--sp-3);">Issue VirtualKey</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3);">
+          <div class="form-group">
+            <label for="vk-team">Team</label>
+            <input type="text" id="vk-team" placeholder="engineering">
+          </div>
+          <div class="form-group">
+            <label for="vk-agent">Agent</label>
+            <input type="text" id="vk-agent" placeholder="research-agent-1">
+          </div>
+          <div class="form-group">
+            <label for="vk-provider">Provider</label>
+            <select id="vk-provider">
+              <option value="anthropic">Anthropic</option>
+              <option value="openai">OpenAI</option>
+              <option value="gemini">Gemini</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="vk-provider-key">Provider Key</label>
+            <input type="password" id="vk-provider-key" placeholder="sk-...">
+          </div>
+          <div class="form-group">
+            <label for="vk-models">Scoped Models (comma-separated)</label>
+            <input type="text" id="vk-models" placeholder="gpt-4o, claude-sonnet">
+          </div>
+          <div class="form-group">
+            <label for="vk-description">Description</label>
+            <input type="text" id="vk-description" placeholder="Purpose of this virtual key">
+          </div>
+          <div class="form-group">
+            <label for="vk-budget-limit">Budget Limit (USD)</label>
+            <input type="number" id="vk-budget-limit" placeholder="0.00" min="0" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="vk-budget-interval">Budget Interval</label>
+            <select id="vk-budget-interval">
+              <option value="none">No limit</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+        <div class="inline-form-actions">
+          <button class="btn btn-primary btn-nav" id="issue-submit-btn" onclick="issueKey()">Issue Key</button>
+          <button class="btn-cancel" onclick="hideIssueForm()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- One-time reveal dialog -->
+      <div id="vk-reveal-overlay" class="dialog-overlay" style="display: none;">
+        <div class="dialog" style="max-width: 560px;">
+          <div class="dialog-title">VirtualKey Issued</div>
+          <div class="dialog-body" style="margin-bottom: var(--sp-3);">
+            <p style="color: var(--warning); font-weight: 600; margin-bottom: var(--sp-2);">This key will NOT be shown again. Copy it now.</p>
+            <pre class="policy-body" id="vk-reveal-key" style="max-height: 80px; margin-bottom: var(--sp-2); user-select: all;"></pre>
+            <button class="btn btn-secondary btn-nav" onclick="copyVK()" id="vk-copy-btn">Copy</button>
+          </div>
+          <div class="dialog-actions">
+            <button class="btn btn-primary btn-nav" onclick="dismissReveal()">I've copied it</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VirtualKeys table -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>VK ID</th>
+                <th>Team</th>
+                <th>Agent</th>
+                <th>Provider</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="vk-body">
+              <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('virtualkeys');
+
+    let vkData = [];
+
+    async function loadVirtualKeys() {
+      try {
+        let resp = await authFetch('/api/v1/credentials/list');
+        if (resp.status === 404) {
+          resp = await authFetch('/api/v1/credentials');
+        }
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        vkData = data.credentials || [];
+        renderVirtualKeys();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load virtual keys: ' + err.message, 'error');
+        }
+      }
+    }
+
+    function renderVirtualKeys() {
+      const total = vkData.length;
+      const active = vkData.filter(v => !v.revoked && v.status !== 'revoked').length;
+      const budgeted = vkData.filter(v => v.budget_limit_usd && v.budget_limit_usd > 0).length;
+      const exhausted = vkData.filter(v => {
+        if (!v.budget_limit_usd || v.budget_limit_usd <= 0) return false;
+        const remaining = v.budget_remaining_usd !== undefined
+          ? v.budget_remaining_usd
+          : v.budget_limit_usd - (v.budget_used_usd || 0);
+        return remaining <= 0;
+      }).length;
+
+      document.getElementById('vk-total').textContent = total;
+      document.getElementById('vk-active').textContent = active;
+      document.getElementById('vk-budgeted').textContent = budgeted;
+      document.getElementById('vk-exhausted').textContent = exhausted;
+
+      const tbody = document.getElementById('vk-body');
+      if (total === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No virtual keys issued.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = vkData.map(v => {
+        const isActive = !v.revoked && v.status !== 'revoked';
+        const statusBadge = isActive
+          ? '<span class="badge badge-active">ACTIVE</span>'
+          : '<span class="badge badge-killed">REVOKED</span>';
+
+        const revokeBtn = isActive
+          ? '<button class="btn-cancel role-write-only" onclick="event.stopPropagation(); revokeKey(\'' + escapeHtml(v.id || v.virtual_key_id) + '\')">Revoke</button>'
+          : '';
+
+        return '<tr>' +
+          '<td class="mono" style="font-size: 0.75rem;">' + escapeHtml(v.id || v.virtual_key_id || '--') + '</td>' +
+          '<td class="mono">' + escapeHtml(v.team || '--') + '</td>' +
+          '<td class="mono">' + escapeHtml(v.agent_id || v.agent || '--') + '</td>' +
+          '<td class="mono">' + escapeHtml(v.provider || '--') + '</td>' +
+          '<td>' + renderBudgetCell(v) + '</td>' +
+          '<td>' + statusBadge + '</td>' +
+          '<td>' + relativeTime(v.created_at) + '</td>' +
+          '<td>' + revokeBtn + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderBudgetCell(vk) {
+      if (!vk.budget_limit_usd || vk.budget_limit_usd <= 0) {
+        return '<span class="budget-text">No limit</span>';
+      }
+
+      const used = vk.budget_used_usd || 0;
+      const limit = vk.budget_limit_usd;
+      const pct = Math.min(Math.round(used / limit * 100), 100);
+      const interval = vk.budget_interval || '';
+      const color = pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent';
+      const intervalLabel = interval && interval !== 'none' ? '/' + interval.charAt(0) : '';
+
+      return '<div class="budget-bar-inline">' +
+        '<div class="budget-bar-track"><div class="budget-bar-fill ' + color + '" style="width:' + pct + '%;"></div></div>' +
+        '<span class="budget-text">' + formatUSD(used) + ' / ' + formatUSD(limit) + intervalLabel + '</span>' +
+      '</div>';
+    }
+
+    function showIssueForm() {
+      document.getElementById('issue-form').style.display = 'block';
+      document.getElementById('issue-btn').style.display = 'none';
+    }
+
+    function hideIssueForm() {
+      document.getElementById('issue-form').style.display = 'none';
+      document.getElementById('issue-btn').style.display = '';
+    }
+
+    async function issueKey() {
+      const team = document.getElementById('vk-team').value.trim();
+      const agent = document.getElementById('vk-agent').value.trim();
+      const provider = document.getElementById('vk-provider').value;
+      const providerKey = document.getElementById('vk-provider-key').value.trim();
+      const models = document.getElementById('vk-models').value.trim();
+      const description = document.getElementById('vk-description').value.trim();
+      const budgetLimit = parseFloat(document.getElementById('vk-budget-limit').value) || 0;
+      const budgetInterval = document.getElementById('vk-budget-interval').value;
+
+      if (!team || !agent || !providerKey) {
+        showToast('Team, agent, and provider key are required', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('issue-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Issuing...';
+
+      try {
+        const body = {
+          team,
+          agent_id: agent,
+          provider,
+          provider_key: providerKey,
+          scoped_models: models ? models.split(',').map(m => m.trim()).filter(Boolean) : [],
+          description
+        };
+        if (budgetLimit > 0) {
+          body.budget_limit_usd = budgetLimit;
+          body.budget_interval = budgetInterval;
+        }
+
+        const resp = await authFetch('/api/v1/credentials/issue', {
+          method: 'POST',
+          body: JSON.stringify(body)
+        });
+        if (!resp.ok) {
+          const errText = await resp.text();
+          throw new Error('HTTP ' + resp.status + ': ' + errText);
+        }
+
+        const result = await resp.json();
+        const vk = result.virtual_key || result.key || result.id || '';
+
+        // Show one-time reveal
+        document.getElementById('vk-reveal-key').textContent = vk;
+        document.getElementById('vk-reveal-overlay').style.display = '';
+        document.getElementById('vk-copy-btn').textContent = 'Copy';
+
+        hideIssueForm();
+        document.getElementById('vk-team').value = '';
+        document.getElementById('vk-agent').value = '';
+        document.getElementById('vk-provider-key').value = '';
+        document.getElementById('vk-models').value = '';
+        document.getElementById('vk-description').value = '';
+        document.getElementById('vk-budget-limit').value = '';
+        document.getElementById('vk-budget-interval').value = 'none';
+
+        loadVirtualKeys();
+      } catch (err) {
+        showToast('Issue failed: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Issue Key';
+      }
+    }
+
+    function copyVK() {
+      const key = document.getElementById('vk-reveal-key').textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        document.getElementById('vk-copy-btn').textContent = 'Copied';
+      }).catch(() => {
+        showToast('Failed to copy — select and copy manually', 'error');
+      });
+    }
+
+    function dismissReveal() {
+      document.getElementById('vk-reveal-overlay').style.display = 'none';
+      document.getElementById('vk-reveal-key').textContent = '';
+    }
+
+    function revokeKey(id) {
+      showConfirmDialog(
+        'Revoke VirtualKey',
+        'This will permanently revoke this virtual key. Any agents using it will lose access immediately. Proceed?',
+        'Revoke',
+        async () => {
+          try {
+            const resp = await authFetch('/api/v1/credentials/' + encodeURIComponent(id), {
+              method: 'DELETE'
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            showToast('VirtualKey revoked', 'success');
+            loadVirtualKeys();
+          } catch (err) {
+            showToast('Revoke failed: ' + err.message, 'error');
+          }
+        }
+      );
+    }
+
+    loadVirtualKeys();
+    startAutoRefresh(loadVirtualKeys, 30000);
+    connectSSE();
+  </script>
+</body>
+</html>

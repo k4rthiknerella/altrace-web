@@ -30,8 +30,8 @@
 
     <!-- Radial bg glow -->
     <radialGradient id="bgGlow" cx="50%" cy="45%" r="35%">
-      <stop offset="0%" stop-color="rgba(99,102,241,0.08)"/>
-      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+      <stop offset="0%" stop-color="rgba(13,148,136,0.08)"/>
+      <stop offset="100%" stop-color="rgba(13,148,136,0)"/>
     </radialGradient>
   </defs>
 
@@ -46,7 +46,7 @@
     /* Lightning bolts */
     .bolt {
       fill: none;
-      stroke: #6366f1;
+      stroke: #0d9488;
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -73,7 +73,7 @@
 
     /* Sparks */
     .spark {
-      fill: #6366f1;
+      fill: #0d9488;
       filter: url(#sparkGlow);
     }
 
@@ -138,7 +138,7 @@
     /* Electric arcs */
     .arc {
       fill: none;
-      stroke: #818cf8;
+      stroke: #5eead4;
       stroke-width: 1.5;
       stroke-linecap: round;
       filter: url(#sparkGlow);
@@ -164,7 +164,7 @@
 
     /* Energy orb behind logo */
     .energy-orb {
-      fill: rgba(99, 102, 241, 0.1);
+      fill: rgba(13, 148, 136, 0.1);
       filter: url(#orbGlow);
       animation: orbPulse 4s ease-in-out infinite;
     }
@@ -217,7 +217,7 @@
     }
 
     .status-active {
-      fill: #6366f1;
+      fill: #0d9488;
       opacity: 0;
       animation: showActive 4s ease-in-out infinite;
     }
@@ -246,7 +246,7 @@
 
     /* Subtle grid pattern */
     .grid-line {
-      stroke: rgba(99, 102, 241, 0.06);
+      stroke: rgba(13, 148, 136, 0.06);
       stroke-width: 1;
     }
   </style>

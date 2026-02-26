@@ -90,10 +90,10 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      // Attempt API submission
-      fetch('/api/contact', {
+      // Attempt Formspree submission
+      fetch('https://formspree.io/f/FORM_ID', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data),
       })
         .then(res => {

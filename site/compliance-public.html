@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance — Altrace</title>
+  <meta name="description" content="Altrace enforces AI agent governance at the infrastructure layer. Built for EU AI Act, SOC 2, NIST SP 800-53, HIPAA, and AIUC-1 compliance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="product.html" class="nav-link">Product</a>
+        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
+        <a href="compliance-public.html" class="nav-link">Compliance</a>
+        <a href="request-access.html" class="nav-link">Request Access</a>
+        <a href="/login" class="nav-link">Console</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="request-access.html" class="btn btn-primary btn-nav">Request Access</a>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="compliance-public.html">Compliance</a>
+    <a href="request-access.html">Request Access</a>
+    <a href="/login">Console</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content hero-centered">
+      <p class="section-label fade-in">Compliance</p>
+      <h1 class="fade-in fade-in-delay-1">AI Agent Governance for Regulated Environments</h1>
+      <p class="section-subtitle fade-in fade-in-delay-2">Altrace enforces governance at the infrastructure layer — not the application layer. Every decision is recorded with causal provenance and tamper-evident integrity. Your compliance team gets enforcement evidence, not log files.</p>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK CARDS -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Frameworks</p>
+        <h2 class="section-title">Built for the frameworks that matter</h2>
+      </div>
+      <div class="grid-3 stagger-reveal">
+        <div class="card card-accent-top">
+          <h4>EU AI Act</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">Articles 9, 14, 52</p>
+          <p>Human oversight, risk management, and transparency — enforced at the infrastructure layer. Altrace produces machine-readable evidence that auditors can verify. Art. 14 deadline: August 2, 2026.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>SOC 2 Type II</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">Trust Service Criteria</p>
+          <p>Tamper-evident audit logs with hash-chain integrity. Every governance decision — allow, block, warn, kill — is recorded with full causal context. Continuous compliance evidence, not periodic snapshots.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>AIUC-1</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">19 of 51 controls</p>
+          <p>The AI Under Control standard defines governance requirements for autonomous AI agents across five domains. Altrace enforces controls at the infrastructure layer and reports compliance status in real time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADDITIONAL FRAMEWORKS -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="grid-2 stagger-reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <h4>NIST SP 800-53</h4>
+          <p>Access control (AC), audit and accountability (AU), and security assessment (CA) families. Delegation contracts enforce least-privilege access. Continuous audit evidence satisfies monitoring requirements.</p>
+        </div>
+        <div class="card">
+          <h4>HIPAA / PCI DSS</h4>
+          <p>Content-blind architecture means Altrace never reads prompt or response content. Your data stays in your infrastructure. Governance operates on metadata and boolean labels only.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW ALTRACE ENFORCES COMPLIANCE -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Enforcement</p>
+        <h2 class="section-title">How Altrace enforces compliance</h2>
+        <p class="section-subtitle">Governance decisions are enforced below the application — at the network layer. Agents cannot bypass controls regardless of prompt behavior.</p>
+      </div>
+      <div class="grid-3 stagger-reveal">
+        <div class="card">
+          <h4>Infrastructure-Layer Enforcement</h4>
+          <p>Controls are enforced by a sidecar proxy in Kubernetes. Agents have no code path to bypass governance. This is enforcement, not monitoring.</p>
+        </div>
+        <div class="card">
+          <h4>Tamper-Evident Audit Trail</h4>
+          <p>Every governance decision is recorded with a hash-chain. Modifications are detectable. Auditors get causal records with machine-readable reason codes.</p>
+        </div>
+        <div class="card">
+          <h4>Bounded-Latency Kill Switch</h4>
+          <p>One API call blocks all new LLM requests for a team or agent. Kill state persists through restarts. Maximum cost overrun is bounded and quantifiable.</p>
+        </div>
+        <div class="card">
+          <h4>Delegation Contracts</h4>
+          <p>Authority can only shrink through delegation, never grow. Budget, model access, and tool permissions are attenuated at each level of the agent hierarchy.</p>
+        </div>
+        <div class="card">
+          <h4>Budget Governance</h4>
+          <p>Per-team and per-agent budget limits with graduated enforcement. Soft limits warn. Hard limits block. Kill switches activate automatically at thresholds.</p>
+        </div>
+        <div class="card">
+          <h4>Content-Blind Architecture</h4>
+          <p>Altrace never reads prompt or response content. Governance operates on metadata: model, cost, agent identity, delegation chain. Your data stays private.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Need a compliance assessment?</h2>
+      <p class="fade-in fade-in-delay-1">Request access and we'll walk through how Altrace maps to your specific regulatory requirements.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance-public.html">Compliance</a>
+          <a href="request-access.html">Request Access</a>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

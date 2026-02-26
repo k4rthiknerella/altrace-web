@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Audit Trail — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Audit Trail</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Filters -->
+      <div style="display: flex; gap: var(--sp-3); margin-bottom: var(--sp-4); flex-wrap: wrap; align-items: flex-end;">
+        <div class="form-group" style="margin: 0; min-width: 160px;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 4px;">Team</label>
+          <input type="text" id="filter-team" placeholder="All teams" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-btn); font-family: var(--font-mono); font-size: 0.8125rem; width: 100%;">
+        </div>
+        <div class="form-group" style="margin: 0; min-width: 130px;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 4px;">Status</label>
+          <select id="filter-status" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-btn); font-family: var(--font-mono); font-size: 0.8125rem; width: 100%;">
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="closed">Closed</option>
+            <option value="killed">Killed</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary btn-nav" onclick="loadWorkflows()" style="height: 34px;">Search</button>
+      </div>
+
+      <!-- Workflow sessions table -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Workflow</th>
+                <th>Agent</th>
+                <th>Team</th>
+                <th>Status</th>
+                <th>Records</th>
+                <th>Started</th>
+              </tr>
+            </thead>
+            <tbody id="workflow-body">
+              <tr><td colspan="6" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="load-more-row" style="display: none; padding: var(--sp-3); text-align: center; border-top: 1px solid var(--border);">
+          <button class="btn btn-secondary btn-nav" id="load-more-btn" onclick="loadMore()">Load More</button>
+        </div>
+      </div>
+
+      <!-- Workflow detail (shown below table when a row is clicked) -->
+      <div id="workflow-detail" style="display: none; margin-top: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title" id="detail-title">Workflow Detail</span>
+            <button class="btn-cancel" onclick="closeDetail()" style="padding: 4px 12px; font-size: 0.75rem;">Close</button>
+          </div>
+
+          <!-- Workflow meta -->
+          <div class="row-detail-grid" id="detail-meta" style="margin-bottom: var(--sp-4);"></div>
+
+          <!-- Chain integrity -->
+          <div id="detail-chain"></div>
+
+          <!-- Timeline -->
+          <div id="detail-timeline" class="timeline" style="margin-top: var(--sp-4);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('audit');
+
+    const PAGE_SIZE = 50;
+    let currentOffset = 0;
+    let hasMore = false;
+
+    async function loadWorkflows(append) {
+      try {
+        const team = document.getElementById('filter-team').value.trim();
+        const status = document.getElementById('filter-status').value;
+
+        if (!append) currentOffset = 0;
+
+        let url = '/api/v1/workflows?limit=' + PAGE_SIZE + '&offset=' + currentOffset;
+        if (team) url += '&team=' + encodeURIComponent(team);
+        if (status) url += '&status=' + encodeURIComponent(status);
+
+        const resp = await authFetch(url);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        const workflows = data.workflows || [];
+
+        hasMore = workflows.length >= PAGE_SIZE;
+        document.getElementById('load-more-row').style.display = hasMore ? '' : 'none';
+
+        if (append) {
+          appendWorkflows(workflows);
+        } else {
+          renderWorkflows(workflows);
+        }
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load workflows: ' + err.message, 'error');
+        }
+      }
+    }
+
+    function loadMore() {
+      currentOffset += PAGE_SIZE;
+      const btn = document.getElementById('load-more-btn');
+      btn.textContent = 'Loading...';
+      btn.disabled = true;
+      loadWorkflows(true).finally(() => {
+        btn.textContent = 'Load More';
+        btn.disabled = false;
+      });
+    }
+
+    function workflowRowHtml(w) {
+      let statusBadge;
+      switch (w.status) {
+        case 'active': statusBadge = '<span class="badge badge-active">ACTIVE</span>'; break;
+        case 'killed': statusBadge = '<span class="badge badge-killed">KILLED</span>'; break;
+        default: statusBadge = '<span class="badge badge-inactive">' + escapeHtml(w.status || 'closed').toUpperCase() + '</span>';
+      }
+      return `
+        <tr class="clickable" onclick="loadDetail('${escapeHtml(w.workflow_run_id)}')">
+          <td class="mono">${escapeHtml(w.workflow_run_id)}</td>
+          <td class="mono">${escapeHtml(w.agent_id || '--')}</td>
+          <td class="mono">${escapeHtml(w.team || '--')}</td>
+          <td>${statusBadge}</td>
+          <td class="mono">${w.record_count ?? '--'}</td>
+          <td>${relativeTime(w.started_at)}</td>
+        </tr>
+      `;
+    }
+
+    function renderWorkflows(workflows) {
+      const tbody = document.getElementById('workflow-body');
+
+      if (workflows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No workflows found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = workflows.map(workflowRowHtml).join('');
+    }
+
+    function appendWorkflows(workflows) {
+      const tbody = document.getElementById('workflow-body');
+      tbody.insertAdjacentHTML('beforeend', workflows.map(workflowRowHtml).join(''));
+    }
+
+    async function loadDetail(workflowId) {
+      try {
+        const resp = await authFetch('/api/v1/workflows/' + encodeURIComponent(workflowId));
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        renderDetail(data);
+      } catch (err) {
+        showToast('Failed to load workflow: ' + err.message, 'error');
+      }
+    }
+
+    function renderDetail(data) {
+      const wf = data.workflow || {};
+      const records = data.records || [];
+
+      document.getElementById('detail-title').textContent = 'Workflow ' + (wf.workflow_run_id || '');
+      document.getElementById('workflow-detail').style.display = 'block';
+
+      // Meta
+      document.getElementById('detail-meta').innerHTML = `
+        <div class="row-detail-item"><label>Agent</label><span>${escapeHtml(wf.agent_id || '--')}</span></div>
+        <div class="row-detail-item"><label>Team</label><span>${escapeHtml(wf.team || '--')}</span></div>
+        <div class="row-detail-item"><label>Status</label><span>${escapeHtml(wf.status || '--')}</span></div>
+        <div class="row-detail-item"><label>Records</label><span>${wf.record_count ?? records.length}</span></div>
+        <div class="row-detail-item"><label>Started</label><span>${formatTimestamp(wf.started_at)}</span></div>
+        <div class="row-detail-item"><label>Last Activity</label><span>${formatTimestamp(wf.last_activity)}</span></div>
+      `;
+
+      // Chain integrity check
+      let chainOk = true;
+      for (let i = 1; i < records.length; i++) {
+        if (records[i].previous_hash && records[i - 1].record_hash) {
+          if (records[i].previous_hash !== records[i - 1].record_hash) {
+            chainOk = false;
+            break;
+          }
+        }
+      }
+
+      const chainEl = document.getElementById('detail-chain');
+      if (records.length > 0) {
+        chainEl.innerHTML = `
+          <div class="chain-integrity ${chainOk ? 'verified' : 'broken'}">
+            ${chainOk ? '&#10003;' : '&#10007;'} Chain integrity: ${chainOk ? 'verified' : 'BROKEN'}
+            (${records.length} records, ${chainOk ? '0' : '1+'} gaps)
+          </div>
+        `;
+      } else {
+        chainEl.innerHTML = '';
+      }
+
+      // Timeline
+      const timeline = document.getElementById('detail-timeline');
+      if (records.length === 0) {
+        timeline.innerHTML = '<div class="empty-state">No causal records.</div>';
+        return;
+      }
+
+      timeline.innerHTML = records.map(r => {
+        const action = (r.action || r.chain_result || 'allow').toLowerCase();
+        const dotClass = action === 'block' ? 'block' : action === 'kill' ? 'kill' : action === 'warn' ? 'warn' : 'allow';
+        const actionBadge = action === 'block' ? '<span class="badge badge-block">BLOCK</span>'
+          : action === 'kill' ? '<span class="badge badge-killed">KILL</span>'
+          : action === 'warn' ? '<span class="badge badge-warn">WARN</span>'
+          : '<span class="badge badge-allow">ALLOW</span>';
+
+        const labels = (r.content_labels || []).length > 0
+          ? '<span class="mono" style="color: var(--warning);">Labels: ' + r.content_labels.map(escapeHtml).join(', ') + '</span>'
+          : '';
+
+        return `
+          <div class="timeline-entry">
+            <div class="timeline-dot ${dotClass}"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">${formatTime(r.timestamp)}</span>
+              ${actionBadge}
+              <span class="mono" style="font-size: 0.75rem; color: var(--text-muted);">#${r.sequence_num ?? '--'}</span>
+            </div>
+            <div class="timeline-detail">
+              <span class="mono">${escapeHtml(r.decider_name || '--')}</span> &mdash; ${escapeHtml(r.reason || '--')}
+              ${r.model ? '<br><span class="mono">Model: ' + escapeHtml(r.model) + '</span>' : ''}
+              ${r.estimated_cost_usd ? ' &middot; Cost: ' + formatUSD(r.estimated_cost_usd) : ''}
+              ${labels ? '<br>' + labels : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Scroll to detail
+      document.getElementById('workflow-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeDetail() {
+      document.getElementById('workflow-detail').style.display = 'none';
+    }
+
+    loadWorkflows();
+    startAutoRefresh(loadWorkflows, 30000);
+    connectSSE();
+    onSSE('workflow_update', loadWorkflows);
+  </script>
+</body>
+</html>

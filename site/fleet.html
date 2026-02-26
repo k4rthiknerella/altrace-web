@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Fleet — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Fleet</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Summary bar -->
+      <div class="grid-3" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Total Sidecars</span></div>
+          <div class="panel-value" id="fleet-total"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Active</span></div>
+          <div class="panel-value" id="fleet-active" style="color: var(--success);"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Offline</span></div>
+          <div class="panel-value" id="fleet-offline" style="color: var(--danger);"><span class="skeleton skeleton-value"></span></div>
+        </div>
+      </div>
+
+      <!-- Sidecar table -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <div style="overflow-x: auto;">
+          <table class="data-table" id="fleet-table">
+            <thead>
+              <tr>
+                <th>Sidecar</th>
+                <th>Cluster</th>
+                <th>Namespace</th>
+                <th>Version</th>
+                <th>Status</th>
+                <th>Invariants</th>
+                <th>Causal Seq</th>
+                <th>Last Heartbeat</th>
+                <th style="width: 40px;"></th>
+              </tr>
+            </thead>
+            <tbody id="fleet-body">
+              <tr><td colspan="9" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('fleet');
+
+    let fleetData = null;
+    let expandedId = null;
+
+    async function loadFleet() {
+      try {
+        const resp = await authFetch('/api/v1/fleet');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        fleetData = await resp.json();
+        renderFleet();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load fleet: ' + err.message, 'error');
+        }
+      }
+    }
+
+    function renderFleet() {
+      if (!fleetData) return;
+
+      document.getElementById('fleet-total').textContent = fleetData.total ?? 0;
+      document.getElementById('fleet-active').textContent = fleetData.active ?? 0;
+      document.getElementById('fleet-offline').textContent = fleetData.offline ?? 0;
+
+      const sidecars = fleetData.sidecars || [];
+      const tbody = document.getElementById('fleet-body');
+
+      if (sidecars.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No sidecars registered.</td></tr>';
+        return;
+      }
+
+      // Sort: active first, then by last heartbeat desc
+      sidecars.sort((a, b) => {
+        if (a.status === 'active' && b.status !== 'active') return -1;
+        if (a.status !== 'active' && b.status === 'active') return 1;
+        return new Date(b.last_heartbeat || 0) - new Date(a.last_heartbeat || 0);
+      });
+
+      let html = '';
+      for (const sc of sidecars) {
+        const inv = sc.invariant_summary;
+        const cp = sc.causal_checkpoint;
+        const isActive = sc.status === 'active';
+        const statusBadge = isActive
+          ? '<span class="badge badge-active">ACTIVE</span>'
+          : '<span class="badge badge-offline">OFFLINE</span>';
+
+        let invText = '--';
+        let invClass = '';
+        if (inv) {
+          invText = (inv.held ?? 0) + '/' + (inv.total ?? 0);
+          if (inv.degraded > 0) invClass = ' style="color: var(--warning);"';
+        }
+
+        html += `
+          <tr class="clickable" onclick="toggleDetail('${escapeHtml(sc.id)}')">
+            <td class="mono">${escapeHtml(sc.id)}</td>
+            <td class="mono">${escapeHtml(sc.cluster_id || '--')}</td>
+            <td class="mono">${escapeHtml(sc.namespace || '--')}</td>
+            <td class="mono">${escapeHtml(sc.version || '--')}</td>
+            <td>${statusBadge}</td>
+            <td class="mono"${invClass}>${invText}</td>
+            <td class="mono">${cp ? cp.sequence : '--'}</td>
+            <td>${relativeTime(sc.last_heartbeat)}</td>
+            <td class="expand-chevron" style="text-align: center; font-size: 0.7rem; color: var(--text-muted); transition: transform 0.15s ease;">&#9660;</td>
+          </tr>
+        `;
+
+        // Detail row
+        html += `<tr class="row-detail-tr" id="detail-${escapeHtml(sc.id)}"><td colspan="9">
+          <div class="row-detail ${expandedId === sc.id ? 'open' : ''}">
+            <div class="row-detail-grid">
+              <div class="row-detail-item">
+                <label>Registered</label>
+                <span>${formatTimestamp(sc.registered_at)}</span>
+              </div>
+              <div class="row-detail-item">
+                <label>Config Version</label>
+                <span>${sc.config_version ?? '--'}</span>
+              </div>
+              <div class="row-detail-item">
+                <label>Last Heartbeat</label>
+                <span>${formatTimestamp(sc.last_heartbeat)}</span>
+              </div>
+              <div class="row-detail-item">
+                <label>Causal Hash</label>
+                <span>${cp && cp.latest_hash ? cp.latest_hash.substring(0, 16) + '...' : '--'}</span>
+              </div>
+              ${inv && inv.degraded > 0 ? `
+              <div class="row-detail-item" style="grid-column: 1 / -1;">
+                <label>Degraded Invariants</label>
+                <span style="color: var(--warning);">${(inv.degraded_ids || []).join(', ') || 'Unknown'}</span>
+              </div>` : ''}
+            </div>
+          </div>
+        </td></tr>`;
+      }
+
+      tbody.innerHTML = html;
+    }
+
+    function toggleDetail(id) {
+      expandedId = expandedId === id ? null : id;
+      // Toggle all detail rows and chevrons
+      document.querySelectorAll('.row-detail').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.expand-chevron').forEach(el => el.style.transform = '');
+      if (expandedId) {
+        const detailRow = document.getElementById('detail-' + expandedId);
+        if (detailRow) detailRow.querySelector('.row-detail').classList.add('open');
+        const chevron = document.querySelector('tr[onclick*="' + expandedId + '"] .expand-chevron');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    loadFleet();
+    startAutoRefresh(loadFleet, 15000);
+    connectSSE();
+    onSSE('heartbeat', loadFleet);
+  </script>
+</body>
+</html>

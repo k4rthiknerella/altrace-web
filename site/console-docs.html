@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Documentation — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Documentation</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Doc navigation tabs -->
+      <div class="docs-nav" id="docs-nav"></div>
+
+      <!-- Doc content container -->
+      <div class="docs-content" id="docs-content"></div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    // ── Document definitions ──────────────────────────────────
+    const DOCS = [
+      { id: 'quickstart', title: 'Quickstart' },
+      { id: 'deployment', title: 'Deployment Checklist' },
+      { id: 'manifest', title: 'Manifest Guide' },
+      { id: 'opa-policy', title: 'OPA Policy Guide' },
+      { id: 'api-reference', title: 'API Reference' },
+      { id: 'aiuc1-mapping', title: 'AIUC-1 Mapping' },
+      { id: 'compliance-report', title: 'Compliance Report' }
+    ];
+
+    // ── Embedded doc content ──────────────────────────────────
+    // Each key maps to an HTML string rendered into the docs-content container.
+    // In production these could be fetched from /docs/*.md and rendered,
+    // but embedding avoids external dependencies.
+
+    const DOC_CONTENT = {
+
+      'quickstart': `
+        <h1>Quickstart</h1>
+        <p>Get Altrace running in your Kubernetes cluster. This guide covers the minimum steps to deploy the governance sidecar, connect the console, and verify enforcement.</p>
+
+        <h2>Prerequisites</h2>
+        <ul>
+          <li>Kubernetes 1.26+ cluster with <code>kubectl</code> access</li>
+          <li>Helm 3.12+</li>
+          <li>At least one LLM provider API key (OpenAI, Anthropic, etc.)</li>
+        </ul>
+
+        <h2>1. Install the Helm Chart</h2>
+        <pre><code>helm repo add altrace https://charts.altrace.io
+helm repo update
+helm install altrace altrace/altrace \\
+  --namespace altrace --create-namespace \\
+  --set hub.apiKey=YOUR_HUB_TOKEN</code></pre>
+
+        <h2>2. Verify the Hub</h2>
+        <pre><code>kubectl -n altrace get pods
+# Expected: altrace-hub-0  1/1  Running</code></pre>
+        <p>The hub exposes the API on port 8080. The console connects to the hub via the Kubernetes service.</p>
+
+        <h2>3. Connect the Console</h2>
+        <p>Navigate to the console login page and enter your organization name, hub API key, and role. The console authenticates against the hub's RBAC endpoint.</p>
+
+        <h2>4. Deploy a Sidecar</h2>
+        <p>Annotate any deployment to inject the Altrace sidecar:</p>
+        <pre><code>metadata:
+  annotations:
+    altrace.io/inject: "true"
+    altrace.io/team: "engineering"
+    altrace.io/agent: "my-agent"</code></pre>
+        <p>The sidecar intercepts all outbound LLM traffic and enforces governance policies.</p>
+
+        <h2>5. Verify Enforcement</h2>
+        <p>Check the audit trail in the console. Every LLM request from the annotated deployment should appear with an ALLOW, BLOCK, or WARN decision.</p>
+
+        <blockquote>If you see no events, verify the sidecar pod is running and the agent's outbound traffic is routed through the sidecar. Check <code>kubectl logs</code> on the sidecar container.</blockquote>
+      `,
+
+      'deployment': `
+        <h1>Deployment Checklist</h1>
+        <p>Use this checklist before promoting Altrace to production. Each item ensures a specific governance capability is operational.</p>
+
+        <h2>Infrastructure</h2>
+        <ul>
+          <li>Hub deployed with persistent storage (PVC or external database)</li>
+          <li>Hub API key rotated from default</li>
+          <li>TLS termination configured (ingress or service mesh)</li>
+          <li>Resource limits set on hub and sidecar containers</li>
+          <li>Horizontal pod autoscaling configured for hub (if &gt;50 agents)</li>
+        </ul>
+
+        <h2>Governance</h2>
+        <ul>
+          <li>At least one team created with budget limits</li>
+          <li>Model allowlists configured per team</li>
+          <li>Kill switch tested (activate → verify block → deactivate)</li>
+          <li>Delegation contracts defined for multi-agent workflows</li>
+          <li>OPA policy loaded and shadow-evaluated</li>
+        </ul>
+
+        <h2>Observability</h2>
+        <ul>
+          <li>Audit trail verified (events appearing in console)</li>
+          <li>SSE stream connected (console shows "Connected")</li>
+          <li>Alert integration configured (Slack, PagerDuty, or webhook)</li>
+          <li>Budget alerts tested (soft limit warning fires)</li>
+        </ul>
+
+        <h2>Security</h2>
+        <ul>
+          <li>RBAC roles assigned (admin, operator, viewer)</li>
+          <li>VirtualKeys issued with per-key budget caps</li>
+          <li>Network policies restrict sidecar egress to hub only</li>
+          <li>Console access restricted to internal network or VPN</li>
+        </ul>
+
+        <h2>Compliance</h2>
+        <ul>
+          <li>AIUC-1 compliance report generated and reviewed</li>
+          <li>Hash-chain integrity verified on audit trail</li>
+          <li>Data classification labels configured</li>
+        </ul>
+      `,
+
+      'manifest': `
+        <h1>Manifest Guide</h1>
+        <p>The Altrace manifest defines the governance contract for your deployment. It specifies teams, agents, budget limits, model allowlists, and delegation chains.</p>
+
+        <h2>Manifest Structure</h2>
+        <pre><code>apiVersion: altrace.io/v1
+kind: Manifest
+metadata:
+  name: production
+spec:
+  teams:
+    - name: engineering
+      budget:
+        daily_limit_usd: 500
+        soft_limit_pct: 80
+      models:
+        allowlist: [gpt-4o, claude-sonnet-4-20250514]
+      agents:
+        - name: research-agent
+          budget:
+            daily_limit_usd: 100
+          tools:
+            allowed: [web_search, db_read]
+        - name: code-agent
+          budget:
+            daily_limit_usd: 200
+          tools:
+            allowed: [web_search, code_exec]</code></pre>
+
+        <h2>Team Configuration</h2>
+        <table>
+          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          <tr><td><code>name</code></td><td>string</td><td>Unique team identifier</td></tr>
+          <tr><td><code>budget.daily_limit_usd</code></td><td>number</td><td>Maximum daily spend in USD</td></tr>
+          <tr><td><code>budget.soft_limit_pct</code></td><td>number</td><td>Warning threshold (percentage of daily limit)</td></tr>
+          <tr><td><code>models.allowlist</code></td><td>string[]</td><td>Models this team can access</td></tr>
+          <tr><td><code>agents</code></td><td>Agent[]</td><td>Agent configurations for this team</td></tr>
+        </table>
+
+        <h2>Agent Configuration</h2>
+        <table>
+          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          <tr><td><code>name</code></td><td>string</td><td>Unique agent identifier within team</td></tr>
+          <tr><td><code>budget.daily_limit_usd</code></td><td>number</td><td>Agent-level daily budget (must be &le; team budget)</td></tr>
+          <tr><td><code>tools.allowed</code></td><td>string[]</td><td>Tools this agent can invoke</td></tr>
+          <tr><td><code>tools.denied</code></td><td>string[]</td><td>Explicitly blocked tools</td></tr>
+          <tr><td><code>delegation</code></td><td>Delegation</td><td>Delegation contract for sub-agents</td></tr>
+        </table>
+
+        <h2>Applying the Manifest</h2>
+        <pre><code>kubectl apply -f manifest.yaml -n altrace</code></pre>
+        <p>The hub validates the manifest and applies changes within one reconciliation cycle (default: 10 seconds). Changes are recorded in the policy version history.</p>
+      `,
+
+      'opa-policy': `
+        <h1>OPA Policy Guide</h1>
+        <p>Altrace uses Open Policy Agent (OPA) for custom governance rules. Policies are evaluated on every LLM request and can produce ALLOW, BLOCK, or WARN decisions.</p>
+
+        <h2>Policy Structure</h2>
+        <pre><code>package altrace.governance
+
+import rego.v1
+
+# Block requests to expensive models outside business hours
+deny contains msg if {
+    input.model == "gpt-4o"
+    time.clock(time.now_ns())[0] < 8
+    msg := "gpt-4o blocked outside business hours (08:00-20:00)"
+}
+
+deny contains msg if {
+    input.model == "gpt-4o"
+    time.clock(time.now_ns())[0] >= 20
+    msg := "gpt-4o blocked outside business hours (08:00-20:00)"
+}
+
+# Warn on high-cost requests
+warn contains msg if {
+    input.estimated_cost_usd > 1.0
+    msg := sprintf("High-cost request: $%.2f", [input.estimated_cost_usd])
+}</code></pre>
+
+        <h2>Input Object</h2>
+        <p>The policy engine receives the following input on each request:</p>
+        <table>
+          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          <tr><td><code>input.team</code></td><td>string</td><td>Team identifier</td></tr>
+          <tr><td><code>input.agent</code></td><td>string</td><td>Agent identifier</td></tr>
+          <tr><td><code>input.model</code></td><td>string</td><td>Requested model name</td></tr>
+          <tr><td><code>input.provider</code></td><td>string</td><td>Provider (openai, anthropic, etc.)</td></tr>
+          <tr><td><code>input.estimated_cost_usd</code></td><td>number</td><td>Estimated request cost</td></tr>
+          <tr><td><code>input.tool_calls</code></td><td>string[]</td><td>Tools requested in this call</td></tr>
+          <tr><td><code>input.budget_remaining_usd</code></td><td>number</td><td>Remaining budget for agent</td></tr>
+          <tr><td><code>input.delegation_depth</code></td><td>number</td><td>Current delegation chain depth</td></tr>
+        </table>
+
+        <h2>Decision Rules</h2>
+        <ul>
+          <li><code>deny</code> — blocks the request with a reason message</li>
+          <li><code>warn</code> — allows the request but records a warning</li>
+          <li>No matching rule — request is allowed by default</li>
+        </ul>
+
+        <h2>Shadow Evaluation</h2>
+        <p>New policies can be deployed in shadow mode. Shadow policies are evaluated on every request but do not affect the decision. Results are recorded in the audit trail for comparison against the active policy.</p>
+        <pre><code># Deploy in shadow mode
+kubectl annotate policy production \\
+  altrace.io/mode=shadow -n altrace</code></pre>
+      `,
+
+      'api-reference': `
+        <h1>API Reference</h1>
+        <p>The Altrace hub exposes a REST API on port 8080. All endpoints require a Bearer token in the Authorization header.</p>
+
+        <h2>Authentication</h2>
+        <pre><code>Authorization: Bearer &lt;hub-api-key&gt;</code></pre>
+
+        <h2>Endpoints</h2>
+
+        <h3>Dashboard</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/dashboard</code></td><td>Overview stats (fleet, budget, decisions)</td></tr>
+        </table>
+
+        <h3>Fleet</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/fleet</code></td><td>List all sidecars and their status</td></tr>
+          <tr><td>GET</td><td><code>/api/v1/fleet/:id</code></td><td>Get sidecar details</td></tr>
+        </table>
+
+        <h3>Kill Switches</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/kill</code></td><td>List all kill switch entries</td></tr>
+          <tr><td>POST</td><td><code>/api/v1/kill</code></td><td>Activate a kill switch</td></tr>
+          <tr><td>DELETE</td><td><code>/api/v1/kill/:id</code></td><td>Deactivate a kill switch</td></tr>
+        </table>
+
+        <h3>Cost / Budget</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/cost</code></td><td>Budget usage by team and model</td></tr>
+        </table>
+
+        <h3>Audit</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/audit</code></td><td>Query audit events (supports ?limit, ?offset, ?team, ?agent, ?decision)</td></tr>
+          <tr><td>GET</td><td><code>/api/v1/audit/:id</code></td><td>Get full event detail with chain hash</td></tr>
+        </table>
+
+        <h3>Policies</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/policies</code></td><td>List policy versions</td></tr>
+          <tr><td>GET</td><td><code>/api/v1/policies/active</code></td><td>Get the active policy</td></tr>
+          <tr><td>POST</td><td><code>/api/v1/policies</code></td><td>Upload a new policy version</td></tr>
+        </table>
+
+        <h3>Credentials / VirtualKeys</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/credentials</code></td><td>List all VirtualKeys</td></tr>
+          <tr><td>POST</td><td><code>/api/v1/credentials/issue</code></td><td>Issue a new VirtualKey</td></tr>
+          <tr><td>DELETE</td><td><code>/api/v1/credentials/:id</code></td><td>Revoke a VirtualKey</td></tr>
+        </table>
+
+        <h3>Compliance</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/verify/aiuc1</code></td><td>AIUC-1 compliance status for all controls</td></tr>
+        </table>
+
+        <h3>Approvals</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1/approvals</code></td><td>List pending approval requests</td></tr>
+          <tr><td>POST</td><td><code>/api/v1/approvals/:id/approve</code></td><td>Approve a request</td></tr>
+          <tr><td>POST</td><td><code>/api/v1/approvals/:id/deny</code></td><td>Deny a request</td></tr>
+        </table>
+
+        <h3>Events (SSE)</h3>
+        <table>
+          <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          <tr><td>GET</td><td><code>/api/v1alpha1/events</code></td><td>Server-Sent Events stream for real-time updates</td></tr>
+        </table>
+      `,
+
+      'aiuc1-mapping': `
+        <h1>AIUC-1 Control Mapping</h1>
+        <p>The AI Under Control (AIUC-1) standard defines 51 controls across 5 governance domains. Altrace enforces 19 of these controls at the infrastructure layer. This document maps each enforced control to the specific Altrace capability that satisfies it.</p>
+
+        <h2>Domain A: Data &amp; Privacy</h2>
+        <table>
+          <tr><th>Control</th><th>Name</th><th>Altrace Capability</th><th>Status</th></tr>
+          <tr><td><code>A002</code></td><td>Data classification enforcement</td><td>Content labels on delegation contracts; sidecar enforces data flow restrictions</td><td>Enforced</td></tr>
+          <tr><td><code>A003</code></td><td>Content-blind governance</td><td>Sidecar operates on metadata only; no prompt/response content inspection</td><td>Enforced</td></tr>
+          <tr><td><code>A005</code></td><td>Cross-border data routing</td><td>Provider allowlists restrict which endpoints agents can reach; region-aware routing</td><td>Enforced</td></tr>
+        </table>
+
+        <h2>Domain B: Security</h2>
+        <table>
+          <tr><th>Control</th><th>Name</th><th>Altrace Capability</th><th>Status</th></tr>
+          <tr><td><code>B002</code></td><td>Credential authority &amp; VirtualKey isolation</td><td>VirtualKeys with per-key budget caps; real provider keys never exposed to agents</td><td>Enforced</td></tr>
+          <tr><td><code>B004</code></td><td>Model allowlist enforcement</td><td>Per-team model allowlists enforced at sidecar; non-listed models blocked</td><td>Enforced</td></tr>
+          <tr><td><code>B006</code></td><td>Tool permission governance</td><td>Tool call filtering in sidecar; delegation contracts attenuate tool access</td><td>Enforced</td></tr>
+        </table>
+
+        <h2>Domain C: Safety</h2>
+        <table>
+          <tr><th>Control</th><th>Name</th><th>Altrace Capability</th><th>Status</th></tr>
+          <tr><td><code>C003</code></td><td>Bounded-latency kill switch</td><td>New requests blocked &lt;1ms; active tunnels terminated within 1.2s</td><td>Enforced</td></tr>
+          <tr><td><code>C006</code></td><td>Graduated enforcement levels</td><td>5-level enforcement: allow &rarr; warn &rarr; soft block &rarr; hard block &rarr; kill</td><td>Enforced</td></tr>
+          <tr><td><code>C007</code></td><td>Content safety classification</td><td>Optional content labels in delegation contracts; operator-configurable</td><td>Optional</td></tr>
+          <tr><td><code>C008</code></td><td>Human-in-the-loop approval</td><td>Approval queue for high-risk operations; operator approve/deny via console</td><td>Optional</td></tr>
+        </table>
+
+        <h2>Domain D: Reliability</h2>
+        <table>
+          <tr><th>Control</th><th>Name</th><th>Altrace Capability</th><th>Status</th></tr>
+          <tr><td><code>D003</code></td><td>Budget enforcement &amp; cost governance</td><td>Per-team and per-agent budget limits; soft/hard limits with graduated response</td><td>Enforced</td></tr>
+        </table>
+
+        <h2>Domain E: Accountability</h2>
+        <table>
+          <tr><th>Control</th><th>Name</th><th>Altrace Capability</th><th>Status</th></tr>
+          <tr><td><code>E004</code></td><td>Tamper-evident audit trail</td><td>Hash-chained audit log; every decision recorded with causal provenance</td><td>Enforced</td></tr>
+          <tr><td><code>E005</code></td><td>Delegation contract enforcement</td><td>Authority attenuation through delegation chain; mathematically enforced subset</td><td>Enforced</td></tr>
+          <tr><td><code>E008</code></td><td>Policy versioning &amp; shadow evaluation</td><td>Immutable policy versions; shadow mode for safe rollout; diff in console</td><td>Enforced</td></tr>
+        </table>
+      `,
+
+      'compliance-report': `
+        <h1>Compliance Report</h1>
+        <p>This guide explains how to generate and export compliance reports from the Altrace console.</p>
+
+        <h2>AIUC-1 Compliance Dashboard</h2>
+        <p>Navigate to the <strong>Compliance</strong> page in the console sidebar. The dashboard shows:</p>
+        <ul>
+          <li><strong>Overall score</strong> — number of enforced controls out of total applicable controls</li>
+          <li><strong>Domain breakdown</strong> — controls grouped by AIUC-1 domain (A through E)</li>
+          <li><strong>Status per control</strong> — Enforced, Configured, Not Configured, or Optional</li>
+          <li><strong>Evidence</strong> — the specific Altrace capability satisfying each control</li>
+        </ul>
+
+        <h2>Exporting a PDF Report</h2>
+        <p>Click the <strong>Export Report</strong> button on the compliance dashboard. This opens the browser's print dialog. Select "Save as PDF" to generate a clean compliance document.</p>
+        <p>The exported report includes:</p>
+        <ul>
+          <li>Report header with organization name and generation date</li>
+          <li>All control groups with status indicators</li>
+          <li>Report footer with timestamp</li>
+        </ul>
+        <p>The sidebar, topbar, and interactive elements are automatically hidden in the export. Dark mode is forced to light colors for print readability.</p>
+
+        <h2>Audit Trail Integrity</h2>
+        <p>The audit trail uses hash-chain integrity. Each event includes a hash of the previous event, making any modification detectable. The compliance dashboard verifies chain integrity automatically.</p>
+
+        <h2>Scheduling Reports</h2>
+        <p>For automated compliance reporting, use the API endpoint:</p>
+        <pre><code>GET /api/v1/verify/aiuc1
+Authorization: Bearer &lt;hub-api-key&gt;</code></pre>
+        <p>This returns the full compliance status as JSON, which can be integrated into your compliance automation pipeline.</p>
+      `
+    };
+
+    // ── Render logic ──────────────────────────────────────────
+
+    function renderNav(activeId) {
+      const nav = document.getElementById('docs-nav');
+      nav.innerHTML = DOCS.map(doc =>
+        '<a class="docs-nav-link' + (doc.id === activeId ? ' active' : '') + '" href="#' + doc.id + '">' + doc.title + '</a>'
+      ).join('');
+    }
+
+    function renderDoc(docId) {
+      const content = DOC_CONTENT[docId];
+      const container = document.getElementById('docs-content');
+      if (content) {
+        container.innerHTML = content;
+      } else {
+        container.innerHTML = '<h1>Not Found</h1><p>This document does not exist.</p>';
+      }
+      renderNav(docId);
+    }
+
+    function getDocIdFromHash() {
+      const hash = window.location.hash.slice(1);
+      return DOC_CONTENT[hash] ? hash : 'quickstart';
+    }
+
+    // ── Initialize ────────────────────────────────────────────
+
+    const session = initConsole('console-docs');
+    if (session) {
+      renderDoc(getDocIdFromHash());
+
+      window.addEventListener('hashchange', function() {
+        renderDoc(getDocIdFromHash());
+      });
+
+      connectSSE();
+    }
+  </script>
+</body>
+</html>

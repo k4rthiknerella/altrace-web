@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Compliance — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=3">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">AIUC-1 Compliance</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Print-only header -->
+      <div class="print-only print-header">
+        <h1>AIUC-1 Compliance Report</h1>
+        <p id="print-org"></p>
+        <p id="print-date"></p>
+      </div>
+
+      <!-- Summary panel -->
+      <div class="panel compliance-summary" style="margin-bottom: var(--sp-4);">
+        <div>
+          <div class="panel-title">Overall Compliance</div>
+          <div class="compliance-score" id="compliance-score">
+            <span class="skeleton skeleton-value"></span>
+          </div>
+          <div class="compliance-score-sub" id="compliance-sub">controls enforced</div>
+        </div>
+        <div>
+          <button class="btn btn-primary btn-nav no-print" id="export-btn" onclick="exportReport()">Export Report</button>
+        </div>
+      </div>
+
+      <!-- Last checked -->
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--sp-3); font-family: var(--font-mono);" id="last-checked"></div>
+
+      <!-- Domain groups -->
+      <div id="controls-container">
+        <div class="panel" style="padding: var(--sp-5); text-align: center;">
+          <div class="skeleton skeleton-text" style="width: 60%; margin: 0 auto var(--sp-2);"></div>
+          <div class="skeleton skeleton-text" style="width: 40%; margin: 0 auto;"></div>
+        </div>
+      </div>
+
+      <!-- Print-only footer -->
+      <div class="print-only print-footer">
+        <p id="print-footer-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    const session = initConsole('compliance');
+
+    const DOMAINS = {
+      'A': 'A. Data & Privacy',
+      'B': 'B. Security',
+      'C': 'C. Safety',
+      'D': 'D. Reliability',
+      'E': 'E. Accountability'
+    };
+
+    let controlsData = [];
+
+    async function loadCompliance() {
+      try {
+        const resp = await authFetch('/api/v1/verify/aiuc1');
+
+        if (resp.status === 404) {
+          renderNotAvailable();
+          return;
+        }
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+
+        const data = await resp.json();
+        controlsData = Array.isArray(data) ? data : (data.controls || []);
+        renderControls();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load compliance data: ' + err.message, 'error');
+          renderNotAvailable();
+        }
+      }
+    }
+
+    function renderNotAvailable() {
+      document.getElementById('compliance-score').textContent = '--';
+      document.getElementById('compliance-sub').textContent = 'Endpoint not available';
+      document.getElementById('controls-container').innerHTML =
+        '<div class="panel empty-state">AIUC-1 verify endpoint not available. Ensure the agent is running v0.1.0+ with AIUC-1 verification enabled.</div>';
+    }
+
+    function renderControls() {
+      const total = controlsData.length;
+      const enforced = controlsData.filter(c => c.status === 'enforced').length;
+      const configured = controlsData.filter(c => c.status === 'configured').length;
+
+      document.getElementById('compliance-score').textContent = enforced + '/' + total;
+      document.getElementById('compliance-sub').textContent =
+        'controls enforced' + (configured > 0 ? ', ' + configured + ' configured' : '');
+
+      document.getElementById('last-checked').textContent =
+        'Last checked: ' + new Date().toLocaleString();
+
+      // Print header/footer
+      const orgEl = document.getElementById('print-org');
+      if (orgEl) orgEl.textContent = (session && session.org) || '';
+      const dateEl = document.getElementById('print-date');
+      if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+      const footerEl = document.getElementById('print-footer-text');
+      if (footerEl) footerEl.textContent = 'Generated by Altrace Console on ' + new Date().toISOString();
+
+      // Group by domain letter
+      const grouped = {};
+      controlsData.forEach(c => {
+        const key = (c.control_id || '').charAt(0).toUpperCase();
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(c);
+      });
+
+      const container = document.getElementById('controls-container');
+      container.innerHTML = Object.keys(DOMAINS).map(key => {
+        const controls = grouped[key] || [];
+        if (controls.length === 0) return '';
+
+        return '<div class="domain-group">' +
+          '<div class="domain-group-header">' + DOMAINS[key] + '</div>' +
+          controls.map(c => {
+            const statusClass = (c.status || '').replace(/_/g, '-');
+            const statusText = (!c.mandatory && c.status !== 'enforced') ? 'OPTIONAL' : (c.status || '').replace(/_/g, ' ').toUpperCase();
+
+            return '<div class="control-row">' +
+              '<span class="status-dot ' + statusClass + '"></span>' +
+              '<span class="control-id">' + escapeHtml(c.control_id) + '</span>' +
+              '<span class="control-name">' + escapeHtml(c.name) + '</span>' +
+              '<span class="control-evidence">' + escapeHtml(c.evidence || c.mechanism || '') + '</span>' +
+              '<span class="control-status-label ' + statusClass + '">' + statusText + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      }).join('');
+    }
+
+    function exportReport() {
+      window.print();
+    }
+
+    loadCompliance();
+    startAutoRefresh(loadCompliance, 60000);
+    connectSSE();
+  </script>
+</body>
+</html>

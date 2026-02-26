@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Policies — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Policies</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Active policy summary -->
+      <div class="panel" id="active-policy" style="margin-bottom: var(--sp-4);">
+        <div class="panel-header">
+          <span class="panel-title">Active Policy</span>
+          <button class="btn btn-primary btn-nav role-admin-only" onclick="showDeployForm()">Deploy New</button>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: var(--sp-3); margin-bottom: var(--sp-2);">
+          <span class="panel-value" id="active-version"><span class="skeleton skeleton-value"></span></span>
+          <span class="mono" style="font-size: 0.8125rem; color: var(--text-muted);" id="active-hash"></span>
+        </div>
+        <div class="panel-sub" id="active-meta"></div>
+        <div id="active-rollout" style="margin-top: var(--sp-3);"></div>
+      </div>
+
+      <!-- Deploy form (hidden) -->
+      <div class="inline-form" id="deploy-form" style="display: none;">
+        <div class="panel-title" style="margin-bottom: var(--sp-3);">Deploy New Policy</div>
+        <div class="form-group">
+          <label for="policy-body">Policy Body (JSON)</label>
+          <textarea id="policy-body" rows="12" placeholder='{"allowed_destinations": [...], "model_allowlist": [...]}'></textarea>
+        </div>
+        <div class="form-group">
+          <label for="policy-author">Created By</label>
+          <input type="text" id="policy-author" placeholder="ops@company.com">
+        </div>
+        <div class="inline-form-actions">
+          <button class="btn btn-primary btn-nav" onclick="deployPolicy()">Deploy</button>
+          <button class="btn-cancel" onclick="hideDeployForm()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Shadow policy panel (shown only when a shadow policy exists) -->
+      <div class="panel" id="shadow-panel" style="display: none; margin-bottom: var(--sp-4); border-left: 3px solid var(--warning);">
+        <div class="panel-header">
+          <span class="panel-title">Shadow Policy</span>
+          <button class="btn btn-primary btn-nav role-admin-only" id="promote-btn" onclick="promoteShadow()">Promote to Active</button>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: var(--sp-3); margin-bottom: var(--sp-2);">
+          <span class="panel-value" id="shadow-version"></span>
+          <span class="badge badge-warn">SHADOW</span>
+        </div>
+        <div class="panel-sub" id="shadow-meta"></div>
+        <div id="shadow-report" style="margin-top: var(--sp-3);"></div>
+      </div>
+
+      <!-- Version history -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <div class="panel-header" style="padding: var(--sp-3) var(--sp-4);">
+          <span class="panel-title">Version History</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Version</th>
+                <th>Hash</th>
+                <th>Created By</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>ACKs</th>
+              </tr>
+            </thead>
+            <tbody id="policy-body-table">
+              <tr><td colspan="6" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Version detail (shown when row is clicked) -->
+      <div id="version-detail" style="display: none; margin-top: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title" id="version-detail-title">Policy Detail</span>
+            <button class="btn-cancel" onclick="closeVersionDetail()" style="padding: 4px 12px; font-size: 0.75rem;">Close</button>
+          </div>
+
+          <!-- Rollout table -->
+          <div id="version-rollout" style="margin-bottom: var(--sp-4);"></div>
+
+          <!-- Policy body -->
+          <div class="panel-title" style="margin-bottom: var(--sp-2);">Policy Content</div>
+          <pre class="policy-body" id="version-body"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('policies');
+
+    let policiesData = [];
+
+    async function loadPolicies() {
+      try {
+        const resp = await authFetch('/api/v1/policies');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        policiesData = data.policies || [];
+        renderPolicies();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load policies: ' + err.message, 'error');
+        }
+      }
+    }
+
+    function renderPolicies() {
+      const active = policiesData.find(p => p.active);
+      const tbody = document.getElementById('policy-body-table');
+
+      // Active policy summary
+      if (active) {
+        document.getElementById('active-version').textContent = 'v' + active.version;
+        document.getElementById('active-hash').textContent = active.hash ? active.hash.substring(0, 16) : '';
+        document.getElementById('active-meta').textContent = 'Deployed ' + relativeTime(active.created_at) + ' by ' + (active.created_by || 'unknown');
+
+        // Rollout bar
+        const acked = active.ack_count ?? 0;
+        loadRolloutSummary(active.version, acked);
+      } else {
+        document.getElementById('active-version').textContent = '--';
+        document.getElementById('active-hash').textContent = '';
+        document.getElementById('active-meta').textContent = 'No active policy';
+        document.getElementById('active-rollout').innerHTML = '';
+      }
+
+      // Shadow policy detection
+      const shadow = policiesData.find(p => p.stage === 'shadow');
+      if (shadow) {
+        loadShadowPanel(shadow);
+      } else {
+        document.getElementById('shadow-panel').style.display = 'none';
+      }
+
+      // Version table
+      if (policiesData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No policies deployed.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = policiesData.map(p => {
+        const statusBadge = p.active
+          ? '<span class="badge badge-active">ACTIVE</span>'
+          : '<span class="badge badge-inactive">SUPERSEDED</span>';
+
+        return `
+          <tr class="clickable" onclick="showVersionDetail(${p.version})">
+            <td class="mono" style="font-weight: 600;">v${p.version}</td>
+            <td class="mono">${p.hash ? escapeHtml(p.hash.substring(0, 12)) : '--'}</td>
+            <td>${escapeHtml(p.created_by || '--')}</td>
+            <td>${relativeTime(p.created_at)}</td>
+            <td>${statusBadge}</td>
+            <td class="mono">${p.ack_count ?? '--'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function loadRolloutSummary(version, acked) {
+      try {
+        const resp = await authFetch('/api/v1/policies/' + version + '/rollout');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const total = data.total_active_sidecars || 0;
+        const pct = total > 0 ? Math.round((data.total_acks || acked) / total * 100) : 0;
+        const pending = (data.acks || []).length < total ? total - (data.total_acks || acked) : 0;
+
+        document.getElementById('active-rollout').innerHTML = `
+          <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 4px;">
+            Rollout: ${data.total_acks || acked} / ${total} sidecars (${pct}%)
+            ${pending > 0 ? '<span style="color: var(--warning);"> &middot; ' + pending + ' pending</span>' : ''}
+          </div>
+          <div class="rollout-bar">
+            <div class="rollout-bar-fill" style="width: ${pct}%;"></div>
+          </div>
+        `;
+      } catch {}
+    }
+
+    async function showVersionDetail(version) {
+      document.getElementById('version-detail').style.display = 'block';
+      document.getElementById('version-detail-title').textContent = 'Policy v' + version;
+
+      // Load rollout
+      try {
+        const rolloutResp = await authFetch('/api/v1/policies/' + version + '/rollout');
+        if (rolloutResp.ok) {
+          const rd = await rolloutResp.json();
+          const acks = rd.acks || [];
+          if (acks.length > 0) {
+            document.getElementById('version-rollout').innerHTML = `
+              <div class="panel-title" style="margin-bottom: var(--sp-2);">Rollout Status (${rd.total_acks || acks.length} / ${rd.total_active_sidecars || '?'})</div>
+              <table class="data-table" style="font-size: 0.8125rem;">
+                <thead><tr><th>Sidecar</th><th>Acknowledged</th></tr></thead>
+                <tbody>
+                  ${acks.map(a => `<tr><td class="mono">${escapeHtml(a.sidecar_id)}</td><td>${relativeTime(a.acknowledged_at)}</td></tr>`).join('')}
+                </tbody>
+              </table>
+            `;
+          } else {
+            document.getElementById('version-rollout').innerHTML = '<div class="empty-state">No ACKs recorded.</div>';
+          }
+        }
+      } catch {}
+
+      // Load policy body
+      try {
+        const bodyResp = await authFetch('/api/v1/policies/' + version);
+        if (bodyResp.ok) {
+          const pd = await bodyResp.json();
+          const body = pd.body || pd;
+          document.getElementById('version-body').textContent = JSON.stringify(body, null, 2);
+        } else {
+          document.getElementById('version-body').textContent = 'Failed to load policy content.';
+        }
+      } catch {
+        document.getElementById('version-body').textContent = 'Failed to load policy content.';
+      }
+
+      document.getElementById('version-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeVersionDetail() {
+      document.getElementById('version-detail').style.display = 'none';
+    }
+
+    function showDeployForm() {
+      document.getElementById('deploy-form').style.display = 'block';
+      // Pre-fill author from session
+      const session = getSession();
+      if (session && session.org) {
+        document.getElementById('policy-author').value = session.org;
+      }
+    }
+
+    function hideDeployForm() {
+      document.getElementById('deploy-form').style.display = 'none';
+    }
+
+    async function deployPolicy() {
+      const bodyText = document.getElementById('policy-body').value.trim();
+      const author = document.getElementById('policy-author').value.trim();
+
+      if (!bodyText) { showToast('Policy body is required', 'error'); return; }
+
+      let bodyJson;
+      try {
+        bodyJson = JSON.parse(bodyText);
+      } catch {
+        showToast('Invalid JSON in policy body', 'error');
+        return;
+      }
+
+      showConfirmDialog(
+        'Deploy New Policy',
+        'This will create a new policy version and push it to all sidecars. Proceed?',
+        'Deploy',
+        async () => {
+          const deployBtn = document.querySelector('#deploy-form .btn-primary');
+          deployBtn.disabled = true;
+          deployBtn.textContent = 'Deploying...';
+          try {
+            const resp = await authFetch('/api/v1/policies', {
+              method: 'POST',
+              body: JSON.stringify({ body: bodyJson, created_by: author || 'console' })
+            });
+            if (!resp.ok) {
+              const err = await resp.text();
+              throw new Error('HTTP ' + resp.status + ': ' + err);
+            }
+            showToast('Policy deployed successfully', 'success');
+            hideDeployForm();
+            document.getElementById('policy-body').value = '';
+            loadPolicies();
+          } catch (err) {
+            showToast('Deploy failed: ' + err.message, 'error');
+          } finally {
+            deployBtn.disabled = false;
+            deployBtn.textContent = 'Deploy';
+          }
+        }
+      );
+    }
+
+    // ── Shadow policy panel ──────────────────────────────
+
+    let shadowVersion = null;
+
+    async function loadShadowPanel(shadow) {
+      shadowVersion = shadow.version;
+      const panel = document.getElementById('shadow-panel');
+      panel.style.display = '';
+
+      document.getElementById('shadow-version').textContent = 'v' + shadow.version;
+      document.getElementById('shadow-meta').textContent =
+        'Created ' + relativeTime(shadow.created_at) + ' by ' + (shadow.created_by || 'unknown');
+
+      // Load shadow report (graceful degradation layer 2: handle 404)
+      try {
+        const resp = await authFetch('/api/v1/policies/' + shadow.version + '/shadow-report');
+        if (resp.status === 404) {
+          document.getElementById('shadow-report').innerHTML =
+            '<div class="empty-state">Shadow report not available yet.</div>';
+          return;
+        }
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const report = await resp.json();
+        renderShadowReport(report);
+      } catch {
+        document.getElementById('shadow-report').innerHTML =
+          '<div class="empty-state">Shadow report not available yet.</div>';
+      }
+    }
+
+    function renderShadowReport(report) {
+      const divergences = report.divergences ?? 0;
+      const totalEval = report.total_evaluations ?? 0;
+      const samples = report.samples || [];
+
+      // Graceful degradation layer 3: skip rate if total_evaluations is 0 (known backend bug)
+      let rateHtml = '';
+      if (totalEval > 0) {
+        const rate = report.divergence_rate ?? (divergences / totalEval * 100);
+        rateHtml = ` &middot; Rate: ${Number(rate).toFixed(1)}%`;
+      }
+
+      let html = `
+        <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">
+          Divergences: <strong style="color: ${divergences > 0 ? 'var(--warning)' : 'var(--success)'};">${divergences}</strong>
+          ${totalEval > 0 ? ' / ' + totalEval + ' evaluated' : ''}${rateHtml}
+        </div>
+      `;
+
+      if (samples.length > 0) {
+        html += `
+          <div class="panel-title" style="margin-bottom: var(--sp-2); font-size: 0.75rem;">Sample Divergences</div>
+          <table class="data-table" style="font-size: 0.8125rem;">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Active Result</th>
+                <th>Shadow Result</th>
+                <th>Reason</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${samples.map(s => `
+                <tr>
+                  <td class="mono" style="font-size: 0.75rem;">${escapeHtml((s.request_id || '').substring(0, 12))}</td>
+                  <td><span class="badge ${s.active_result === 'block' ? 'badge-block' : 'badge-active'}">${escapeHtml((s.active_result || '--').toUpperCase())}</span></td>
+                  <td><span class="badge ${s.shadow_result === 'block' ? 'badge-block' : 'badge-active'}">${escapeHtml((s.shadow_result || '--').toUpperCase())}</span></td>
+                  <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(s.shadow_reason || '--')}</td>
+                  <td>${relativeTime(s.timestamp)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      document.getElementById('shadow-report').innerHTML = html;
+    }
+
+    function promoteShadow() {
+      if (!shadowVersion) return;
+      showConfirmDialog(
+        'Promote Shadow Policy',
+        'This will promote the shadow policy v' + shadowVersion + ' to active, replacing the current active policy. Proceed?',
+        'Promote',
+        async () => {
+          const btn = document.getElementById('promote-btn');
+          btn.disabled = true;
+          btn.textContent = 'Promoting...';
+          try {
+            const resp = await authFetch('/api/v1/policies/' + shadowVersion + '/promote', {
+              method: 'POST'
+            });
+            if (!resp.ok) {
+              const err = await resp.text();
+              throw new Error('HTTP ' + resp.status + ': ' + err);
+            }
+            showToast('Shadow policy promoted to active', 'success');
+            loadPolicies();
+          } catch (err) {
+            showToast('Promote failed: ' + err.message, 'error');
+          } finally {
+            btn.disabled = false;
+            btn.textContent = 'Promote to Active';
+          }
+        }
+      );
+    }
+
+    loadPolicies();
+    startAutoRefresh(loadPolicies, 30000);
+    connectSSE();
+    onSSE('policy_update', loadPolicies);
+    onSSE('policy_promoted', loadPolicies);
+  </script>
+</body>
+</html>
