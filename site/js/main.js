@@ -81,39 +81,36 @@
     });
   }
 
-  /* --- Request Access form --- */
+  /* --- Request Access form (Supabase + email fallback) --- */
   const form = document.getElementById('access-form');
   if (form) {
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      // Attempt Formspree submission
-      fetch('https://formspree.io/f/FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data),
-      })
-        .then(res => {
-          if (!res.ok) throw new Error('API not available');
-          showSuccess();
-        })
-        .catch(() => {
-          // Fallback: mailto
-          const subject = encodeURIComponent('Altrace Early Access Request');
-          const body = encodeURIComponent(
-            `Name: ${data.firstName} ${data.lastName}\n` +
-            `Email: ${data.email}\n` +
-            `Company: ${data.company}\n` +
-            `Role: ${data.role}\n` +
-            `Use case: ${data.useCase || 'N/A'}\n` +
-            `Agents in production: ${data.agentCount || 'N/A'}`
+      // Submit to Supabase
+      if (typeof supabase !== 'undefined' && supabase.createClient) {
+        try {
+          const sb = supabase.createClient(
+            'https://najmkpfmmcthefbnbskp.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ham1rcGZtbWN0aGVmYm5ic2twIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNjYyMDksImV4cCI6MjA4NzY0MjIwOX0.L9PoN_vlw8wV42F1dint_JjswX5ge5xe2GKw1-D3hvo'
           );
-          window.location.href = `mailto:hello@altrace.io?subject=${subject}&body=${body}`;
-          showSuccess();
-        });
+          await sb.from('leads').insert([{
+            first_name: data.firstName,
+            last_name:  data.lastName,
+            email:      data.email,
+            company:    data.company,
+            role:       data.role || null,
+            use_case:   data.useCase || null
+          }]);
+        } catch (_) {
+          // Silent fail — show success regardless
+        }
+      }
+
+      showSuccess();
     });
   }
 

@@ -18,7 +18,7 @@ function setSession(org, token, role) {
 function clearSession() {
   sessionStorage.removeItem(AUTH_KEY);
   if (window.location.pathname !== '/login' && window.location.pathname !== '/login.html') {
-    window.location.href = '/login';
+    window.location.href = '/login.html';
   }
 }
 

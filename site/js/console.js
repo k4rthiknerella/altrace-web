@@ -6,7 +6,7 @@
 
 const SIDEBAR_HTML = `
   <div class="sidebar-logo">
-    <a href="/dashboard">
+    <a href="/dashboard.html">
       <svg viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
       Altrace
     </a>
@@ -14,47 +14,47 @@ const SIDEBAR_HTML = `
   <div class="sidebar-org" id="sidebar-org"></div>
   <nav class="sidebar-nav">
     <div class="sidebar-section-label">Overview</div>
-    <a href="/dashboard" class="sidebar-link" data-page="dashboard">
+    <a href="/dashboard.html" class="sidebar-link" data-page="dashboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
     <div class="sidebar-section-label">Operations</div>
-    <a href="/fleet" class="sidebar-link" data-page="fleet">
+    <a href="/fleet.html" class="sidebar-link" data-page="fleet">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       Fleet
     </a>
-    <a href="/kill-switches" class="sidebar-link" data-page="kill-switches">
+    <a href="/kill-switches.html" class="sidebar-link" data-page="kill-switches">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       Kill Switches
     </a>
-    <a href="/cost" class="sidebar-link" data-page="cost">
+    <a href="/cost.html" class="sidebar-link" data-page="cost">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
       Cost
     </a>
-    <a href="/audit" class="sidebar-link" data-page="audit">
+    <a href="/audit.html" class="sidebar-link" data-page="audit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       Audit
     </a>
-    <a href="/policies" class="sidebar-link" data-page="policies">
+    <a href="/policies.html" class="sidebar-link" data-page="policies">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Policies
     </a>
     <div class="sidebar-section-label">Compliance</div>
-    <a href="/compliance" class="sidebar-link" data-page="compliance">
+    <a href="/compliance.html" class="sidebar-link" data-page="compliance">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       Compliance
     </a>
     <div class="sidebar-section-label">Security</div>
-    <a href="/virtualkeys" class="sidebar-link" data-page="virtualkeys">
+    <a href="/virtualkeys.html" class="sidebar-link" data-page="virtualkeys">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
       VirtualKeys
     </a>
-    <a href="/approvals" class="sidebar-link" data-page="approvals">
+    <a href="/approvals.html" class="sidebar-link" data-page="approvals">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       Approvals
     </a>
     <div class="sidebar-section-label">Docs</div>
-    <a href="/console-docs#quickstart" class="sidebar-link" data-page="console-docs">
+    <a href="/console-docs.html#quickstart" class="sidebar-link" data-page="console-docs">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       Documentation
     </a>

@@ -20,7 +20,7 @@
         <a href="why-altrace.html" class="nav-link">Why Altrace</a>
         <a href="compliance-public.html" class="nav-link">Compliance</a>
         <a href="request-access.html" class="nav-link">Request Access</a>
-        <a href="/login" class="nav-link">Console</a>
+        <a href="/login.html" class="nav-link">Console</a>
       </div>
       <button class="nav-hamburger" aria-label="Toggle menu">
         <span></span>
@@ -41,7 +41,7 @@
     <a href="why-altrace.html">Why Altrace</a>
     <a href="compliance-public.html">Compliance</a>
     <a href="request-access.html">Request Access</a>
-    <a href="/login">Console</a>
+    <a href="/login.html">Console</a>
   </div>
 
   <!-- LOGIN FORM -->
@@ -88,7 +88,7 @@
   <script>
     // Redirect if already authenticated
     if (getSession()) {
-      window.location.href = '/dashboard';
+      window.location.href = '/dashboard.html';
     }
 
     document.getElementById('login-form').addEventListener('submit', async function(e) {
@@ -125,7 +125,7 @@
         }
 
         setSession(org, apiKey, role);
-        window.location.href = '/dashboard';
+        window.location.href = '/dashboard.html';
       } catch (err) {
         errorEl.textContent = 'Cannot reach hub. Verify the hub is running and nginx is proxying /api/*.';
         errorEl.style.display = 'block';
