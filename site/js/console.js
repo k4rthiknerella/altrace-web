@@ -87,7 +87,16 @@ function initConsole(pageName) {
 
   // Fill org name and role
   const orgEl = document.getElementById('sidebar-org');
-  if (orgEl) orgEl.textContent = session.org || '';
+  if (orgEl) {
+    orgEl.textContent = session.org || '';
+    // Show DEMO badge when in demo mode
+    if (sessionStorage.getItem('altrace_demo') === 'true') {
+      const badge = document.createElement('span');
+      badge.textContent = 'DEMO';
+      badge.style.cssText = 'display:inline-block;margin-left:8px;padding:1px 6px;font-size:0.65rem;font-weight:600;letter-spacing:0.05em;background:var(--accent);color:#fff;border-radius:3px;vertical-align:middle;';
+      orgEl.appendChild(badge);
+    }
+  }
   const roleEl = document.getElementById('sidebar-role');
   if (roleEl) roleEl.textContent = session.role || 'viewer';
 
@@ -140,6 +149,16 @@ function onSSE(eventType, callback) {
 }
 
 async function connectSSE() {
+  // In demo mode, skip real SSE and show connected status
+  if (typeof isDemo === 'function' && isDemo()) {
+    const el = document.getElementById('sse-status');
+    if (el) {
+      el.textContent = 'Demo';
+      el.classList.add('connected');
+    }
+    return;
+  }
+
   if (sseController) sseController.abort();
   sseController = new AbortController();
 

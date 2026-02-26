@@ -76,6 +76,9 @@
           <button type="submit" class="btn btn-primary btn-large btn-full">Sign In</button>
         </form>
 
+        <div style="text-align: center; margin: 20px 0; color: var(--text-muted); font-size: 0.8rem;">or</div>
+        <button type="button" id="demo-btn" class="btn btn-secondary btn-large btn-full">Try Demo</button>
+
         <p class="form-footer" style="margin-top: var(--sp-4);">
           Don't have an API key? Generate one from your hub config<br>
           or <a href="request-access.html" style="color: var(--accent);">request access</a>.
@@ -132,6 +135,12 @@
         btn.disabled = false;
         btn.textContent = 'Sign In';
       }
+    });
+
+    document.getElementById('demo-btn').addEventListener('click', function() {
+      setSession('Demo Organization', 'demo-token', 'admin');
+      sessionStorage.setItem('altrace_demo', 'true');
+      window.location.href = '/dashboard.html';
     });
   </script>
   <script src="js/main.js"></script>

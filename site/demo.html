@@ -51,6 +51,9 @@
       <p class="section-label fade-in">Demo Environment</p>
       <h1 class="fade-in fade-in-delay-1">Welcome to Altrace</h1>
       <p class="section-subtitle fade-in fade-in-delay-2">The control plane for AI agent authority. This demo environment is pre-loaded with sample teams, active governance policies, and 24 hours of decision data so you can explore how Altrace enforces budget limits, kill switches, tool permissions, and compliance controls.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="/dashboard.html" class="btn btn-primary btn-large">Launch Demo Console</a>
+      </div>
     </div>
   </section>
 
@@ -84,7 +87,7 @@
       <div class="section-header fade-in">
         <p class="section-label">Guided Tour</p>
         <h2 class="section-title">Try these</h2>
-        <p class="section-subtitle">Click any link to jump into the console. You'll be asked to sign in first.</p>
+        <p class="section-subtitle">Click any link to jump into the console with pre-loaded demo data.</p>
       </div>
       <div class="grid-2 stagger-reveal" style="max-width: 800px; margin: 0 auto;">
         <a href="/cost.html" class="card" style="text-decoration: none; cursor: pointer;">
@@ -158,6 +161,16 @@
     </div>
   </footer>
 
+  <script src="js/auth.js"></script>
+  <script>
+    // Auto-enter demo mode when visiting this page
+    (function() {
+      if (!getSession() || !isDemo()) {
+        setSession('Demo Organization', 'demo-token', 'admin');
+        sessionStorage.setItem('altrace_demo', 'true');
+      }
+    })();
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
