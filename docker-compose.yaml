@@ -1,6 +1,49 @@
 version: "3.8"
 
 services:
+  # ── PostgreSQL ────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: altrace-postgres
+    environment:
+      POSTGRES_USER: altrace
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-altrace}
+      POSTGRES_DB: altrace
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U altrace"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── Altrace Hub (control plane) ───────────────────────────
+  hub:
+    image: ${HUB_IMAGE:-altrace/altrace-hub:latest}
+    container_name: altrace-hub
+    ports:
+      - "8443:8443"
+    environment:
+      - DATABASE_URL=postgres://altrace:${POSTGRES_PASSWORD:-altrace}@postgres:5432/altrace?sslmode=disable
+      - ALTRACE_HUB_CONFIG=/etc/altrace-hub/config.yaml
+    volumes:
+      - ./altrace-hub.yaml:/etc/altrace-hub/config.yaml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "--no-check-certificate", "https://localhost:8443/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ── Web Console (nginx + static files) ────────────────────
   web:
     image: nginx:alpine
     container_name: altrace-web
@@ -11,6 +54,9 @@ services:
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     environment:
       - HUB_HOST=${HUB_HOST:-hub:8443}
+    depends_on:
+      hub:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
@@ -18,3 +64,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+
+volumes:
+  postgres-data:
