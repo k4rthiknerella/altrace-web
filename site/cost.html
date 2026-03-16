@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=2">
   <link rel="stylesheet" href="css/console.css?v=1">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
 </head>
 <body class="console-page">
   <aside id="console-sidebar" class="console-sidebar"></aside>
@@ -22,23 +23,42 @@
     </div>
 
     <div class="console-content">
-      <!-- Window selector (24h only — time-windowed endpoint planned for future) -->
+      <!-- Time window selector -->
       <div class="window-selector" id="window-selector">
-        <button class="window-btn" data-window="1h" disabled title="Requires time-windowed cost endpoint">1h</button>
-        <button class="window-btn" data-window="6h" disabled title="Requires time-windowed cost endpoint">6h</button>
+        <button class="window-btn" data-window="15m">15m</button>
+        <button class="window-btn" data-window="1h">1h</button>
+        <button class="window-btn" data-window="6h">6h</button>
         <button class="window-btn active" data-window="24h">24h</button>
-        <button class="window-btn" data-window="168h" disabled title="Requires time-windowed cost endpoint">7d</button>
+        <button class="window-btn" data-window="7d">7d</button>
       </div>
 
       <!-- Total cost -->
       <div class="panel" style="margin-bottom: var(--sp-4);">
         <div class="panel-header"><span class="panel-title">Total Spend</span></div>
         <div class="panel-value" id="cost-total"><span class="skeleton skeleton-value"></span></div>
-        <div class="panel-sub">Last 24 hours</div>
+        <div class="panel-sub" id="cost-sub">Last 24 hours</div>
       </div>
 
-      <!-- By model / By team -->
-      <div class="grid-2">
+      <!-- Cost over time chart -->
+      <div class="panel" style="margin-bottom: var(--sp-4);">
+        <div class="panel-header"><span class="panel-title">Cost Over Time</span></div>
+        <div class="chart-container" id="chart-cost-timeline"></div>
+      </div>
+
+      <!-- Cost by team bar + Cost by provider donut -->
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Cost by Team</span></div>
+          <div class="chart-container" id="chart-cost-team"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Cost by Provider</span></div>
+          <div class="chart-container" id="chart-cost-provider"></div>
+        </div>
+      </div>
+
+      <!-- By model / By team (original CSS bar charts) -->
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
         <div class="panel">
           <div class="panel-header"><span class="panel-title">By Model</span></div>
           <div id="chart-model" class="bar-chart"></div>
@@ -52,18 +72,18 @@
         </div>
       </div>
 
-      <!-- Budget utilization (from main dashboard endpoint) -->
+      <!-- Budget utilization table -->
       <div class="panel" style="margin-top: var(--sp-4);">
         <div class="panel-header"><span class="panel-title">Budget Utilization</span></div>
         <div style="overflow-x: auto;">
           <table class="data-table" id="budget-table">
             <thead>
               <tr>
-                <th>Team</th>
-                <th>Used</th>
-                <th>Allocated</th>
-                <th>Utilization</th>
-                <th>Status</th>
+                <th class="sortable" data-sort="team" data-type="string">Team</th>
+                <th class="sortable" data-sort="used" data-type="number">Used</th>
+                <th class="sortable" data-sort="allocated" data-type="number">Allocated</th>
+                <th class="sortable" data-sort="utilization" data-type="number">Utilization</th>
+                <th class="sortable" data-sort="status" data-type="string">Status</th>
               </tr>
             </thead>
             <tbody id="budget-body">
@@ -82,73 +102,539 @@
   <script>
     initConsole('cost');
 
+    // -- Chart infrastructure (mirrors metrics.html) ------
+
+    var selectedWindow = '24h';
+    var chartInstances = [];
+
+    var COLORS = {
+      primary:   '#0d9488',
+      secondary: '#3b82f6',
+      tertiary:  '#8b5cf6',
+      warning:   '#f59e0b',
+      danger:    '#ef4444'
+    };
+
+    var TEAM_COLORS = {
+      'ml-research':       '#0d9488',
+      'product-ai':        '#3b82f6',
+      'customer-support':  '#8b5cf6',
+      'devops-agents':     '#f59e0b'
+    };
+
+    var PROVIDER_COLORS = {
+      'Anthropic': '#d97706',
+      'OpenAI':    '#10b981',
+      'Google':    '#3b82f6'
+    };
+
+    function getTheme() {
+      var isDark = document.body.classList.contains('dark');
+      return {
+        isDark:    isDark,
+        gridColor: isDark ? '#2a2a35' : '#e5e5e0',
+        textColor: isDark ? '#a0a0b0' : '#525252'
+      };
+    }
+
+    function getDataPoints() {
+      switch (selectedWindow) {
+        case '15m': return 15;
+        case '1h':  return 12;
+        case '6h':  return 24;
+        case '24h': return 24;
+        case '7d':  return 28;
+        default:    return 24;
+      }
+    }
+
+    function getInterval() {
+      switch (selectedWindow) {
+        case '15m': return 60 * 1000;
+        case '1h':  return 300 * 1000;
+        case '6h':  return 900 * 1000;
+        case '24h': return 3600 * 1000;
+        case '7d':  return 21600 * 1000;
+        default:    return 3600 * 1000;
+      }
+    }
+
+    function getWindowLabel() {
+      switch (selectedWindow) {
+        case '15m': return 'Last 15 minutes';
+        case '1h':  return 'Last hour';
+        case '6h':  return 'Last 6 hours';
+        case '24h': return 'Last 24 hours';
+        case '7d':  return 'Last 7 days';
+        default:    return 'Last 24 hours';
+      }
+    }
+
+    // Seeded pseudo-random for reproducible demo data
+    function seededRandom(seed) {
+      var x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    function baseAxis(theme) {
+      return {
+        xAxis: {
+          type: 'time',
+          axisLine: { lineStyle: { color: theme.gridColor } },
+          axisLabel: { color: theme.textColor, fontSize: 11 },
+          splitLine: { show: false }
+        },
+        grid: {
+          left: 50, right: 16, top: 32, bottom: 28, containLabel: false
+        },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: theme.isDark ? '#1a1a22' : '#ffffff',
+          borderColor: theme.gridColor,
+          textStyle: { color: theme.isDark ? '#e0e0e8' : '#333333', fontSize: 12 }
+        }
+      };
+    }
+
+    function yAxis(theme, name) {
+      return {
+        type: 'value',
+        name: name,
+        nameTextStyle: { color: theme.textColor, fontSize: 11, padding: [0, 0, 0, 0] },
+        axisLine: { show: false },
+        axisLabel: { color: theme.textColor, fontSize: 11 },
+        splitLine: { lineStyle: { color: theme.gridColor, type: 'dashed' } }
+      };
+    }
+
+    function disposeAll() {
+      chartInstances.forEach(function(c) {
+        if (c && !c.isDisposed()) c.dispose();
+      });
+      chartInstances.length = 0;
+    }
+
+    function initChart(domId) {
+      var dom = document.getElementById(domId);
+      if (!dom) return null;
+      var instance = echarts.init(dom);
+      chartInstances.push(instance);
+      return instance;
+    }
+
+    function resizeAll() {
+      chartInstances.forEach(function(c) {
+        if (c && !c.isDisposed()) c.resize();
+      });
+    }
+
+    // -- Demo data generation ------------------------------
+
+    var DEMO_TEAMS = [
+      { name: 'ml-research',       baseRate: 4.20, volatility: 1.8, provider: 'Anthropic' },
+      { name: 'product-ai',        baseRate: 2.10, volatility: 0.9, provider: 'OpenAI' },
+      { name: 'customer-support',  baseRate: 0.85, volatility: 0.4, provider: 'OpenAI' },
+      { name: 'devops-agents',     baseRate: 0.30, volatility: 0.15, provider: 'Google' }
+    ];
+
+    function generateCostTimeSeries(teamIdx, points) {
+      var team = DEMO_TEAMS[teamIdx];
+      var now = Date.now();
+      var interval = getInterval();
+      var data = [];
+      var cumulative = 0;
+
+      for (var i = 0; i < points; i++) {
+        var t = new Date(now - (points - 1 - i) * interval);
+        var seed = teamIdx * 1000 + i * 7 + points;
+        var hourOfDay = t.getHours();
+
+        // Realistic diurnal pattern: higher during business hours
+        var diurnal = 1.0;
+        if (hourOfDay >= 9 && hourOfDay <= 17) {
+          diurnal = 1.4 + 0.3 * Math.sin((hourOfDay - 9) / 8 * Math.PI);
+        } else if (hourOfDay >= 0 && hourOfDay <= 6) {
+          diurnal = 0.3;
+        } else {
+          diurnal = 0.7;
+        }
+
+        // Add some noise and a slight upward trend
+        var trend = 1.0 + (i / points) * 0.15;
+        var noise = (seededRandom(seed) - 0.3) * team.volatility;
+        var value = Math.max(0, team.baseRate * diurnal * trend + noise);
+
+        // Scale based on time window
+        if (selectedWindow === '7d') value *= 6;
+        else if (selectedWindow === '6h') value *= 0.25;
+        else if (selectedWindow === '1h') value *= 0.05;
+        else if (selectedWindow === '15m') value *= 0.012;
+
+        cumulative += value;
+        data.push([t, Math.round(value * 100) / 100]);
+      }
+
+      return { series: data, total: Math.round(cumulative * 100) / 100 };
+    }
+
+    function generateAllTeamData(points) {
+      var results = {};
+      var grandTotal = 0;
+      for (var i = 0; i < DEMO_TEAMS.length; i++) {
+        var teamData = generateCostTimeSeries(i, points);
+        results[DEMO_TEAMS[i].name] = teamData;
+        grandTotal += teamData.total;
+      }
+      results._grandTotal = Math.round(grandTotal * 100) / 100;
+      return results;
+    }
+
+    // -- Build charts --------------------------------------
+
+    function buildCharts() {
+      disposeAll();
+
+      var theme = getTheme();
+      var points = getDataPoints();
+      var base = baseAxis(theme);
+      var allData = generateAllTeamData(points);
+
+      // Update total spend
+      document.getElementById('cost-total').textContent = formatUSD(allData._grandTotal);
+      document.getElementById('cost-sub').textContent = getWindowLabel();
+
+      // -- Cost Over Time (stacked area) --
+      var timeline = initChart('chart-cost-timeline');
+      if (timeline) {
+        var seriesList = [];
+        for (var i = 0; i < DEMO_TEAMS.length; i++) {
+          var teamName = DEMO_TEAMS[i].name;
+          var color = TEAM_COLORS[teamName] || COLORS.primary;
+          seriesList.push({
+            type: 'line',
+            name: teamName,
+            data: allData[teamName].series,
+            smooth: true,
+            symbol: 'none',
+            stack: 'cost',
+            lineStyle: { color: color, width: 1.5 },
+            itemStyle: { color: color },
+            areaStyle: { color: color, opacity: 0.15 },
+            emphasis: { focus: 'series' }
+          });
+        }
+
+        timeline.setOption(Object.assign({}, base, {
+          yAxis: yAxis(theme, '$'),
+          legend: {
+            data: DEMO_TEAMS.map(function(t) { return t.name; }),
+            top: 4,
+            right: 8,
+            textStyle: { color: theme.textColor, fontSize: 11 }
+          },
+          grid: { left: 50, right: 16, top: 40, bottom: 28, containLabel: false },
+          tooltip: Object.assign({}, base.tooltip, {
+            valueFormatter: function(val) { return '$' + Number(val).toFixed(2); }
+          }),
+          series: seriesList
+        }));
+      }
+
+      // -- Cost by Team (horizontal bar) --
+      var teamBarChart = initChart('chart-cost-team');
+      if (teamBarChart) {
+        var teamNames = DEMO_TEAMS.map(function(t) { return t.name; });
+        var teamValues = DEMO_TEAMS.map(function(t) { return allData[t.name].total; });
+        var teamBarColors = DEMO_TEAMS.map(function(t) { return TEAM_COLORS[t.name]; });
+
+        teamBarChart.setOption({
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' },
+            backgroundColor: theme.isDark ? '#1a1a22' : '#ffffff',
+            borderColor: theme.gridColor,
+            textStyle: { color: theme.isDark ? '#e0e0e8' : '#333333', fontSize: 12 },
+            valueFormatter: function(val) { return '$' + Number(val).toFixed(2); }
+          },
+          grid: { left: 130, right: 60, top: 12, bottom: 12, containLabel: false },
+          xAxis: {
+            type: 'value',
+            axisLine: { show: false },
+            axisLabel: { color: theme.textColor, fontSize: 11, formatter: function(v) { return '$' + v; } },
+            splitLine: { lineStyle: { color: theme.gridColor, type: 'dashed' } }
+          },
+          yAxis: {
+            type: 'category',
+            data: teamNames,
+            inverse: true,
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: {
+              color: theme.textColor,
+              fontSize: 11,
+              fontFamily: 'IBM Plex Mono, monospace'
+            }
+          },
+          series: [{
+            type: 'bar',
+            data: teamValues.map(function(v, idx) {
+              return { value: v, itemStyle: { color: teamBarColors[idx], borderRadius: [0, 3, 3, 0] } };
+            }),
+            barMaxWidth: 28,
+            label: {
+              show: true,
+              position: 'right',
+              formatter: function(p) { return '$' + Number(p.value).toFixed(2); },
+              color: theme.textColor,
+              fontSize: 11,
+              fontFamily: 'IBM Plex Mono, monospace'
+            }
+          }]
+        });
+      }
+
+      // -- Cost by Provider (donut) --
+      var providerChart = initChart('chart-cost-provider');
+      if (providerChart) {
+        // Aggregate by provider
+        var providerTotals = {};
+        for (var j = 0; j < DEMO_TEAMS.length; j++) {
+          var prov = DEMO_TEAMS[j].provider;
+          providerTotals[prov] = (providerTotals[prov] || 0) + allData[DEMO_TEAMS[j].name].total;
+        }
+
+        var providerData = Object.keys(providerTotals).map(function(name) {
+          return {
+            name: name,
+            value: Math.round(providerTotals[name] * 100) / 100,
+            itemStyle: { color: PROVIDER_COLORS[name] || COLORS.primary }
+          };
+        }).sort(function(a, b) { return b.value - a.value; });
+
+        var totalForLabel = allData._grandTotal;
+
+        providerChart.setOption({
+          tooltip: {
+            trigger: 'item',
+            backgroundColor: theme.isDark ? '#1a1a22' : '#ffffff',
+            borderColor: theme.gridColor,
+            textStyle: { color: theme.isDark ? '#e0e0e8' : '#333333', fontSize: 12 },
+            formatter: function(p) {
+              return p.name + ': $' + Number(p.value).toFixed(2) + ' (' + p.percent.toFixed(1) + '%)';
+            }
+          },
+          legend: {
+            orient: 'vertical',
+            right: 12,
+            top: 'center',
+            textStyle: { color: theme.textColor, fontSize: 11 }
+          },
+          series: [{
+            type: 'pie',
+            radius: ['45%', '72%'],
+            center: ['38%', '50%'],
+            avoidLabelOverlap: false,
+            padAngle: 2,
+            itemStyle: { borderRadius: 4 },
+            label: {
+              show: true,
+              position: 'center',
+              formatter: '{total|$' + totalForLabel.toFixed(2) + '}\n{label|total}',
+              rich: {
+                total: {
+                  fontSize: 20,
+                  fontWeight: 700,
+                  fontFamily: 'IBM Plex Mono, monospace',
+                  color: theme.isDark ? '#e0e0e8' : '#1a1a2e',
+                  lineHeight: 28
+                },
+                label: {
+                  fontSize: 11,
+                  color: theme.textColor,
+                  lineHeight: 16
+                }
+              }
+            },
+            emphasis: {
+              label: { show: true },
+              itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.15)' }
+            },
+            data: providerData
+          }]
+        });
+      }
+    }
+
+    // -- Table sorting -------------------------------------
+
+    var sortState = { column: null, direction: null };
+    var budgetRows = [];
+
+    function sortTable(column, type) {
+      // Toggle direction
+      if (sortState.column === column) {
+        sortState.direction = sortState.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortState.column = column;
+        sortState.direction = 'asc';
+      }
+
+      // Update header classes
+      var headers = document.querySelectorAll('#budget-table th.sortable');
+      headers.forEach(function(th) {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.getAttribute('data-sort') === column) {
+          th.classList.add(sortState.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+          th.style.fontWeight = '800';
+        } else {
+          th.style.fontWeight = '';
+        }
+      });
+
+      // Sort rows
+      var sorted = budgetRows.slice().sort(function(a, b) {
+        var va = a[column];
+        var vb = b[column];
+
+        if (type === 'number') {
+          va = parseFloat(va) || 0;
+          vb = parseFloat(vb) || 0;
+        } else {
+          va = String(va).toLowerCase();
+          vb = String(vb).toLowerCase();
+        }
+
+        if (va < vb) return sortState.direction === 'asc' ? -1 : 1;
+        if (va > vb) return sortState.direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      renderBudgetRows(sorted);
+    }
+
+    function renderBudgetRows(rows) {
+      var tbody = document.getElementById('budget-body');
+      if (!tbody || rows.length === 0) return;
+
+      var html = '';
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i];
+        var pct = r.utilization;
+        var statusBadge;
+        if (pct > 90) statusBadge = '<span class="badge badge-killed">CRITICAL</span>';
+        else if (pct > 75) statusBadge = '<span class="badge badge-warn">WARNING</span>';
+        else statusBadge = '<span class="badge badge-active">OK</span>';
+
+        var barClass = pct > 90 ? 'bar-fill-danger' : (pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent');
+        var barWidth = Math.min(pct, 100);
+
+        html += '<tr>'
+          + '<td class="mono">' + escapeHtml(r.team) + '</td>'
+          + '<td class="mono">' + formatUSD(r.used) + '</td>'
+          + '<td class="mono">' + formatUSD(r.allocated) + '</td>'
+          + '<td>'
+          +   '<div style="display:flex;align-items:center;gap:8px;">'
+          +     '<div class="bar-track" style="height:8px;flex:1;">'
+          +       '<div class="bar-fill ' + barClass + '" style="width:' + barWidth + '%;height:100%;"></div>'
+          +     '</div>'
+          +     '<span style="font-family:var(--font-mono);font-size:0.75rem;min-width:36px;text-align:right;">' + pct + '%</span>'
+          +   '</div>'
+          + '</td>'
+          + '<td>' + statusBadge + '</td>'
+          + '</tr>';
+      }
+      tbody.innerHTML = html;
+    }
+
+    // Bind sort click handlers
+    document.querySelectorAll('#budget-table th.sortable').forEach(function(th) {
+      th.addEventListener('click', function() {
+        sortTable(th.getAttribute('data-sort'), th.getAttribute('data-type'));
+      });
+    });
+
+    // -- Data loading --------------------------------------
+
     async function loadCostData() {
       try {
-        const resp = await authFetch('/api/v1/dashboard');
+        var resp = await authFetch('/api/v1/dashboard');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-
-        // Total cost from cost_24h
-        const cost = data.cost_24h || {};
-        document.getElementById('cost-total').textContent = formatUSD(cost.total_usd);
+        var data = await resp.json();
 
         // By model (if hub provides breakdown)
-        const byModel = cost.by_model || {};
-        const modelChart = document.getElementById('chart-model');
-        const modelEmpty = document.getElementById('chart-model-empty');
+        var cost = data.cost_24h || {};
+        var byModel = cost.by_model || {};
+        var modelChartEl = document.getElementById('chart-model');
+        var modelEmpty = document.getElementById('chart-model-empty');
         if (Object.keys(byModel).length === 0) {
-          modelChart.innerHTML = '';
+          modelChartEl.textContent = '';
           modelEmpty.style.display = 'block';
         } else {
           modelEmpty.style.display = 'none';
-          renderBarChart(modelChart, byModel, 'bar-fill-accent');
+          renderBarChart(modelChartEl, byModel, 'bar-fill-accent');
         }
 
         // By team (if hub provides breakdown)
-        const byTeam = cost.by_team || {};
-        const teamChart = document.getElementById('chart-team');
-        const teamEmpty = document.getElementById('chart-team-empty');
+        var byTeam = cost.by_team || {};
+        var teamChartEl = document.getElementById('chart-team');
+        var teamEmpty = document.getElementById('chart-team-empty');
         if (Object.keys(byTeam).length === 0) {
-          teamChart.innerHTML = '';
+          teamChartEl.textContent = '';
           teamEmpty.style.display = 'block';
         } else {
           teamEmpty.style.display = 'none';
-          renderBarChart(teamChart, byTeam, 'bar-fill-accent');
+          renderBarChart(teamChartEl, byTeam, 'bar-fill-accent');
         }
 
         // Budget utilization
-        const teams = (data.budget || {}).teams || [];
-        const tbody = document.getElementById('budget-body');
+        var teams = (data.budget || {}).teams || [];
 
         if (teams.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No budget data.</td></tr>';
+          budgetRows = [];
+          document.getElementById('budget-body').textContent = '';
+          var emptyRow = document.createElement('tr');
+          var emptyCell = document.createElement('td');
+          emptyCell.setAttribute('colspan', '5');
+          emptyCell.className = 'empty-state';
+          emptyCell.textContent = 'No budget data.';
+          emptyRow.appendChild(emptyCell);
+          document.getElementById('budget-body').appendChild(emptyRow);
           return;
         }
 
-        tbody.innerHTML = teams.map(t => {
-          const pct = t.allocated_usd > 0 ? Math.round(t.used_usd / t.allocated_usd * 100) : 0;
-          let statusBadge;
-          if (pct > 90) statusBadge = '<span class="badge badge-killed">CRITICAL</span>';
-          else if (pct > 75) statusBadge = '<span class="badge badge-warn">WARNING</span>';
-          else statusBadge = '<span class="badge badge-active">OK</span>';
+        budgetRows = teams.map(function(t) {
+          var pct = t.allocated_usd > 0 ? Math.round(t.used_usd / t.allocated_usd * 100) : 0;
+          return {
+            team: t.team,
+            used: t.used_usd,
+            allocated: t.allocated_usd,
+            utilization: pct,
+            status: pct > 90 ? 'CRITICAL' : (pct > 75 ? 'WARNING' : 'OK')
+          };
+        });
 
-          return `
-            <tr>
-              <td class="mono">${escapeHtml(t.team)}</td>
-              <td class="mono">${formatUSD(t.used_usd)}</td>
-              <td class="mono">${formatUSD(t.allocated_usd)}</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div class="bar-track" style="height: 8px; flex: 1;">
-                    <div class="bar-fill ${pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent'}" style="width: ${Math.min(pct, 100)}%; height: 100%;"></div>
-                  </div>
-                  <span style="font-family: var(--font-mono); font-size: 0.75rem; min-width: 36px; text-align: right;">${pct}%</span>
-                </div>
-              </td>
-              <td>${statusBadge}</td>
-            </tr>
-          `;
-        }).join('');
+        // Re-apply current sort or render default
+        if (sortState.column) {
+          var th = document.querySelector('#budget-table th[data-sort="' + sortState.column + '"]');
+          var type = th ? th.getAttribute('data-type') : 'string';
+          var sorted = budgetRows.slice().sort(function(a, b) {
+            var va = a[sortState.column];
+            var vb = b[sortState.column];
+            if (type === 'number') {
+              va = parseFloat(va) || 0;
+              vb = parseFloat(vb) || 0;
+            } else {
+              va = String(va).toLowerCase();
+              vb = String(vb).toLowerCase();
+            }
+            if (va < vb) return sortState.direction === 'asc' ? -1 : 1;
+            if (va > vb) return sortState.direction === 'asc' ? 1 : -1;
+            return 0;
+          });
+          renderBudgetRows(sorted);
+        } else {
+          renderBudgetRows(budgetRows);
+        }
       } catch (err) {
         if (err.message !== 'Session expired') {
           showToast('Failed to load cost data: ' + err.message, 'error');
@@ -156,8 +642,23 @@
       }
     }
 
+    // -- Window selector -----------------------------------
+
+    document.querySelectorAll('.window-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.window-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        selectedWindow = btn.getAttribute('data-window');
+        buildCharts();
+      });
+    });
+
+    // -- Init ----------------------------------------------
+
+    buildCharts();
     loadCostData();
-    startAutoRefresh(loadCostData, 30000);
+    window.addEventListener('resize', resizeAll);
+    startAutoRefresh(function() { buildCharts(); loadCostData(); }, 30000);
     connectSSE();
   </script>
 </body>
