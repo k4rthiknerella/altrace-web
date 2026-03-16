@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Setup — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+  <style>
+    .setup-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--sp-5) var(--sp-4);
+    }
+    .setup-progress {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: var(--sp-6);
+    }
+    .setup-step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--border);
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .setup-step-indicator.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .setup-step-indicator.done {
+      background: var(--accent);
+      color: #fff;
+    }
+    .setup-step-indicator.done::after {
+      content: none;
+    }
+    .setup-step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      transition: background 0.3s ease;
+    }
+    .setup-step-line.done {
+      background: var(--accent);
+    }
+    .setup-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: var(--sp-5);
+    }
+    .setup-card h2 {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--sp-2);
+    }
+    .setup-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: var(--sp-4);
+      line-height: 1.6;
+    }
+    .setup-hidden { display: none; }
+
+    /* Platform selector */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-4);
+    }
+    .platform-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: var(--sp-4) var(--sp-3);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--bg);
+    }
+    .platform-card:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .platform-card.selected {
+      border-color: var(--accent);
+      background: rgba(13, 148, 136, 0.04);
+    }
+    .platform-card svg {
+      width: 36px;
+      height: 36px;
+      margin-bottom: var(--sp-2);
+      color: var(--text-secondary);
+    }
+    .platform-card.selected svg { color: var(--accent); }
+    .platform-card-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .platform-card-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Code block with copy */
+    .setup-code-wrap {
+      position: relative;
+      margin-bottom: var(--sp-4);
+    }
+    .setup-code {
+      background: #1a1a22;
+      color: #e0e0e8;
+      border-radius: var(--radius-card);
+      padding: var(--sp-4);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .setup-copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #e0e0e8;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .setup-copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* Waiting animation */
+    .setup-waiting {
+      text-align: center;
+      padding: var(--sp-6) 0;
+    }
+    .setup-waiting-dots {
+      display: inline-flex;
+      gap: 6px;
+      margin-bottom: var(--sp-4);
+    }
+    .setup-waiting-dots span {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: setup-pulse 1.4s ease-in-out infinite;
+    }
+    .setup-waiting-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .setup-waiting-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes setup-pulse {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+    .setup-waiting h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: var(--sp-2);
+    }
+    .setup-waiting p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Success state */
+    .setup-success {
+      text-align: center;
+      padding: var(--sp-5) 0;
+    }
+    .setup-success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(13, 148, 136, 0.1);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--sp-4);
+    }
+    .setup-success-icon svg {
+      width: 32px;
+      height: 32px;
+      color: var(--accent);
+    }
+    .setup-success h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--sp-2);
+    }
+    .setup-success p {
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-4);
+    }
+    .setup-next-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-3);
+      margin-top: var(--sp-4);
+      text-align: left;
+    }
+    .setup-next-link {
+      display: block;
+      padding: var(--sp-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: border-color 0.2s;
+    }
+    .setup-next-link:hover { border-color: var(--accent); }
+    .setup-next-link strong {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+    .setup-next-link span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Button row */
+    .setup-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--sp-4);
+    }
+    .setup-actions .btn { min-width: 120px; }
+
+    /* Token display */
+    .token-display {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: var(--sp-3);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      word-break: break-all;
+      margin-bottom: var(--sp-3);
+      position: relative;
+    }
+    .token-display .setup-copy-btn {
+      top: 6px;
+      right: 6px;
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Form inputs matching login */
+    .setup-card label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-secondary);
+    }
+    .setup-card input, .setup-card select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      background: var(--bg);
+      color: var(--text-primary);
+      margin-bottom: var(--sp-3);
+      box-sizing: border-box;
+    }
+    .setup-card input:focus, .setup-card select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+    .setup-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: -8px;
+      margin-bottom: var(--sp-3);
+    }
+
+    /* Dark mode overrides */
+    .dark .setup-code { background: #0f0f14; }
+    .dark .platform-card { background: var(--surface); }
+    .dark .platform-card.selected { background: rgba(13, 148, 136, 0.08); }
+    .dark .token-display { background: var(--surface); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .platform-grid { grid-template-columns: 1fr; }
+      .setup-next-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Setup</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <div class="setup-container">
+
+        <!-- Progress bar -->
+        <div class="setup-progress" id="setup-progress">
+          <div class="setup-step-indicator active" data-step="1">1</div>
+          <div class="setup-step-line" data-line="1"></div>
+          <div class="setup-step-indicator" data-step="2">2</div>
+          <div class="setup-step-line" data-line="2"></div>
+          <div class="setup-step-indicator" data-step="3">3</div>
+          <div class="setup-step-line" data-line="3"></div>
+          <div class="setup-step-indicator" data-step="4">4</div>
+        </div>
+
+        <!-- Step 1: Team setup -->
+        <div class="setup-card" id="step-1">
+          <h2>Create your first team</h2>
+          <p>Teams are how Altrace scopes budgets, kill switches, and policies. You can add more later.</p>
+
+          <label for="setup-team">Team name</label>
+          <input type="text" id="setup-team" placeholder="e.g. backend, ml-research, product-ai" value="">
+          <div class="setup-hint">Lowercase, alphanumeric with dashes. This is used in API headers and config.</div>
+
+          <label for="setup-budget">Monthly budget (USD)</label>
+          <input type="number" id="setup-budget" placeholder="500" value="500" min="0" step="50">
+          <div class="setup-hint">Set a spending ceiling. You can change this any time from Cost &amp; Budget.</div>
+
+          <div class="setup-actions">
+            <span></span>
+            <button class="btn btn-primary" onclick="goToStep(2)">Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Select platform -->
+        <div class="setup-card setup-hidden" id="step-2">
+          <h2>Choose your deployment</h2>
+          <p>How will you run the Altrace agent? This determines the install command and enforcement level.</p>
+
+          <div class="platform-grid">
+            <div class="platform-card" data-platform="kubernetes" onclick="selectPlatform('kubernetes')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="22" y1="7" x2="15" y2="10.5"/><line x1="22" y1="17" x2="15" y2="13.5"/><line x1="12" y1="22" x2="12" y2="15"/><line x1="2" y1="17" x2="9" y2="13.5"/><line x1="2" y1="7" x2="9" y2="10.5"/></svg>
+              <div class="platform-card-title">Kubernetes</div>
+              <div class="platform-card-desc">Governance-grade enforcement with iptables sidecar</div>
+            </div>
+            <div class="platform-card" data-platform="docker" onclick="selectPlatform('docker')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="8" width="20" height="12" rx="2"/><rect x="5" y="11" width="3" height="3"/><rect x="10" y="11" width="3" height="3"/><rect x="15" y="11" width="3" height="3"/><path d="M12 8V4"/><path d="M8 4h8"/></svg>
+              <div class="platform-card-title">Docker</div>
+              <div class="platform-card-desc">Advisory mode for development and testing</div>
+            </div>
+            <div class="platform-card" data-platform="sdk" onclick="selectPlatform('sdk')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+              <div class="platform-card-title">SDK Only</div>
+              <div class="platform-card-desc">Python SDK with local agent for quick start</div>
+            </div>
+          </div>
+
+          <div class="setup-actions">
+            <button class="btn btn-secondary" onclick="goToStep(1)">Back</button>
+            <button class="btn btn-primary" id="step2-next" onclick="goToStep(3)" disabled>Continue</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Install command -->
+        <div class="setup-card setup-hidden" id="step-3">
+          <h2>Install the agent</h2>
+          <p id="step3-desc">Run this command to install and start the Altrace agent.</p>
+
+          <!-- Kubernetes install -->
+          <div id="install-kubernetes" class="setup-hidden">
+            <div class="setup-code-wrap">
+              <pre class="setup-code" id="code-k8s"></pre>
+              <button class="setup-copy-btn" onclick="copyCode('code-k8s')">Copy</button>
+            </div>
+            <div class="setup-hint">Requires Helm 3+ and kubectl access to your cluster. The init container handles iptables enforcement automatically.</div>
+          </div>
+
+          <!-- Docker install -->
+          <div id="install-docker" class="setup-hidden">
+            <div class="setup-code-wrap">
+              <pre class="setup-code" id="code-docker"></pre>
+              <button class="setup-copy-btn" onclick="copyCode('code-docker')">Copy</button>
+            </div>
+            <div class="setup-hint">Advisory mode. Applications must set HTTP_PROXY to route through the agent.</div>
+          </div>
+
+          <!-- SDK install -->
+          <div id="install-sdk" class="setup-hidden">
+            <div class="setup-code-wrap">
+              <pre class="setup-code" id="code-sdk"></pre>
+              <button class="setup-copy-btn" onclick="copyCode('code-sdk')">Copy</button>
+            </div>
+            <div class="setup-hint">Starts a local agent and configures the Python SDK in one step.</div>
+          </div>
+
+          <div class="setup-actions">
+            <button class="btn btn-secondary" onclick="goToStep(2)">Back</button>
+            <button class="btn btn-primary" onclick="goToStep(4)">I ran the command</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Waiting / Success -->
+        <div class="setup-card setup-hidden" id="step-4">
+          <!-- Waiting state -->
+          <div id="step4-waiting">
+            <div class="setup-waiting">
+              <div class="setup-waiting-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <h3>Waiting for first request...</h3>
+              <p>Send an LLM API request through the agent. We will detect it automatically.</p>
+              <div id="step4-timer" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: var(--sp-3);">0:00</div>
+            </div>
+
+            <div class="setup-code-wrap" style="margin-top: var(--sp-4);">
+              <pre class="setup-code" id="code-test-request"></pre>
+              <button class="setup-copy-btn" onclick="copyCode('code-test-request')">Copy</button>
+            </div>
+            <div class="setup-hint">Quick test: send a request through the proxy to verify everything works.</div>
+
+            <div class="setup-actions">
+              <button class="btn btn-secondary" onclick="goToStep(3)">Back</button>
+              <button class="btn btn-secondary" onclick="skipWaiting()">Skip for now</button>
+            </div>
+          </div>
+
+          <!-- Success state -->
+          <div id="step4-success" class="setup-hidden">
+            <div class="setup-success">
+              <div class="setup-success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h2>You are live</h2>
+              <p>Your first request was governed by Altrace. Budgets, kill switches, and audit trail are active.</p>
+
+              <div class="setup-next-links">
+                <a href="/dashboard.html" class="setup-next-link">
+                  <strong>Dashboard</strong>
+                  <span>See real-time fleet status and cost</span>
+                </a>
+                <a href="/kill-switches.html" class="setup-next-link">
+                  <strong>Kill Switches</strong>
+                  <span>Test emergency stop controls</span>
+                </a>
+                <a href="/cost.html" class="setup-next-link">
+                  <strong>Cost &amp; Budget</strong>
+                  <span>Review spending and limits</span>
+                </a>
+                <a href="/audit.html" class="setup-next-link">
+                  <strong>Audit Trail</strong>
+                  <span>Inspect your first governed request</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('setup');
+
+    var currentStep = 1;
+    var selectedPlatform = null;
+    var waitingInterval = null;
+    var waitingSeconds = 0;
+    var pollInterval = null;
+
+    function goToStep(step) {
+      // Validate before advancing
+      if (step === 2 && currentStep === 1) {
+        var team = document.getElementById('setup-team').value.trim();
+        if (!team) {
+          document.getElementById('setup-team').focus();
+          return;
+        }
+        // Validate team name format
+        if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(team) && team.length > 1) {
+          showToast('Team name must be lowercase alphanumeric with dashes', 'error');
+          document.getElementById('setup-team').focus();
+          return;
+        }
+      }
+
+      if (step === 3 && !selectedPlatform) return;
+
+      // Update step visibility
+      for (var i = 1; i <= 4; i++) {
+        var el = document.getElementById('step-' + i);
+        if (el) {
+          el.classList.toggle('setup-hidden', i !== step);
+        }
+      }
+
+      // Update progress indicators
+      var indicators = document.querySelectorAll('.setup-step-indicator');
+      var lines = document.querySelectorAll('.setup-step-line');
+      indicators.forEach(function(ind) {
+        var s = parseInt(ind.getAttribute('data-step'));
+        ind.classList.toggle('active', s === step);
+        ind.classList.toggle('done', s < step);
+        if (s < step) {
+          ind.textContent = '\u2713';
+        } else {
+          ind.textContent = String(s);
+        }
+      });
+      lines.forEach(function(line) {
+        var l = parseInt(line.getAttribute('data-line'));
+        line.classList.toggle('done', l < step);
+      });
+
+      currentStep = step;
+
+      // Generate install commands when entering step 3
+      if (step === 3) {
+        generateInstallCommands();
+      }
+
+      // Start polling when entering step 4
+      if (step === 4) {
+        startWaiting();
+      } else {
+        stopWaiting();
+      }
+    }
+
+    function selectPlatform(platform) {
+      selectedPlatform = platform;
+      document.querySelectorAll('.platform-card').forEach(function(card) {
+        card.classList.toggle('selected', card.getAttribute('data-platform') === platform);
+      });
+      document.getElementById('step2-next').disabled = false;
+    }
+
+    function generateInstallCommands() {
+      var session = getSession();
+      var token = session ? session.token : '<YOUR_API_TOKEN>';
+      var team = document.getElementById('setup-team').value.trim() || 'default';
+      var budget = document.getElementById('setup-budget').value || '500';
+
+      // Show relevant install block
+      document.getElementById('install-kubernetes').classList.toggle('setup-hidden', selectedPlatform !== 'kubernetes');
+      document.getElementById('install-docker').classList.toggle('setup-hidden', selectedPlatform !== 'docker');
+      document.getElementById('install-sdk').classList.toggle('setup-hidden', selectedPlatform !== 'sdk');
+
+      // Kubernetes
+      document.getElementById('code-k8s').textContent =
+        '# Add the Altrace Helm repo\n' +
+        'helm repo add altrace https://charts.altrace.dev\n' +
+        'helm repo update\n\n' +
+        '# Install the agent\n' +
+        'helm install altrace altrace/altrace-agent \\\n' +
+        '  --set token=' + token + ' \\\n' +
+        '  --set team=' + team + ' \\\n' +
+        '  --set budget.monthly=' + budget;
+
+      // Docker
+      document.getElementById('code-docker').textContent =
+        '# Start the Altrace agent\n' +
+        'docker run -d --name altrace \\\n' +
+        '  -p 8080:8080 \\\n' +
+        '  -e ALTRACE_TOKEN=' + token + ' \\\n' +
+        '  -e ALTRACE_TEAM=' + team + ' \\\n' +
+        '  -e ALTRACE_BUDGET_MONTHLY=' + budget + ' \\\n' +
+        '  ghcr.io/altrace-dev/altrace-agent:latest\n\n' +
+        '# Point your app at the proxy\n' +
+        'export HTTPS_PROXY=http://localhost:8080';
+
+      // SDK
+      document.getElementById('code-sdk').textContent =
+        '# Install the SDK and start the local agent\n' +
+        'pip install altrace\n\n' +
+        '# Start local agent (generates config, admin token)\n' +
+        'altrace local start\n\n' +
+        '# Run your app with automatic LLM governance\n' +
+        'ALTRACE_TEAM=' + team + ' altrace-run python your_app.py';
+
+      // Test request command
+      document.getElementById('code-test-request').textContent =
+        '# Send a test request through the proxy\n' +
+        'curl -s -x http://localhost:8080 \\\n' +
+        '  https://api.anthropic.com/v1/messages \\\n' +
+        '  -H "x-api-key: $ANTHROPIC_API_KEY" \\\n' +
+        '  -H "anthropic-version: 2023-06-01" \\\n' +
+        '  -H "content-type: application/json" \\\n' +
+        '  -H "x-altrace-team: ' + team + '" \\\n' +
+        '  -d \'{"model":"claude-haiku-4-5-20251001","max_tokens":32,"messages":[{"role":"user","content":"ping"}]}\'';
+    }
+
+    function copyCode(elementId) {
+      var el = document.getElementById(elementId);
+      if (!el) return;
+      var text = el.textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        showToast('Copied to clipboard', 'info', 2000);
+      });
+    }
+
+    function startWaiting() {
+      waitingSeconds = 0;
+      updateTimer();
+      waitingInterval = setInterval(function() {
+        waitingSeconds++;
+        updateTimer();
+      }, 1000);
+
+      // Poll for first request
+      pollInterval = setInterval(pollForData, 3000);
+      pollForData();
+    }
+
+    function stopWaiting() {
+      if (waitingInterval) { clearInterval(waitingInterval); waitingInterval = null; }
+      if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+    }
+
+    function updateTimer() {
+      var min = Math.floor(waitingSeconds / 60);
+      var sec = waitingSeconds % 60;
+      var el = document.getElementById('step4-timer');
+      if (el) el.textContent = min + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    async function pollForData() {
+      try {
+        var resp = await authFetch('/api/v1/dashboard');
+        if (!resp.ok) return;
+        var data = await resp.json();
+
+        // Check if we have any request data
+        var decisions = data.decisions_24h || {};
+        var total = (decisions.allow || 0) + (decisions.block || 0) + (decisions.kill || 0) + (decisions.warn || 0);
+        if (total > 0) {
+          onFirstRequest();
+        }
+      } catch (e) {
+        // In demo mode, simulate success after 5 seconds
+        if (isDemo() && waitingSeconds >= 5) {
+          onFirstRequest();
+        }
+      }
+    }
+
+    function onFirstRequest() {
+      stopWaiting();
+      document.getElementById('step4-waiting').classList.add('setup-hidden');
+      document.getElementById('step4-success').classList.remove('setup-hidden');
+
+      // Update progress to show step 4 as done
+      var indicators = document.querySelectorAll('.setup-step-indicator');
+      indicators.forEach(function(ind) {
+        ind.classList.add('done');
+        ind.classList.remove('active');
+        ind.textContent = '\u2713';
+      });
+      var lines = document.querySelectorAll('.setup-step-line');
+      lines.forEach(function(line) { line.classList.add('done'); });
+    }
+
+    function skipWaiting() {
+      onFirstRequest();
+    }
+  </script>
+</body>
+</html>
