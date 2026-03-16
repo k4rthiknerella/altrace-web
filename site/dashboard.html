@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=2">
   <link rel="stylesheet" href="css/console.css?v=1">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
 </head>
 <body class="console-page">
   <aside id="console-sidebar" class="console-sidebar"></aside>
@@ -18,6 +19,10 @@
     <div class="console-topbar">
       <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
       <h2 class="topbar-title">Dashboard</h2>
+      <button class="topbar-search-hint" onclick="openCommandPalette()" title="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search <kbd>&#8984;K</kbd>
+      </button>
       <span class="topbar-status" id="sse-status">Connecting...</span>
     </div>
 
@@ -49,7 +54,7 @@
       </div>
 
       <!-- Row 2: Budget + Decisions -->
-      <div class="grid-2">
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
         <div class="panel">
           <div class="panel-header"><span class="panel-title">Budget Utilization</span></div>
           <div id="budget-chart" class="bar-chart"></div>
@@ -61,6 +66,25 @@
           <div id="decisions-chart"></div>
         </div>
       </div>
+
+      <!-- Row 3: ECharts — Request Volume + Latency -->
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Request Volume</span></div>
+          <div id="chart-request-volume" class="chart-container"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Latency P50 / P95 / P99</span></div>
+          <div id="chart-latency" class="chart-container"></div>
+        </div>
+      </div>
+
+      <!-- Row 4: Recent Activity -->
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Recent Activity</span></div>
+        <div id="activity-feed-container"></div>
+      </div>
     </div>
   </div>
 
@@ -70,6 +94,10 @@
   <script src="js/console.js"></script>
   <script>
     initConsole('dashboard');
+
+    // Track ECharts instances for disposal on refresh
+    let _chartVolume = null;
+    let _chartLatency = null;
 
     async function loadDashboard() {
       try {
@@ -90,13 +118,25 @@
         const killDetail = document.getElementById('kill-detail');
 
         if (k.global) {
-          killEl.innerHTML = '<span class="badge badge-killed">GLOBAL KILL</span>';
+          killEl.textContent = '';
+          const badge = document.createElement('span');
+          badge.className = 'badge badge-killed';
+          badge.textContent = 'GLOBAL KILL';
+          killEl.appendChild(badge);
           killDetail.textContent = 'All traffic halted';
         } else if (teamKills + agentKills > 0) {
-          killEl.innerHTML = '<span class="badge badge-warn">ACTIVE</span>';
+          killEl.textContent = '';
+          const badge = document.createElement('span');
+          badge.className = 'badge badge-warn';
+          badge.textContent = 'ACTIVE';
+          killEl.appendChild(badge);
           killDetail.textContent = teamKills + ' team, ' + agentKills + ' agent';
         } else {
-          killEl.innerHTML = '<span class="badge badge-active">CLEAR</span>';
+          killEl.textContent = '';
+          const badge = document.createElement('span');
+          badge.className = 'badge badge-active';
+          badge.textContent = 'CLEAR';
+          killEl.appendChild(badge);
           killDetail.textContent = 'No active kill switches';
         }
 
@@ -117,22 +157,43 @@
         const budgetEmpty = document.getElementById('budget-empty');
 
         if (budgetTeams.length === 0) {
-          budgetChart.innerHTML = '';
+          while (budgetChart.firstChild) budgetChart.removeChild(budgetChart.firstChild);
           budgetEmpty.style.display = 'block';
         } else {
           budgetEmpty.style.display = 'none';
-          budgetChart.innerHTML = budgetTeams.map(t => {
-            const pct = t.allocated_usd > 0 ? (t.used_usd / t.allocated_usd * 100) : 0;
-            const color = pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent';
-            return `
-              <div class="bar-row">
-                <span class="bar-label">${escapeHtml(t.team)}</span>
-                <div class="bar-track"><div class="bar-fill ${color}" style="width:${Math.min(pct, 100)}%"></div></div>
-                <span class="bar-value">${formatUSD(t.used_usd)}</span>
-                <span class="bar-pct">${Math.round(pct)}%</span>
-              </div>
-            `;
-          }).join('');
+          while (budgetChart.firstChild) budgetChart.removeChild(budgetChart.firstChild);
+          budgetTeams.forEach(function (t) {
+            var pct = t.allocated_usd > 0 ? (t.used_usd / t.allocated_usd * 100) : 0;
+            var colorClass = pct > 90 ? 'bar-fill-danger' : pct > 75 ? 'bar-fill-warning' : 'bar-fill-accent';
+
+            var row = document.createElement('div');
+            row.className = 'bar-row';
+
+            var label = document.createElement('span');
+            label.className = 'bar-label';
+            label.textContent = t.team;
+
+            var track = document.createElement('div');
+            track.className = 'bar-track';
+            var fill = document.createElement('div');
+            fill.className = 'bar-fill ' + colorClass;
+            fill.style.width = Math.min(pct, 100) + '%';
+            track.appendChild(fill);
+
+            var value = document.createElement('span');
+            value.className = 'bar-value';
+            value.textContent = formatUSD(t.used_usd);
+
+            var pctSpan = document.createElement('span');
+            pctSpan.className = 'bar-pct';
+            pctSpan.textContent = Math.round(pct) + '%';
+
+            row.appendChild(label);
+            row.appendChild(track);
+            row.appendChild(value);
+            row.appendChild(pctSpan);
+            budgetChart.appendChild(row);
+          });
         }
 
         // Decisions 24h
@@ -140,8 +201,13 @@
         const total = (d.allow || 0) + (d.block || 0) + (d.kill || 0) + (d.warn || 0);
         const decisionsEl = document.getElementById('decisions-chart');
 
+        while (decisionsEl.firstChild) decisionsEl.removeChild(decisionsEl.firstChild);
+
         if (total === 0) {
-          decisionsEl.innerHTML = '<div class="empty-state">No decisions recorded.</div>';
+          var emptyDiv = document.createElement('div');
+          emptyDiv.className = 'empty-state';
+          emptyDiv.textContent = 'No decisions recorded.';
+          decisionsEl.appendChild(emptyDiv);
         } else {
           const items = [
             { label: 'Allow', value: d.allow || 0, color: 'bar-fill-success' },
@@ -149,18 +215,47 @@
             { label: 'Kill', value: d.kill || 0, color: 'bar-fill-danger' },
             { label: 'Warn', value: d.warn || 0, color: 'bar-fill-warning' }
           ];
-          const maxVal = Math.max(...items.map(i => i.value));
-          decisionsEl.innerHTML = '<div class="bar-chart">' + items.map(i => {
-            const pct = maxVal > 0 ? (i.value / maxVal * 100) : 0;
-            return `
-              <div class="bar-row">
-                <span class="bar-label">${i.label}</span>
-                <div class="bar-track"><div class="bar-fill ${i.color}" style="width:${pct}%"></div></div>
-                <span class="bar-value" style="color: var(--text-secondary);">${i.value.toLocaleString()}</span>
-              </div>
-            `;
-          }).join('') + '</div>';
+          const maxVal = Math.max.apply(null, items.map(function (i) { return i.value; }));
+
+          var chartDiv = document.createElement('div');
+          chartDiv.className = 'bar-chart';
+
+          items.forEach(function (i) {
+            var pct = maxVal > 0 ? (i.value / maxVal * 100) : 0;
+
+            var row = document.createElement('div');
+            row.className = 'bar-row';
+
+            var label = document.createElement('span');
+            label.className = 'bar-label';
+            label.textContent = i.label;
+
+            var track = document.createElement('div');
+            track.className = 'bar-track';
+            var fill = document.createElement('div');
+            fill.className = 'bar-fill ' + i.color;
+            fill.style.width = pct + '%';
+            track.appendChild(fill);
+
+            var value = document.createElement('span');
+            value.className = 'bar-value';
+            value.style.color = 'var(--text-secondary)';
+            value.textContent = i.value.toLocaleString();
+
+            row.appendChild(label);
+            row.appendChild(track);
+            row.appendChild(value);
+            chartDiv.appendChild(row);
+          });
+
+          decisionsEl.appendChild(chartDiv);
         }
+
+        // ── ECharts: Request Volume + Latency ──────────────────
+        renderDashboardCharts();
+
+        // ── Activity Feed ──────────────────────────────────────
+        renderActivityFeed();
 
       } catch (err) {
         if (err.message !== 'Session expired') {
@@ -168,6 +263,229 @@
         }
       }
     }
+
+    // ── Chart rendering ───────────────────────────────────────
+
+    function getDashboardChartColors() {
+      const isDark = document.body.classList.contains('dark');
+      return {
+        primary: '#0d9488',
+        secondary: '#3b82f6',
+        tertiary: '#8b5cf6',
+        gridLine: isDark ? '#2a2a35' : '#e5e5e0',
+        axisLabel: isDark ? '#a0a0b0' : '#525252',
+        tooltipBg: isDark ? '#1a1a22' : '#ffffff',
+        tooltipBorder: isDark ? '#2a2a35' : '#e5e5e0',
+        tooltipText: isDark ? '#e8e8e8' : '#1a1a1a',
+        bg: 'transparent'
+      };
+    }
+
+    function generateMockTimeseries() {
+      const now = new Date();
+      const hours = [];
+      const volume = [];
+      const p50 = [];
+      const p95 = [];
+      const p99 = [];
+
+      for (let i = 23; i >= 0; i--) {
+        const t = new Date(now.getTime() - i * 3600000);
+        hours.push(t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }));
+
+        // Request volume: 200-800 range with a midday peak
+        const hourOfDay = t.getHours();
+        const baseLine = 300 + 250 * Math.sin((hourOfDay - 6) * Math.PI / 12);
+        volume.push(Math.max(50, Math.round(baseLine + (Math.random() - 0.5) * 120)));
+
+        // Latency: P50 ~120ms, P95 ~350ms, P99 ~600ms with some variance
+        const latBase = 100 + 30 * Math.sin((hourOfDay - 4) * Math.PI / 14);
+        p50.push(Math.round(latBase + (Math.random() - 0.5) * 40));
+        p95.push(Math.round(latBase * 2.8 + (Math.random() - 0.5) * 80));
+        p99.push(Math.round(latBase * 5.0 + (Math.random() - 0.5) * 150));
+      }
+
+      return { hours: hours, volume: volume, p50: p50, p95: p95, p99: p99 };
+    }
+
+    function renderDashboardCharts() {
+      const colors = getDashboardChartColors();
+      const mock = generateMockTimeseries();
+      const fontFamily = "'IBM Plex Mono', 'JetBrains Mono', monospace";
+
+      // Dispose previous instances
+      if (_chartVolume) { _chartVolume.dispose(); _chartVolume = null; }
+      if (_chartLatency) { _chartLatency.dispose(); _chartLatency = null; }
+
+      const volEl = document.getElementById('chart-request-volume');
+      const latEl = document.getElementById('chart-latency');
+      if (!volEl || !latEl) return;
+
+      // ── Request Volume chart ──
+      _chartVolume = echarts.init(volEl);
+      _chartVolume.setOption({
+        backgroundColor: colors.bg,
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: colors.tooltipBg,
+          borderColor: colors.tooltipBorder,
+          textStyle: { color: colors.tooltipText, fontFamily: fontFamily, fontSize: 12 }
+        },
+        legend: {
+          top: 0,
+          textStyle: { color: colors.axisLabel, fontFamily: fontFamily, fontSize: 11 }
+        },
+        grid: { left: 48, right: 16, top: 32, bottom: 28 },
+        xAxis: {
+          type: 'category',
+          data: mock.hours,
+          axisLine: { lineStyle: { color: colors.gridLine } },
+          axisLabel: { color: colors.axisLabel, fontFamily: fontFamily, fontSize: 10 },
+          axisTick: { show: false }
+        },
+        yAxis: {
+          type: 'value',
+          splitLine: { lineStyle: { color: colors.gridLine } },
+          axisLabel: { color: colors.axisLabel, fontFamily: fontFamily, fontSize: 10 },
+          axisLine: { show: false },
+          axisTick: { show: false }
+        },
+        series: [{
+          name: 'Requests',
+          type: 'line',
+          smooth: true,
+          data: mock.volume,
+          itemStyle: { color: colors.primary },
+          lineStyle: { width: 2, color: colors.primary },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: colors.primary + '30' },
+              { offset: 1, color: colors.primary + '05' }
+            ])
+          },
+          symbol: 'none'
+        }]
+      });
+
+      // ── Latency chart ──
+      _chartLatency = echarts.init(latEl);
+      _chartLatency.setOption({
+        backgroundColor: colors.bg,
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: colors.tooltipBg,
+          borderColor: colors.tooltipBorder,
+          textStyle: { color: colors.tooltipText, fontFamily: fontFamily, fontSize: 12 },
+          valueFormatter: function (v) { return v + ' ms'; }
+        },
+        legend: {
+          top: 0,
+          textStyle: { color: colors.axisLabel, fontFamily: fontFamily, fontSize: 11 }
+        },
+        grid: { left: 48, right: 16, top: 32, bottom: 28 },
+        xAxis: {
+          type: 'category',
+          data: mock.hours,
+          axisLine: { lineStyle: { color: colors.gridLine } },
+          axisLabel: { color: colors.axisLabel, fontFamily: fontFamily, fontSize: 10 },
+          axisTick: { show: false }
+        },
+        yAxis: {
+          type: 'value',
+          splitLine: { lineStyle: { color: colors.gridLine } },
+          axisLabel: {
+            color: colors.axisLabel,
+            fontFamily: fontFamily,
+            fontSize: 10,
+            formatter: '{value} ms'
+          },
+          axisLine: { show: false },
+          axisTick: { show: false }
+        },
+        series: [
+          {
+            name: 'P50',
+            type: 'line',
+            smooth: true,
+            data: mock.p50,
+            itemStyle: { color: colors.primary },
+            lineStyle: { width: 2, color: colors.primary },
+            symbol: 'none'
+          },
+          {
+            name: 'P95',
+            type: 'line',
+            smooth: true,
+            data: mock.p95,
+            itemStyle: { color: colors.secondary },
+            lineStyle: { width: 2, color: colors.secondary },
+            symbol: 'none'
+          },
+          {
+            name: 'P99',
+            type: 'line',
+            smooth: true,
+            data: mock.p99,
+            itemStyle: { color: colors.tertiary },
+            lineStyle: { width: 2, color: colors.tertiary, type: 'dashed' },
+            symbol: 'none'
+          }
+        ]
+      });
+    }
+
+    // ── Activity Feed ─────────────────────────────────────────
+
+    function renderActivityFeed() {
+      const activities = [
+        { type: 'allow', text: 'claude-coder completed 47 requests (ml-research)', time: '2m ago' },
+        { type: 'block', text: 'gpt-assistant blocked: budget_exceeded (product-ai)', time: '5m ago' },
+        { type: 'policy', text: 'Policy v3 acknowledged by 12/14 sidecars', time: '12m ago' },
+        { type: 'approval', text: 'Approval granted: execute_sql (ml-research)', time: '18m ago' },
+        { type: 'warn', text: 'Budget warning: product-ai at 87% utilization', time: '25m ago' },
+        { type: 'allow', text: 'support-bot completed 12 requests (customer-support)', time: '30m ago' },
+        { type: 'kill', text: 'Kill switch deactivated: team/staging (ops-admin)', time: '1h ago' },
+        { type: 'block', text: 'infra-agent blocked: content_policy_violation', time: '1h ago' },
+      ];
+
+      const container = document.getElementById('activity-feed-container');
+      if (!container) return;
+
+      while (container.firstChild) container.removeChild(container.firstChild);
+
+      const ul = document.createElement('ul');
+      ul.className = 'activity-feed';
+
+      activities.forEach(function (a) {
+        const li = document.createElement('li');
+        li.className = 'activity-item';
+
+        const dot = document.createElement('span');
+        dot.className = 'activity-dot ' + a.type;
+
+        const text = document.createElement('span');
+        text.className = 'activity-text';
+        text.textContent = a.text;
+
+        const time = document.createElement('span');
+        time.className = 'activity-time';
+        time.textContent = a.time;
+
+        li.appendChild(dot);
+        li.appendChild(text);
+        li.appendChild(time);
+        ul.appendChild(li);
+      });
+
+      container.appendChild(ul);
+    }
+
+    // ── Window resize handler for chart responsiveness ────────
+
+    window.addEventListener('resize', function () {
+      if (_chartVolume) _chartVolume.resize();
+      if (_chartLatency) _chartLatency.resize();
+    });
 
     loadDashboard();
     startAutoRefresh(loadDashboard, 30000);

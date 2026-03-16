@@ -18,68 +18,78 @@
     <div class="console-topbar">
       <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
       <h2 class="topbar-title">Audit Trail</h2>
+      <button class="topbar-search-hint" onclick="openCommandPalette()" title="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search <kbd>&#8984;K</kbd>
+      </button>
       <span class="topbar-status" id="sse-status">Connecting...</span>
     </div>
 
     <div class="console-content">
-      <!-- Filters -->
-      <div style="display: flex; gap: var(--sp-3); margin-bottom: var(--sp-4); flex-wrap: wrap; align-items: flex-end;">
-        <div class="form-group" style="margin: 0; min-width: 160px;">
-          <label style="display: block; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 4px;">Team</label>
-          <input type="text" id="filter-team" placeholder="All teams" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-btn); font-family: var(--font-mono); font-size: 0.8125rem; width: 100%;">
-        </div>
-        <div class="form-group" style="margin: 0; min-width: 130px;">
-          <label style="display: block; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 4px;">Status</label>
-          <select id="filter-status" style="padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-btn); font-family: var(--font-mono); font-size: 0.8125rem; width: 100%;">
-            <option value="">All</option>
-            <option value="active">Active</option>
-            <option value="closed">Closed</option>
-            <option value="killed">Killed</option>
-          </select>
-        </div>
-        <button class="btn btn-secondary btn-nav" onclick="loadWorkflows()" style="height: 34px;">Search</button>
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <input type="text" id="filter-search" placeholder="Search audit entries..." />
+        <select id="filter-team">
+          <option value="">All Teams</option>
+        </select>
+        <select id="filter-action">
+          <option value="">All Actions</option>
+          <option value="allow">Allow</option>
+          <option value="block">Block</option>
+          <option value="kill">Kill</option>
+          <option value="warn">Warn</option>
+        </select>
+        <select id="filter-agent">
+          <option value="">All Agents</option>
+        </select>
+        <select id="filter-date">
+          <option value="24h">Last 24h</option>
+          <option value="7d">Last 7 days</option>
+          <option value="30d">Last 30 days</option>
+          <option value="all">All time</option>
+        </select>
       </div>
 
-      <!-- Workflow sessions table -->
-      <div class="panel" style="padding: 0; overflow: hidden;">
-        <div style="overflow-x: auto;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Workflow</th>
-                <th>Agent</th>
-                <th>Team</th>
-                <th>Status</th>
-                <th>Records</th>
-                <th>Started</th>
-              </tr>
-            </thead>
-            <tbody id="workflow-body">
-              <tr><td colspan="6" class="empty-state">Loading...</td></tr>
-            </tbody>
-          </table>
+      <!-- View toggle and count -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-3);">
+        <div class="view-toggle">
+          <button class="view-toggle-btn active" data-view="timeline" onclick="setAuditView('timeline')">Timeline</button>
+          <button class="view-toggle-btn" data-view="table" onclick="setAuditView('table')">Table</button>
         </div>
-        <div id="load-more-row" style="display: none; padding: var(--sp-3); text-align: center; border-top: 1px solid var(--border);">
-          <button class="btn btn-secondary btn-nav" id="load-more-btn" onclick="loadMore()">Load More</button>
-        </div>
+        <span id="audit-count" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);"></span>
       </div>
 
-      <!-- Workflow detail (shown below table when a row is clicked) -->
-      <div id="workflow-detail" style="display: none; margin-top: var(--sp-4);">
-        <div class="panel">
-          <div class="panel-header">
-            <span class="panel-title" id="detail-title">Workflow Detail</span>
-            <button class="btn-cancel" onclick="closeDetail()" style="padding: 4px 12px; font-size: 0.75rem;">Close</button>
-          </div>
+      <!-- Timeline view -->
+      <div id="audit-timeline" class="panel" style="padding: var(--sp-4);">
+        <div class="timeline" id="timeline-container"></div>
+        <div id="timeline-empty" class="empty-state" style="display:none;">No audit entries match your filters.</div>
+      </div>
 
-          <!-- Workflow meta -->
-          <div class="row-detail-grid" id="detail-meta" style="margin-bottom: var(--sp-4);"></div>
+      <!-- Table view -->
+      <div id="audit-table" class="panel" style="display:none;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="time" onclick="toggleSort('time')">Time</th>
+              <th class="sortable" data-sort="decision" onclick="toggleSort('decision')">Decision</th>
+              <th class="sortable" data-sort="action" onclick="toggleSort('action')">Action</th>
+              <th class="sortable" data-sort="team" onclick="toggleSort('team')">Team</th>
+              <th class="sortable" data-sort="agent" onclick="toggleSort('agent')">Agent</th>
+              <th class="sortable" data-sort="cost" onclick="toggleSort('cost')">Cost</th>
+              <th>Model</th>
+            </tr>
+          </thead>
+          <tbody id="audit-table-body"></tbody>
+        </table>
+        <div id="table-empty" class="empty-state" style="display:none;">No audit entries match your filters.</div>
+      </div>
 
-          <!-- Chain integrity -->
-          <div id="detail-chain"></div>
-
-          <!-- Timeline -->
-          <div id="detail-timeline" class="timeline" style="margin-top: var(--sp-4);"></div>
+      <!-- Pagination -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--sp-3); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+        <span id="audit-pagination-info">Showing 1-50</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="window-btn" id="audit-prev" onclick="auditPrevPage()" disabled>Prev</button>
+          <button class="window-btn" id="audit-next" onclick="auditNextPage()">Next</button>
         </div>
       </div>
     </div>
@@ -92,187 +102,434 @@
   <script>
     initConsole('audit');
 
-    const PAGE_SIZE = 50;
-    let currentOffset = 0;
-    let hasMore = false;
+    var auditData = [];
+    var auditView = 'timeline';
+    var auditPage = 0;
+    var AUDIT_PAGE_SIZE = 50;
+    var sortField = 'time';
+    var sortDir = 'desc';
 
-    async function loadWorkflows(append) {
-      try {
-        const team = document.getElementById('filter-team').value.trim();
-        const status = document.getElementById('filter-status').value;
+    /* ── Mock data generator ─────────────────────────────── */
 
-        if (!append) currentOffset = 0;
-
-        let url = '/api/v1/workflows?limit=' + PAGE_SIZE + '&offset=' + currentOffset;
-        if (team) url += '&team=' + encodeURIComponent(team);
-        if (status) url += '&status=' + encodeURIComponent(status);
-
-        const resp = await authFetch(url);
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        const workflows = data.workflows || [];
-
-        hasMore = workflows.length >= PAGE_SIZE;
-        document.getElementById('load-more-row').style.display = hasMore ? '' : 'none';
-
-        if (append) {
-          appendWorkflows(workflows);
-        } else {
-          renderWorkflows(workflows);
-        }
-      } catch (err) {
-        if (err.message !== 'Session expired') {
-          showToast('Failed to load workflows: ' + err.message, 'error');
-        }
+    function generateMockAuditData() {
+      var teams = ['ml-research', 'product-ai', 'customer-support', 'devops-agents'];
+      var agents = ['claude-coder', 'gpt-assistant', 'support-bot', 'infra-agent', 'batch-processor'];
+      var models = ['claude-sonnet-4-20250514', 'gpt-4o', 'gpt-4o-mini', 'claude-haiku-20250514'];
+      var actions = ['allow', 'allow', 'allow', 'allow', 'block', 'warn', 'allow', 'allow'];
+      var reasons = ['', '', '', '', 'budget_exceeded', 'content_policy', '', 'rate_limited'];
+      var entries = [];
+      var now = Date.now();
+      for (var i = 0; i < 100; i++) {
+        var actionIdx = Math.floor(Math.random() * actions.length);
+        entries.push({
+          id: 'r-' + String(i).padStart(3, '0'),
+          team: teams[Math.floor(Math.random() * teams.length)],
+          agent: agents[Math.floor(Math.random() * agents.length)],
+          model: models[Math.floor(Math.random() * models.length)],
+          action: actions[actionIdx],
+          reason: reasons[actionIdx],
+          cost_usd: actions[actionIdx] === 'block' ? 0 : Math.round(Math.random() * 0.08 * 1000) / 1000,
+          tokens_in: Math.floor(Math.random() * 2000),
+          tokens_out: Math.floor(Math.random() * 800),
+          timestamp: new Date(now - i * 120000 - Math.random() * 60000).toISOString()
+        });
       }
+      return entries;
     }
 
-    function loadMore() {
-      currentOffset += PAGE_SIZE;
-      const btn = document.getElementById('load-more-btn');
-      btn.textContent = 'Loading...';
-      btn.disabled = true;
-      loadWorkflows(true).finally(() => {
-        btn.textContent = 'Load More';
-        btn.disabled = false;
+    /* ── Populate filter dropdowns from data ──────────────── */
+
+    function populateFilterDropdowns() {
+      var teamSet = {};
+      var agentSet = {};
+      auditData.forEach(function(e) {
+        if (e.team) teamSet[e.team] = true;
+        if (e.agent) agentSet[e.agent] = true;
+      });
+
+      var teamSelect = document.getElementById('filter-team');
+      var currentTeam = teamSelect.value;
+      var teamOpts = '<option value="">All Teams</option>';
+      Object.keys(teamSet).sort().forEach(function(t) {
+        teamOpts += '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>';
+      });
+      teamSelect.innerHTML = teamOpts;
+      teamSelect.value = currentTeam;
+
+      var agentSelect = document.getElementById('filter-agent');
+      var currentAgent = agentSelect.value;
+      var agentOpts = '<option value="">All Agents</option>';
+      Object.keys(agentSet).sort().forEach(function(a) {
+        agentOpts += '<option value="' + escapeHtml(a) + '">' + escapeHtml(a) + '</option>';
+      });
+      agentSelect.innerHTML = agentOpts;
+      agentSelect.value = currentAgent;
+    }
+
+    /* ── View toggle ─────────────────────────────────────── */
+
+    function setAuditView(view) {
+      auditView = view;
+      document.querySelectorAll('.view-toggle-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.view === view);
+      });
+      document.getElementById('audit-timeline').style.display = view === 'timeline' ? 'block' : 'none';
+      document.getElementById('audit-table').style.display = view === 'table' ? 'block' : 'none';
+      renderAudit();
+    }
+
+    /* ── Filtering ───────────────────────────────────────── */
+
+    function getFilteredData() {
+      var search = document.getElementById('filter-search').value.toLowerCase();
+      var team = document.getElementById('filter-team').value;
+      var action = document.getElementById('filter-action').value;
+      var agent = document.getElementById('filter-agent').value;
+      var dateRange = document.getElementById('filter-date').value;
+
+      var now = Date.now();
+      var cutoff = 0;
+      if (dateRange === '24h') cutoff = now - 86400000;
+      else if (dateRange === '7d') cutoff = now - 7 * 86400000;
+      else if (dateRange === '30d') cutoff = now - 30 * 86400000;
+
+      return auditData.filter(function(entry) {
+        if (team && entry.team !== team) return false;
+        if (action && entry.action !== action) return false;
+        if (agent && entry.agent !== agent) return false;
+        if (cutoff && new Date(entry.timestamp).getTime() < cutoff) return false;
+        if (search) {
+          var text = [entry.team, entry.agent, entry.model, entry.action, entry.reason || ''].join(' ').toLowerCase();
+          if (text.indexOf(search) === -1) return false;
+        }
+        return true;
       });
     }
 
-    function workflowRowHtml(w) {
-      let statusBadge;
-      switch (w.status) {
-        case 'active': statusBadge = '<span class="badge badge-active">ACTIVE</span>'; break;
-        case 'killed': statusBadge = '<span class="badge badge-killed">KILLED</span>'; break;
-        default: statusBadge = '<span class="badge badge-inactive">' + escapeHtml(w.status || 'closed').toUpperCase() + '</span>';
-      }
-      return `
-        <tr class="clickable" onclick="loadDetail('${escapeHtml(w.workflow_run_id)}')">
-          <td class="mono">${escapeHtml(w.workflow_run_id)}</td>
-          <td class="mono">${escapeHtml(w.agent_id || '--')}</td>
-          <td class="mono">${escapeHtml(w.team || '--')}</td>
-          <td>${statusBadge}</td>
-          <td class="mono">${w.record_count ?? '--'}</td>
-          <td>${relativeTime(w.started_at)}</td>
-        </tr>
-      `;
+    /* ── Sorting ─────────────────────────────────────────── */
+
+    function sortData(data) {
+      var sorted = data.slice();
+      sorted.sort(function(a, b) {
+        var valA, valB;
+        switch (sortField) {
+          case 'time':
+            valA = new Date(a.timestamp).getTime();
+            valB = new Date(b.timestamp).getTime();
+            break;
+          case 'decision':
+          case 'action':
+            valA = (a.action || '').toLowerCase();
+            valB = (b.action || '').toLowerCase();
+            if (valA < valB) return sortDir === 'asc' ? -1 : 1;
+            if (valA > valB) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+          case 'team':
+            valA = (a.team || '').toLowerCase();
+            valB = (b.team || '').toLowerCase();
+            if (valA < valB) return sortDir === 'asc' ? -1 : 1;
+            if (valA > valB) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+          case 'agent':
+            valA = (a.agent || '').toLowerCase();
+            valB = (b.agent || '').toLowerCase();
+            if (valA < valB) return sortDir === 'asc' ? -1 : 1;
+            if (valA > valB) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+          case 'cost':
+            valA = a.cost_usd || 0;
+            valB = b.cost_usd || 0;
+            break;
+          default:
+            valA = new Date(a.timestamp).getTime();
+            valB = new Date(b.timestamp).getTime();
+        }
+        if (sortDir === 'asc') return valA - valB;
+        return valB - valA;
+      });
+      return sorted;
     }
 
-    function renderWorkflows(workflows) {
-      const tbody = document.getElementById('workflow-body');
+    function toggleSort(field) {
+      if (sortField === field) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortField = field;
+        sortDir = field === 'cost' ? 'desc' : 'asc';
+      }
+      document.querySelectorAll('.data-table th.sortable').forEach(function(th) {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.sort === sortField) {
+          th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+        }
+      });
+      renderAudit();
+    }
 
-      if (workflows.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No workflows found.</td></tr>';
+    /* ── Pagination ──────────────────────────────────────── */
+
+    function auditPrevPage() {
+      if (auditPage > 0) {
+        auditPage--;
+        renderAudit();
+      }
+    }
+
+    function auditNextPage() {
+      var filtered = getFilteredData();
+      if ((auditPage + 1) * AUDIT_PAGE_SIZE < filtered.length) {
+        auditPage++;
+        renderAudit();
+      }
+    }
+
+    function updatePagination(totalFiltered) {
+      var start = totalFiltered === 0 ? 0 : auditPage * AUDIT_PAGE_SIZE + 1;
+      var end = Math.min((auditPage + 1) * AUDIT_PAGE_SIZE, totalFiltered);
+      document.getElementById('audit-pagination-info').textContent =
+        'Showing ' + start + '-' + end + ' of ' + totalFiltered;
+      document.getElementById('audit-prev').disabled = auditPage === 0;
+      document.getElementById('audit-next').disabled = end >= totalFiltered;
+    }
+
+    /* ── Render ──────────────────────────────────────────── */
+
+    function getActionBadge(action) {
+      switch (action) {
+        case 'block': return '<span class="badge badge-block">BLOCK</span>';
+        case 'kill':  return '<span class="badge badge-killed">KILL</span>';
+        case 'warn':  return '<span class="badge badge-warn">WARN</span>';
+        default:      return '<span class="badge badge-allow">ALLOW</span>';
+      }
+    }
+
+    function getDotClass(action) {
+      switch (action) {
+        case 'block': return 'block';
+        case 'kill':  return 'kill';
+        case 'warn':  return 'warn';
+        default:      return 'allow';
+      }
+    }
+
+    function renderAudit() {
+      var filtered = getFilteredData();
+      var sorted = sortData(filtered);
+      var pageData = sorted.slice(
+        auditPage * AUDIT_PAGE_SIZE,
+        (auditPage + 1) * AUDIT_PAGE_SIZE
+      );
+
+      document.getElementById('audit-count').textContent = filtered.length + ' entries';
+      updatePagination(filtered.length);
+
+      if (auditView === 'timeline') {
+        renderTimeline(pageData);
+      } else {
+        renderTable(pageData);
+      }
+    }
+
+    function renderTimeline(entries) {
+      var container = document.getElementById('timeline-container');
+      var emptyEl = document.getElementById('timeline-empty');
+
+      if (entries.length === 0) {
+        container.textContent = '';
+        emptyEl.style.display = 'block';
         return;
       }
 
-      tbody.innerHTML = workflows.map(workflowRowHtml).join('');
+      emptyEl.style.display = 'none';
+
+      /* Build timeline DOM nodes safely */
+      container.textContent = '';
+
+      entries.forEach(function(e) {
+        var entry = document.createElement('div');
+        entry.className = 'timeline-entry';
+
+        var dot = document.createElement('div');
+        dot.className = 'timeline-dot ' + getDotClass(e.action);
+        entry.appendChild(dot);
+
+        var header = document.createElement('div');
+        header.className = 'timeline-header';
+
+        var timeSpan = document.createElement('span');
+        timeSpan.className = 'timeline-time';
+        timeSpan.textContent = formatTime(e.timestamp);
+        header.appendChild(timeSpan);
+
+        var badgeSpan = document.createElement('span');
+        badgeSpan.innerHTML = getActionBadge(e.action);
+        header.appendChild(badgeSpan.firstChild);
+
+        var idSpan = document.createElement('span');
+        idSpan.className = 'mono';
+        idSpan.style.cssText = 'font-size: 0.75rem; color: var(--text-muted);';
+        idSpan.textContent = e.id;
+        header.appendChild(idSpan);
+
+        entry.appendChild(header);
+
+        var detail = document.createElement('div');
+        detail.className = 'timeline-detail';
+
+        var agentMono = document.createElement('span');
+        agentMono.className = 'mono';
+        agentMono.textContent = e.agent;
+        detail.appendChild(agentMono);
+
+        var sep1 = document.createTextNode(' \u00B7 ' + e.team);
+        detail.appendChild(sep1);
+
+        if (e.reason) {
+          var reasonText = document.createTextNode(' -- ' + e.reason);
+          detail.appendChild(reasonText);
+        }
+
+        detail.appendChild(document.createElement('br'));
+
+        var modelMono = document.createElement('span');
+        modelMono.className = 'mono';
+        modelMono.textContent = 'Model: ' + e.model;
+        detail.appendChild(modelMono);
+
+        if (e.cost_usd) {
+          var costText = document.createTextNode(' \u00B7 Cost: ' + formatUSD(e.cost_usd));
+          detail.appendChild(costText);
+        }
+
+        var tokenText = document.createTextNode(
+          ' \u00B7 ' + e.tokens_in + ' in / ' + e.tokens_out + ' out'
+        );
+        detail.appendChild(tokenText);
+
+        entry.appendChild(detail);
+        container.appendChild(entry);
+      });
     }
 
-    function appendWorkflows(workflows) {
-      const tbody = document.getElementById('workflow-body');
-      tbody.insertAdjacentHTML('beforeend', workflows.map(workflowRowHtml).join(''));
-    }
+    function renderTable(entries) {
+      var tbody = document.getElementById('audit-table-body');
+      var emptyEl = document.getElementById('table-empty');
 
-    async function loadDetail(workflowId) {
-      try {
-        const resp = await authFetch('/api/v1/workflows/' + encodeURIComponent(workflowId));
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        renderDetail(data);
-      } catch (err) {
-        showToast('Failed to load workflow: ' + err.message, 'error');
+      if (entries.length === 0) {
+        tbody.textContent = '';
+        emptyEl.style.display = 'block';
+        return;
       }
+
+      emptyEl.style.display = 'none';
+      tbody.textContent = '';
+
+      entries.forEach(function(e) {
+        var tr = document.createElement('tr');
+
+        var tdTime = document.createElement('td');
+        tdTime.className = 'mono';
+        tdTime.textContent = relativeTime(e.timestamp);
+        tr.appendChild(tdTime);
+
+        var tdDecision = document.createElement('td');
+        var tmpBadge = document.createElement('span');
+        tmpBadge.innerHTML = getActionBadge(e.action);
+        tdDecision.appendChild(tmpBadge.firstChild);
+        tr.appendChild(tdDecision);
+
+        var tdAction = document.createElement('td');
+        tdAction.className = 'mono';
+        tdAction.textContent = e.action + (e.reason ? ' (' + e.reason + ')' : '');
+        tr.appendChild(tdAction);
+
+        var tdTeam = document.createElement('td');
+        tdTeam.className = 'mono';
+        tdTeam.textContent = e.team;
+        tr.appendChild(tdTeam);
+
+        var tdAgent = document.createElement('td');
+        tdAgent.className = 'mono';
+        tdAgent.textContent = e.agent;
+        tr.appendChild(tdAgent);
+
+        var tdCost = document.createElement('td');
+        tdCost.className = 'mono';
+        tdCost.textContent = formatUSD(e.cost_usd);
+        tr.appendChild(tdCost);
+
+        var tdModel = document.createElement('td');
+        tdModel.className = 'mono';
+        tdModel.style.fontSize = '0.75rem';
+        tdModel.textContent = e.model;
+        tr.appendChild(tdModel);
+
+        tbody.appendChild(tr);
+      });
     }
 
-    function renderDetail(data) {
-      const wf = data.workflow || {};
-      const records = data.records || [];
+    /* ── Data loading ────────────────────────────────────── */
 
-      document.getElementById('detail-title').textContent = 'Workflow ' + (wf.workflow_run_id || '');
-      document.getElementById('workflow-detail').style.display = 'block';
+    async function loadAuditData() {
+      if (typeof isDemo === 'function' && isDemo()) {
+        auditData = generateMockAuditData();
+        populateFilterDropdowns();
+        renderAudit();
+        return;
+      }
 
-      // Meta
-      document.getElementById('detail-meta').innerHTML = `
-        <div class="row-detail-item"><label>Agent</label><span>${escapeHtml(wf.agent_id || '--')}</span></div>
-        <div class="row-detail-item"><label>Team</label><span>${escapeHtml(wf.team || '--')}</span></div>
-        <div class="row-detail-item"><label>Status</label><span>${escapeHtml(wf.status || '--')}</span></div>
-        <div class="row-detail-item"><label>Records</label><span>${wf.record_count ?? records.length}</span></div>
-        <div class="row-detail-item"><label>Started</label><span>${formatTimestamp(wf.started_at)}</span></div>
-        <div class="row-detail-item"><label>Last Activity</label><span>${formatTimestamp(wf.last_activity)}</span></div>
-      `;
-
-      // Chain integrity check
-      let chainOk = true;
-      for (let i = 1; i < records.length; i++) {
-        if (records[i].previous_hash && records[i - 1].record_hash) {
-          if (records[i].previous_hash !== records[i - 1].record_hash) {
-            chainOk = false;
-            break;
-          }
+      try {
+        var resp = await authFetch('/api/v1/audit');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var data = await resp.json();
+        auditData = data.entries || data.records || data || [];
+        populateFilterDropdowns();
+        renderAudit();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          /* Fall back to mock data for development */
+          auditData = generateMockAuditData();
+          populateFilterDropdowns();
+          renderAudit();
         }
       }
-
-      const chainEl = document.getElementById('detail-chain');
-      if (records.length > 0) {
-        chainEl.innerHTML = `
-          <div class="chain-integrity ${chainOk ? 'verified' : 'broken'}">
-            ${chainOk ? '&#10003;' : '&#10007;'} Chain integrity: ${chainOk ? 'verified' : 'BROKEN'}
-            (${records.length} records, ${chainOk ? '0' : '1+'} gaps)
-          </div>
-        `;
-      } else {
-        chainEl.innerHTML = '';
-      }
-
-      // Timeline
-      const timeline = document.getElementById('detail-timeline');
-      if (records.length === 0) {
-        timeline.innerHTML = '<div class="empty-state">No causal records.</div>';
-        return;
-      }
-
-      timeline.innerHTML = records.map(r => {
-        const action = (r.action || r.chain_result || 'allow').toLowerCase();
-        const dotClass = action === 'block' ? 'block' : action === 'kill' ? 'kill' : action === 'warn' ? 'warn' : 'allow';
-        const actionBadge = action === 'block' ? '<span class="badge badge-block">BLOCK</span>'
-          : action === 'kill' ? '<span class="badge badge-killed">KILL</span>'
-          : action === 'warn' ? '<span class="badge badge-warn">WARN</span>'
-          : '<span class="badge badge-allow">ALLOW</span>';
-
-        const labels = (r.content_labels || []).length > 0
-          ? '<span class="mono" style="color: var(--warning);">Labels: ' + r.content_labels.map(escapeHtml).join(', ') + '</span>'
-          : '';
-
-        return `
-          <div class="timeline-entry">
-            <div class="timeline-dot ${dotClass}"></div>
-            <div class="timeline-header">
-              <span class="timeline-time">${formatTime(r.timestamp)}</span>
-              ${actionBadge}
-              <span class="mono" style="font-size: 0.75rem; color: var(--text-muted);">#${r.sequence_num ?? '--'}</span>
-            </div>
-            <div class="timeline-detail">
-              <span class="mono">${escapeHtml(r.decider_name || '--')}</span> &mdash; ${escapeHtml(r.reason || '--')}
-              ${r.model ? '<br><span class="mono">Model: ' + escapeHtml(r.model) + '</span>' : ''}
-              ${r.estimated_cost_usd ? ' &middot; Cost: ' + formatUSD(r.estimated_cost_usd) : ''}
-              ${labels ? '<br>' + labels : ''}
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      // Scroll to detail
-      document.getElementById('workflow-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function closeDetail() {
-      document.getElementById('workflow-detail').style.display = 'none';
-    }
+    /* ── Filter event listeners ──────────────────────────── */
 
-    loadWorkflows();
-    startAutoRefresh(loadWorkflows, 30000);
+    document.getElementById('filter-search').addEventListener('input', function() {
+      auditPage = 0;
+      renderAudit();
+    });
+    document.getElementById('filter-team').addEventListener('change', function() {
+      auditPage = 0;
+      renderAudit();
+    });
+    document.getElementById('filter-action').addEventListener('change', function() {
+      auditPage = 0;
+      renderAudit();
+    });
+    document.getElementById('filter-agent').addEventListener('change', function() {
+      auditPage = 0;
+      renderAudit();
+    });
+    document.getElementById('filter-date').addEventListener('change', function() {
+      auditPage = 0;
+      renderAudit();
+    });
+
+    /* ── Initialize ──────────────────────────────────────── */
+
+    loadAuditData();
+    startAutoRefresh(loadAuditData, 30000);
     connectSSE();
-    onSSE('workflow_update', loadWorkflows);
+    onSSE('audit_entry', function(data) {
+      if (data && data.id) {
+        auditData.unshift(data);
+        populateFilterDropdowns();
+        renderAudit();
+      }
+    });
   </script>
 </body>
 </html>

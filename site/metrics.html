@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Metrics — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Metrics</h2>
+      <button class="topbar-search-hint" onclick="openCommandPalette()" title="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search <kbd>&#8984;K</kbd>
+      </button>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Time window selector -->
+      <div class="window-selector" style="margin-bottom: var(--sp-4);">
+        <button class="window-btn" data-window="15m">15m</button>
+        <button class="window-btn" data-window="1h">1h</button>
+        <button class="window-btn active" data-window="6h">6h</button>
+        <button class="window-btn" data-window="24h">24h</button>
+        <button class="window-btn" data-window="7d">7d</button>
+      </div>
+
+      <!-- Row 1: Request Rate + Error Rate -->
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Request Rate</span></div>
+          <div class="chart-container" id="chart-request-rate"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Error Rate</span></div>
+          <div class="chart-container" id="chart-error-rate"></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Latency + Budget Check Duration -->
+      <div class="grid-2" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Latency P50 / P95 / P99</span></div>
+          <div class="chart-container" id="chart-latency"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Budget Check Duration</span></div>
+          <div class="chart-container" id="chart-budget-check"></div>
+        </div>
+      </div>
+
+      <!-- Row 3: Active Connections + Kill Switch Evaluations -->
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Active Connections</span></div>
+          <div class="chart-container" id="chart-connections"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Kill Switch Evaluations</span></div>
+          <div class="chart-container" id="chart-killswitch"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('metrics');
+
+    let selectedWindow = '6h';
+    const chartInstances = [];
+
+    const COLORS = {
+      primary:   '#0d9488',
+      secondary: '#3b82f6',
+      tertiary:  '#8b5cf6',
+      warning:   '#f59e0b',
+      danger:    '#ef4444'
+    };
+
+    function getTheme() {
+      const isDark = document.body.classList.contains('dark');
+      return {
+        isDark:    isDark,
+        gridColor: isDark ? '#2a2a35' : '#e5e5e0',
+        textColor: isDark ? '#a0a0b0' : '#525252'
+      };
+    }
+
+    function getDataPoints() {
+      switch (selectedWindow) {
+        case '15m': return 15;
+        case '1h':  return 12;
+        case '6h':  return 24;
+        case '24h': return 24;
+        case '7d':  return 28;
+        default:    return 24;
+      }
+    }
+
+    function getInterval() {
+      switch (selectedWindow) {
+        case '15m': return 60 * 1000;
+        case '1h':  return 300 * 1000;
+        case '6h':  return 900 * 1000;
+        case '24h': return 3600 * 1000;
+        case '7d':  return 21600 * 1000;
+        default:    return 900 * 1000;
+      }
+    }
+
+    function generateTimeSeries(points, min, max) {
+      const now = Date.now();
+      const interval = getInterval();
+      return Array.from({ length: points }, (_, i) => {
+        const t = new Date(now - (points - 1 - i) * interval);
+        const v = min + Math.random() * (max - min) + Math.sin(i / 3) * (max - min) * 0.2;
+        return [t, Math.max(0, Math.round(v * 100) / 100)];
+      });
+    }
+
+    function generateKillSwitchData(points) {
+      const now = Date.now();
+      const interval = getInterval();
+      return Array.from({ length: points }, (_, i) => {
+        const t = new Date(now - (points - 1 - i) * interval);
+        const v = Math.random() < 0.15 ? Math.round(Math.random() * 50) : 0;
+        return [t, v];
+      });
+    }
+
+    function baseAxis(theme) {
+      return {
+        xAxis: {
+          type: 'time',
+          axisLine: { lineStyle: { color: theme.gridColor } },
+          axisLabel: { color: theme.textColor, fontSize: 11 },
+          splitLine: { show: false }
+        },
+        grid: {
+          left: 50, right: 16, top: 32, bottom: 28, containLabel: false
+        },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: theme.isDark ? '#1a1a22' : '#ffffff',
+          borderColor: theme.gridColor,
+          textStyle: { color: theme.isDark ? '#e0e0e8' : '#333333', fontSize: 12 }
+        }
+      };
+    }
+
+    function yAxis(theme, name) {
+      return {
+        type: 'value',
+        name: name,
+        nameTextStyle: { color: theme.textColor, fontSize: 11, padding: [0, 0, 0, 0] },
+        axisLine: { show: false },
+        axisLabel: { color: theme.textColor, fontSize: 11 },
+        splitLine: { lineStyle: { color: theme.gridColor, type: 'dashed' } }
+      };
+    }
+
+    function disposeAll() {
+      chartInstances.forEach(function(c) {
+        if (c && !c.isDisposed()) c.dispose();
+      });
+      chartInstances.length = 0;
+    }
+
+    function initChart(domId) {
+      var dom = document.getElementById(domId);
+      if (!dom) return null;
+      var instance = echarts.init(dom);
+      chartInstances.push(instance);
+      return instance;
+    }
+
+    function buildCharts() {
+      disposeAll();
+
+      var theme = getTheme();
+      var points = getDataPoints();
+      var base = baseAxis(theme);
+
+      // -- Request Rate --
+      var reqRate = initChart('chart-request-rate');
+      if (reqRate) {
+        reqRate.setOption({
+          ...base,
+          yAxis: yAxis(theme, 'req/s'),
+          series: [{
+            type: 'line',
+            name: 'Request Rate',
+            data: generateTimeSeries(points, 50, 200),
+            smooth: true,
+            symbol: 'none',
+            lineStyle: { color: COLORS.primary, width: 2 },
+            itemStyle: { color: COLORS.primary }
+          }]
+        });
+      }
+
+      // -- Error Rate --
+      var errRate = initChart('chart-error-rate');
+      if (errRate) {
+        errRate.setOption({
+          ...base,
+          yAxis: yAxis(theme, '%'),
+          series: [{
+            type: 'line',
+            name: 'Error Rate',
+            data: generateTimeSeries(points, 0.1, 2.5),
+            smooth: true,
+            symbol: 'none',
+            lineStyle: { color: COLORS.danger, width: 2 },
+            itemStyle: { color: COLORS.danger }
+          }]
+        });
+      }
+
+      // -- Latency P50/P95/P99 --
+      var latency = initChart('chart-latency');
+      if (latency) {
+        latency.setOption({
+          ...base,
+          yAxis: yAxis(theme, 'ms'),
+          legend: {
+            data: ['P50', 'P95', 'P99'],
+            top: 4,
+            right: 8,
+            textStyle: { color: theme.textColor, fontSize: 11 }
+          },
+          grid: { left: 50, right: 16, top: 40, bottom: 28, containLabel: false },
+          series: [
+            {
+              type: 'line', name: 'P50',
+              data: generateTimeSeries(points, 20, 60),
+              smooth: true, symbol: 'none',
+              lineStyle: { color: COLORS.primary, width: 2 },
+              itemStyle: { color: COLORS.primary }
+            },
+            {
+              type: 'line', name: 'P95',
+              data: generateTimeSeries(points, 80, 150),
+              smooth: true, symbol: 'none',
+              lineStyle: { color: COLORS.secondary, width: 2 },
+              itemStyle: { color: COLORS.secondary }
+            },
+            {
+              type: 'line', name: 'P99',
+              data: generateTimeSeries(points, 150, 400),
+              smooth: true, symbol: 'none',
+              lineStyle: { color: COLORS.tertiary, width: 2 },
+              itemStyle: { color: COLORS.tertiary }
+            }
+          ]
+        });
+      }
+
+      // -- Budget Check Duration --
+      var budgetCheck = initChart('chart-budget-check');
+      if (budgetCheck) {
+        budgetCheck.setOption({
+          ...base,
+          yAxis: yAxis(theme, 'ms'),
+          series: [{
+            type: 'line',
+            name: 'Budget Check',
+            data: generateTimeSeries(points, 0.5, 5),
+            smooth: true,
+            symbol: 'none',
+            lineStyle: { color: COLORS.primary, width: 2 },
+            itemStyle: { color: COLORS.primary }
+          }]
+        });
+      }
+
+      // -- Active Connections --
+      var connections = initChart('chart-connections');
+      if (connections) {
+        connections.setOption({
+          ...base,
+          yAxis: yAxis(theme, ''),
+          series: [{
+            type: 'line',
+            name: 'Active Connections',
+            data: generateTimeSeries(points, 10, 80),
+            smooth: true,
+            symbol: 'none',
+            lineStyle: { color: COLORS.primary, width: 2 },
+            itemStyle: { color: COLORS.primary },
+            areaStyle: { color: COLORS.primary, opacity: 0.1 }
+          }]
+        });
+      }
+
+      // -- Kill Switch Evaluations --
+      var killSwitch = initChart('chart-killswitch');
+      if (killSwitch) {
+        killSwitch.setOption({
+          ...base,
+          yAxis: yAxis(theme, ''),
+          series: [{
+            type: 'bar',
+            name: 'Kill Switch Evaluations',
+            data: generateKillSwitchData(points),
+            itemStyle: { color: COLORS.primary, borderRadius: [2, 2, 0, 0] },
+            barMaxWidth: 24
+          }]
+        });
+      }
+    }
+
+    function resizeAll() {
+      chartInstances.forEach(function(c) {
+        if (c && !c.isDisposed()) c.resize();
+      });
+    }
+
+    // Build charts on load
+    buildCharts();
+
+    // Window selector handler
+    document.querySelectorAll('.window-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.window-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        selectedWindow = btn.getAttribute('data-window');
+        buildCharts();
+      });
+    });
+
+    // Responsive resize
+    window.addEventListener('resize', resizeAll);
+
+    // Auto-refresh every 15s
+    startAutoRefresh(buildCharts, 15000);
+
+    // SSE connection
+    connectSSE();
+  </script>
+</body>
+</html>

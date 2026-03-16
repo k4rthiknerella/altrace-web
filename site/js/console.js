@@ -13,50 +13,54 @@ const SIDEBAR_HTML = `
   </div>
   <div class="sidebar-org" id="sidebar-org"></div>
   <nav class="sidebar-nav">
-    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-section-label">Command</div>
     <a href="/dashboard.html" class="sidebar-link" data-page="dashboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
-    </a>
-    <div class="sidebar-section-label">Operations</div>
-    <a href="/fleet.html" class="sidebar-link" data-page="fleet">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      Fleet
     </a>
     <a href="/kill-switches.html" class="sidebar-link" data-page="kill-switches">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       Kill Switches
     </a>
+    <a href="/approvals.html" class="sidebar-link" data-page="approvals">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Approvals
+      <span class="nav-badge" id="nav-approval-count" style="display:none"></span>
+    </a>
+    <div class="sidebar-section-label">Observe</div>
+    <a href="/fleet.html" class="sidebar-link" data-page="fleet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Fleet
+    </a>
     <a href="/cost.html" class="sidebar-link" data-page="cost">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      Cost
+      Cost & Budget
     </a>
     <a href="/audit.html" class="sidebar-link" data-page="audit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Audit
+      Audit Log
     </a>
+    <a href="/metrics.html" class="sidebar-link" data-page="metrics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+      Metrics
+    </a>
+    <div class="sidebar-section-label">Govern</div>
     <a href="/policies.html" class="sidebar-link" data-page="policies">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Policies
     </a>
-    <div class="sidebar-section-label">Compliance</div>
+    <a href="/virtualkeys.html" class="sidebar-link" data-page="virtualkeys">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+      Credentials
+    </a>
+    <a href="#" class="sidebar-link" data-page="teams">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Teams & RBAC
+    </a>
+    <div class="sidebar-section-label">Comply</div>
     <a href="/compliance.html" class="sidebar-link" data-page="compliance">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       Compliance
-    </a>
-    <div class="sidebar-section-label">Security</div>
-    <a href="/virtualkeys.html" class="sidebar-link" data-page="virtualkeys">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-      VirtualKeys
-    </a>
-    <a href="/approvals.html" class="sidebar-link" data-page="approvals">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Approvals
-    </a>
-    <div class="sidebar-section-label">Docs</div>
-    <a href="/console-docs.html#quickstart" class="sidebar-link" data-page="console-docs">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      Documentation
     </a>
   </nav>
   <div class="sidebar-footer">
@@ -104,7 +108,24 @@ function initConsole(pageName) {
   if (localStorage.getItem('altrace_dark_mode') === '1') {
     document.body.classList.add('dark');
     const toggle = document.getElementById('dark-mode-toggle');
-    if (toggle) toggle.innerHTML = '&#9788;';
+    if (toggle) toggle.textContent = '\u2600';
+  }
+
+  // Inject Cmd+K hint into topbar (before SSE status)
+  const sseStatus = document.getElementById('sse-status');
+  if (sseStatus) {
+    const cmdkHint = document.createElement('button');
+    cmdkHint.className = 'topbar-cmdk';
+    cmdkHint.onclick = openCommandPalette;
+    cmdkHint.title = 'Command palette';
+    const isMac = navigator.platform.indexOf('Mac') > -1;
+    const k1 = document.createElement('kbd');
+    k1.textContent = isMac ? '\u2318' : 'Ctrl';
+    const k2 = document.createElement('kbd');
+    k2.textContent = 'K';
+    cmdkHint.appendChild(k1);
+    cmdkHint.appendChild(k2);
+    sseStatus.parentNode.insertBefore(cmdkHint, sseStatus);
   }
 
   // Mobile sidebar toggle
@@ -112,6 +133,12 @@ function initConsole(pageName) {
   overlay.className = 'sidebar-overlay';
   overlay.addEventListener('click', () => toggleSidebar(false));
   document.body.appendChild(overlay);
+
+  // Fetch approval badge count
+  updateApprovalBadge();
+
+  // Initialize command palette keyboard listener
+  initCommandPalette();
 
   return session;
 }
@@ -130,7 +157,7 @@ function toggleDarkMode() {
   const isDark = document.body.classList.toggle('dark');
   localStorage.setItem('altrace_dark_mode', isDark ? '1' : '0');
   const toggle = document.getElementById('dark-mode-toggle');
-  if (toggle) toggle.innerHTML = isDark ? '&#9788;' : '&#9790;';
+  if (toggle) toggle.textContent = isDark ? '\u2600' : '\u263E';
 }
 
 // ── SSE via fetch + ReadableStream ───────────────────────
@@ -375,6 +402,278 @@ function renderBarChart(container, data, color) {
       </div>
     `;
   }).join('');
+}
+
+// ── Approval badge ────────────────────────────────────────
+
+async function updateApprovalBadge() {
+  try {
+    const resp = await authFetch('/api/v1/approvals');
+    if (!resp.ok) return;
+    const data = await resp.json();
+    const pending = (data.approvals || data || []).filter(function(a) {
+      return a.status === 'pending';
+    });
+    const badge = document.getElementById('nav-approval-count');
+    if (!badge) return;
+    if (pending.length > 0) {
+      badge.textContent = pending.length > 99 ? '99+' : String(pending.length);
+      badge.style.display = '';
+    } else {
+      badge.style.display = 'none';
+    }
+  } catch (e) {
+    // Silently ignore — badge is non-critical
+  }
+}
+
+// ── Command Palette ──────────────────────────────────────
+
+const PALETTE_ITEMS = [
+  { name: 'Dashboard', url: '/dashboard.html', section: 'Pages', icon: 'grid' },
+  { name: 'Kill Switches', url: '/kill-switches.html', section: 'Pages', icon: 'zap' },
+  { name: 'Approvals', url: '/approvals.html', section: 'Pages', icon: 'check' },
+  { name: 'Fleet', url: '/fleet.html', section: 'Pages', icon: 'monitor' },
+  { name: 'Cost & Budget', url: '/cost.html', section: 'Pages', icon: 'dollar' },
+  { name: 'Audit Log', url: '/audit.html', section: 'Pages', icon: 'file' },
+  { name: 'Metrics', url: '/metrics.html', section: 'Pages', icon: 'chart' },
+  { name: 'Policies', url: '/policies.html', section: 'Pages', icon: 'shield' },
+  { name: 'Credentials', url: '/virtualkeys.html', section: 'Pages', icon: 'key' },
+  { name: 'Compliance', url: '/compliance.html', section: 'Pages', icon: 'check-square' },
+  { name: 'Documentation', url: '/console-docs.html', section: 'Pages', icon: 'book' },
+  { name: 'Activate Global Kill Switch', action: function() { window.location.href = '/kill-switches.html'; }, section: 'Actions', icon: 'zap' },
+  { name: 'Issue Virtual Key', action: function() { window.location.href = '/virtualkeys.html'; }, section: 'Actions', icon: 'key' },
+  { name: 'Deploy Policy', action: function() { window.location.href = '/policies.html'; }, section: 'Actions', icon: 'shield' },
+  { name: 'Toggle Dark Mode', action: function() { toggleDarkMode(); }, section: 'Actions', icon: 'moon' },
+  { name: 'Sign Out', action: function() { clearSession(); }, section: 'Actions', icon: 'logout' },
+];
+
+let _paletteOverlay = null;
+let _paletteSelectedIdx = -1;
+let _paletteResults = [];
+
+function _getRecentPages() {
+  try {
+    return JSON.parse(localStorage.getItem('altrace_recent_pages') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function _addRecentPage(name) {
+  var recent = _getRecentPages().filter(function(r) { return r !== name; });
+  recent.unshift(name);
+  if (recent.length > 5) recent = recent.slice(0, 5);
+  try {
+    localStorage.setItem('altrace_recent_pages', JSON.stringify(recent));
+  } catch (e) {
+    // localStorage full or unavailable
+  }
+}
+
+function _fuzzyMatch(query, text) {
+  return text.toLowerCase().indexOf(query.toLowerCase()) > -1;
+}
+
+function _buildPaletteResults(query) {
+  var results = [];
+  var recent = _getRecentPages();
+
+  // If no query, show recent pages first
+  if (!query) {
+    var recentItems = [];
+    recent.forEach(function(name) {
+      var item = PALETTE_ITEMS.find(function(p) { return p.name === name; });
+      if (item) recentItems.push({ item: item, section: 'Recent' });
+    });
+    if (recentItems.length > 0) {
+      results = results.concat(recentItems);
+    }
+    // Then show all pages and actions
+    PALETTE_ITEMS.forEach(function(item) {
+      var alreadyRecent = recent.indexOf(item.name) > -1;
+      if (!alreadyRecent) {
+        results.push({ item: item, section: item.section });
+      }
+    });
+  } else {
+    PALETTE_ITEMS.forEach(function(item) {
+      if (_fuzzyMatch(query, item.name)) {
+        results.push({ item: item, section: item.section });
+      }
+    });
+  }
+
+  return results;
+}
+
+function _renderPaletteResults(listEl, results) {
+  listEl.textContent = '';
+  _paletteResults = results;
+  _paletteSelectedIdx = results.length > 0 ? 0 : -1;
+
+  if (results.length === 0) {
+    var empty = document.createElement('div');
+    empty.className = 'cmdk-empty';
+    empty.textContent = 'No results found';
+    listEl.appendChild(empty);
+    return;
+  }
+
+  var lastSection = '';
+  results.forEach(function(r, idx) {
+    if (r.section !== lastSection) {
+      lastSection = r.section;
+      var header = document.createElement('div');
+      header.className = 'cmdk-section-label';
+      header.textContent = r.section;
+      listEl.appendChild(header);
+    }
+
+    var row = document.createElement('div');
+    row.className = 'cmdk-item' + (idx === _paletteSelectedIdx ? ' cmdk-item-active' : '');
+    row.setAttribute('data-idx', String(idx));
+
+    var label = document.createElement('span');
+    label.className = 'cmdk-item-label';
+    label.textContent = r.item.name;
+    row.appendChild(label);
+
+    if (r.item.url) {
+      var hint = document.createElement('span');
+      hint.className = 'cmdk-item-hint';
+      hint.textContent = r.item.url;
+      row.appendChild(hint);
+    }
+
+    row.addEventListener('click', function() {
+      _selectPaletteItem(idx);
+    });
+    row.addEventListener('mouseenter', function() {
+      _paletteSelectedIdx = idx;
+      _highlightPaletteItem(listEl);
+    });
+
+    listEl.appendChild(row);
+  });
+}
+
+function _highlightPaletteItem(listEl) {
+  var items = listEl.querySelectorAll('.cmdk-item');
+  items.forEach(function(el, i) {
+    el.classList.toggle('cmdk-item-active', parseInt(el.getAttribute('data-idx')) === _paletteSelectedIdx);
+  });
+  // Scroll active item into view
+  var active = listEl.querySelector('.cmdk-item-active');
+  if (active) active.scrollIntoView({ block: 'nearest' });
+}
+
+function _selectPaletteItem(idx) {
+  if (idx < 0 || idx >= _paletteResults.length) return;
+  var r = _paletteResults[idx];
+  _addRecentPage(r.item.name);
+  closeCommandPalette();
+  if (r.item.url) {
+    window.location.href = r.item.url;
+  } else if (r.item.action) {
+    r.item.action();
+  }
+}
+
+function openCommandPalette() {
+  if (_paletteOverlay) return; // Already open
+
+  var overlay = document.createElement('div');
+  overlay.className = 'cmdk-overlay';
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeCommandPalette();
+  });
+
+  var dialog = document.createElement('div');
+  dialog.className = 'cmdk-dialog';
+
+  var inputWrap = document.createElement('div');
+  inputWrap.className = 'cmdk-input-wrap';
+
+  var searchIcon = document.createElement('span');
+  searchIcon.className = 'cmdk-search-icon';
+  searchIcon.textContent = '\u2315'; // search symbol
+  inputWrap.appendChild(searchIcon);
+
+  var input = document.createElement('input');
+  input.className = 'cmdk-input';
+  input.type = 'text';
+  input.placeholder = 'Search pages and actions...';
+  input.setAttribute('autocomplete', 'off');
+  input.setAttribute('spellcheck', 'false');
+  inputWrap.appendChild(input);
+
+  dialog.appendChild(inputWrap);
+
+  var list = document.createElement('div');
+  list.className = 'cmdk-list';
+  dialog.appendChild(list);
+
+  overlay.appendChild(dialog);
+  document.body.appendChild(overlay);
+  _paletteOverlay = overlay;
+
+  // Initial render (no query — show recent + all)
+  var results = _buildPaletteResults('');
+  _renderPaletteResults(list, results);
+
+  input.focus();
+
+  input.addEventListener('input', function() {
+    var q = input.value.trim();
+    var filtered = _buildPaletteResults(q);
+    _renderPaletteResults(list, filtered);
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCommandPalette();
+      e.preventDefault();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (_paletteResults.length > 0) {
+        _paletteSelectedIdx = (_paletteSelectedIdx + 1) % _paletteResults.length;
+        _highlightPaletteItem(list);
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (_paletteResults.length > 0) {
+        _paletteSelectedIdx = (_paletteSelectedIdx - 1 + _paletteResults.length) % _paletteResults.length;
+        _highlightPaletteItem(list);
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      _selectPaletteItem(_paletteSelectedIdx);
+    }
+  });
+}
+
+function closeCommandPalette() {
+  if (_paletteOverlay) {
+    _paletteOverlay.remove();
+    _paletteOverlay = null;
+    _paletteSelectedIdx = -1;
+    _paletteResults = [];
+  }
+}
+
+function initCommandPalette() {
+  document.addEventListener('keydown', function(e) {
+    var isMod = navigator.platform.indexOf('Mac') > -1 ? e.metaKey : e.ctrlKey;
+    if (isMod && e.key === 'k') {
+      e.preventDefault();
+      if (_paletteOverlay) {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
+      }
+    }
+  });
 }
 
 // Cleanup on page unload
