@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Teams — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+  <style>
+    /* ── Teams page-specific styles ──────────────────────── */
+
+    .teams-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sp-3);
+    }
+
+    .teams-header h3 {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .team-row {
+      cursor: pointer;
+    }
+
+    .team-row:hover td {
+      background: rgba(13, 148, 136, 0.04);
+    }
+
+    .team-expand-icon {
+      display: inline-block;
+      width: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      transition: transform 0.15s ease;
+      user-select: none;
+    }
+
+    .team-row.expanded .team-expand-icon {
+      transform: rotate(90deg);
+    }
+
+    .team-detail {
+      display: none;
+    }
+
+    .team-detail.open {
+      display: table-row;
+    }
+
+    .team-detail-inner {
+      padding: var(--sp-4);
+      background: var(--bg);
+    }
+
+    .team-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--sp-4);
+    }
+
+    .team-detail-section h4 {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: var(--sp-2);
+    }
+
+    .team-agent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .team-agent-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .team-agent-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .team-agent-dot.active { background: var(--success); }
+    .team-agent-dot.offline { background: var(--text-muted); }
+
+    .team-budget-detail {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .team-budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+    }
+
+    .team-budget-label {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .team-budget-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .team-budget-bar {
+      height: 8px;
+      background: #f3f3f1;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .team-budget-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .team-detail-actions {
+      display: flex;
+      gap: var(--sp-2);
+      margin-top: var(--sp-3);
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--border);
+    }
+
+    .inline-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inline-edit input {
+      width: 100px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      background: var(--surface);
+      color: var(--text-primary);
+    }
+
+    .inline-edit input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .inline-edit-save {
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .inline-edit-save:hover {
+      background: var(--accent-hover);
+    }
+
+    .member-count {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+    }
+
+    /* ── Dark mode overrides ──────────────────────────────── */
+
+    body.console-page.dark .team-detail-inner {
+      background: #13131a;
+    }
+
+    body.console-page.dark .team-budget-bar {
+      background: #1a1a22;
+    }
+
+    body.console-page.dark .inline-edit input {
+      background: #0f0f14;
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+
+    @media (max-width: 768px) {
+      .team-detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-detail-actions {
+        flex-wrap: wrap;
+      }
+
+      .teams-header {
+        flex-direction: column;
+        gap: var(--sp-2);
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Teams</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <!-- Summary stats -->
+      <div class="grid-4" style="margin-bottom: var(--sp-4);">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Total Teams</span></div>
+          <div class="panel-value" id="stat-total-teams"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Total Agents</span></div>
+          <div class="panel-value" id="stat-total-agents"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Combined Budget</span></div>
+          <div class="panel-value" id="stat-combined-budget"><span class="skeleton skeleton-value"></span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Kill Switches</span></div>
+          <div class="panel-value" id="stat-kill-switches"><span class="skeleton skeleton-value"></span></div>
+        </div>
+      </div>
+
+      <!-- New team button + header -->
+      <div class="teams-header">
+        <h3>All Teams</h3>
+        <button class="btn btn-secondary btn-nav role-write-only" id="new-team-btn" onclick="showNewTeamForm()">Create Team</button>
+      </div>
+
+      <!-- Create team form (hidden by default) -->
+      <div class="inline-form" id="new-team-form" style="display: none;">
+        <div class="form-group">
+          <label for="team-name">Team Name</label>
+          <input type="text" id="team-name" placeholder="e.g. ml-research">
+        </div>
+        <div class="form-group">
+          <label for="team-budget">Monthly Budget (USD)</label>
+          <input type="number" id="team-budget" placeholder="500" min="0" step="1">
+        </div>
+        <div class="form-group">
+          <label for="team-description">Description</label>
+          <textarea id="team-description" rows="2" placeholder="What this team does"></textarea>
+        </div>
+        <div class="inline-form-actions">
+          <button class="btn-approve" onclick="submitNewTeam()">Create Team</button>
+          <button class="btn-cancel" onclick="hideNewTeamForm()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Teams table -->
+      <div class="panel" style="padding: 0; overflow: hidden;">
+        <table class="data-table" id="teams-table">
+          <thead>
+            <tr>
+              <th style="width: 24px;"></th>
+              <th>Team</th>
+              <th>Members</th>
+              <th>Budget</th>
+              <th>Used</th>
+              <th>Utilization</th>
+              <th>Kill Switch</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="teams-body">
+            <tr><td colspan="8" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('teams');
+
+    var teamsData = [];
+
+    // ── Mock data for demo mode ──────────────────────────
+    function getMockTeams() {
+      return {
+        teams: [
+          {
+            id: 'team-001',
+            name: 'backend',
+            description: 'Backend infrastructure and API agents',
+            budget_limit_usd: 800,
+            budget_used_usd: 342.50,
+            status: 'active',
+            kill_switch: false,
+            created_at: '2026-01-15T10:00:00Z',
+            agents: [
+              { id: 'ag-001', name: 'infra-agent', status: 'active', model: 'claude-sonnet-4-20250514', requests_24h: 312 },
+              { id: 'ag-002', name: 'db-migrator', status: 'active', model: 'gpt-4o', requests_24h: 89 },
+              { id: 'ag-003', name: 'log-analyzer', status: 'offline', model: 'claude-haiku-20250514', requests_24h: 0 }
+            ]
+          },
+          {
+            id: 'team-002',
+            name: 'ml-research',
+            description: 'Machine learning research and experimentation',
+            budget_limit_usd: 2000,
+            budget_used_usd: 1456.80,
+            status: 'active',
+            kill_switch: false,
+            created_at: '2026-01-20T14:30:00Z',
+            agents: [
+              { id: 'ag-004', name: 'claude-coder', status: 'active', model: 'claude-sonnet-4-20250514', requests_24h: 847 },
+              { id: 'ag-005', name: 'batch-processor', status: 'active', model: 'claude-sonnet-4-20250514', requests_24h: 1203 },
+              { id: 'ag-006', name: 'eval-runner', status: 'active', model: 'gpt-4o', requests_24h: 456 },
+              { id: 'ag-007', name: 'paper-analyst', status: 'offline', model: 'claude-haiku-20250514', requests_24h: 0 }
+            ]
+          },
+          {
+            id: 'team-003',
+            name: 'product-ai',
+            description: 'Product-facing AI features and assistants',
+            budget_limit_usd: 500,
+            budget_used_usd: 467.20,
+            status: 'active',
+            kill_switch: false,
+            created_at: '2026-02-01T09:00:00Z',
+            agents: [
+              { id: 'ag-008', name: 'gpt-assistant', status: 'active', model: 'gpt-4o', requests_24h: 623 },
+              { id: 'ag-009', name: 'copilot-proxy', status: 'active', model: 'gpt-4o-mini', requests_24h: 1891 }
+            ]
+          },
+          {
+            id: 'team-004',
+            name: 'customer-support',
+            description: 'Customer-facing support automation',
+            budget_limit_usd: 200,
+            budget_used_usd: 43.20,
+            status: 'active',
+            kill_switch: true,
+            kill_switch_reason: 'Cost anomaly detected — auto-graduated',
+            created_at: '2026-02-10T11:00:00Z',
+            agents: [
+              { id: 'ag-010', name: 'support-bot', status: 'killed', model: 'gpt-4o-mini', requests_24h: 0 }
+            ]
+          }
+        ]
+      };
+    }
+
+    // ── Data loading ─────────────────────────────────────
+    async function loadTeams() {
+      try {
+        var data;
+        if (isDemo()) {
+          data = getMockTeams();
+        } else {
+          var resp = await authFetch('/api/v1/teams');
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          data = await resp.json();
+        }
+        teamsData = data.teams || [];
+        renderStats();
+        renderTeamsTable();
+      } catch (err) {
+        if (err.message !== 'Session expired') {
+          showToast('Failed to load teams: ' + err.message, 'error');
+        }
+      }
+    }
+
+    // ── Stats rendering ──────────────────────────────────
+    function renderStats() {
+      var totalAgents = 0;
+      var combinedBudget = 0;
+      var activeKills = 0;
+
+      teamsData.forEach(function(t) {
+        totalAgents += (t.agents || []).length;
+        combinedBudget += t.budget_limit_usd || 0;
+        if (t.kill_switch) activeKills++;
+      });
+
+      document.getElementById('stat-total-teams').textContent = teamsData.length;
+      document.getElementById('stat-total-agents').textContent = totalAgents;
+      document.getElementById('stat-combined-budget').textContent = formatUSD(combinedBudget);
+
+      var killEl = document.getElementById('stat-kill-switches');
+      while (killEl.firstChild) killEl.removeChild(killEl.firstChild);
+      var badge = document.createElement('span');
+      if (activeKills > 0) {
+        badge.className = 'badge badge-killed';
+        badge.textContent = activeKills + ' ACTIVE';
+      } else {
+        badge.className = 'badge badge-active';
+        badge.textContent = 'CLEAR';
+      }
+      killEl.appendChild(badge);
+    }
+
+    // ── Teams table rendering ────────────────────────────
+    function renderTeamsTable() {
+      var tbody = document.getElementById('teams-body');
+      while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+      if (teamsData.length === 0) {
+        var emptyRow = document.createElement('tr');
+        var emptyTd = document.createElement('td');
+        emptyTd.setAttribute('colspan', '8');
+        emptyTd.className = 'empty-state';
+        emptyTd.textContent = 'No teams configured. Create one to get started.';
+        emptyRow.appendChild(emptyTd);
+        tbody.appendChild(emptyRow);
+        return;
+      }
+
+      teamsData.forEach(function(team, idx) {
+        var pct = team.budget_limit_usd > 0 ? (team.budget_used_usd / team.budget_limit_usd * 100) : 0;
+        var pctRounded = Math.round(pct);
+        var agents = team.agents || [];
+        var activeCount = agents.filter(function(a) { return a.status === 'active'; }).length;
+
+        // Main row
+        var tr = document.createElement('tr');
+        tr.className = 'team-row';
+        tr.setAttribute('data-idx', String(idx));
+        tr.addEventListener('click', function() { toggleTeamDetail(idx); });
+
+        // Expand icon
+        var tdExpand = document.createElement('td');
+        var expandIcon = document.createElement('span');
+        expandIcon.className = 'team-expand-icon';
+        expandIcon.textContent = '\u25B6';
+        tdExpand.appendChild(expandIcon);
+        tr.appendChild(tdExpand);
+
+        // Team name
+        var tdName = document.createElement('td');
+        tdName.className = 'mono';
+        tdName.textContent = team.name;
+        tr.appendChild(tdName);
+
+        // Members
+        var tdMembers = document.createElement('td');
+        var memberSpan = document.createElement('span');
+        memberSpan.className = 'member-count';
+        memberSpan.textContent = activeCount + ' / ' + agents.length;
+        tdMembers.appendChild(memberSpan);
+        tr.appendChild(tdMembers);
+
+        // Budget
+        var tdBudget = document.createElement('td');
+        tdBudget.className = 'mono';
+        tdBudget.textContent = formatUSD(team.budget_limit_usd);
+        tr.appendChild(tdBudget);
+
+        // Used
+        var tdUsed = document.createElement('td');
+        tdUsed.className = 'mono';
+        tdUsed.textContent = formatUSD(team.budget_used_usd);
+        tr.appendChild(tdUsed);
+
+        // Utilization
+        var tdUtil = document.createElement('td');
+        var utilBadge = document.createElement('span');
+        utilBadge.className = 'badge';
+        if (pct > 90) utilBadge.className += ' badge-killed';
+        else if (pct > 75) utilBadge.className += ' badge-warn';
+        else utilBadge.className += ' badge-active';
+        utilBadge.textContent = pctRounded + '%';
+        tdUtil.appendChild(utilBadge);
+        tr.appendChild(tdUtil);
+
+        // Kill switch
+        var tdKill = document.createElement('td');
+        var killBadge = document.createElement('span');
+        if (team.kill_switch) {
+          killBadge.className = 'badge badge-killed';
+          killBadge.textContent = 'ACTIVE';
+        } else {
+          killBadge.className = 'badge badge-active';
+          killBadge.textContent = 'CLEAR';
+        }
+        tdKill.appendChild(killBadge);
+        tr.appendChild(tdKill);
+
+        // Status
+        var tdStatus = document.createElement('td');
+        var statusBadge = document.createElement('span');
+        if (team.status === 'active') {
+          statusBadge.className = 'badge badge-active';
+          statusBadge.textContent = 'ACTIVE';
+        } else {
+          statusBadge.className = 'badge badge-inactive';
+          statusBadge.textContent = (team.status || 'unknown').toUpperCase();
+        }
+        tdStatus.appendChild(statusBadge);
+        tr.appendChild(tdStatus);
+
+        tbody.appendChild(tr);
+
+        // Detail row
+        var detailTr = document.createElement('tr');
+        detailTr.className = 'team-detail';
+        detailTr.id = 'team-detail-' + idx;
+        var detailTd = document.createElement('td');
+        detailTd.setAttribute('colspan', '8');
+        detailTd.appendChild(buildTeamDetailDOM(team, idx));
+        detailTr.appendChild(detailTd);
+        tbody.appendChild(detailTr);
+      });
+    }
+
+    function buildTeamDetailDOM(team, idx) {
+      var agents = team.agents || [];
+      var pct = team.budget_limit_usd > 0 ? (team.budget_used_usd / team.budget_limit_usd * 100) : 0;
+      var remaining = Math.max(0, (team.budget_limit_usd || 0) - (team.budget_used_usd || 0));
+
+      var barColor = 'var(--accent)';
+      if (pct > 90) barColor = 'var(--danger)';
+      else if (pct > 75) barColor = 'var(--warning)';
+
+      var inner = document.createElement('div');
+      inner.className = 'team-detail-inner';
+
+      // Description
+      if (team.description) {
+        var descP = document.createElement('p');
+        descP.style.cssText = 'font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: var(--sp-3);';
+        descP.textContent = team.description;
+        inner.appendChild(descP);
+      }
+
+      var grid = document.createElement('div');
+      grid.className = 'team-detail-grid';
+
+      // ── Agents section ──
+      var agentSection = document.createElement('div');
+      agentSection.className = 'team-detail-section';
+      var agentH4 = document.createElement('h4');
+      agentH4.textContent = 'Agents';
+      agentSection.appendChild(agentH4);
+
+      var agentList = document.createElement('div');
+      agentList.className = 'team-agent-list';
+      if (agents.length === 0) {
+        var noAgents = document.createElement('span');
+        noAgents.style.cssText = 'font-size: 0.8125rem; color: var(--text-muted);';
+        noAgents.textContent = 'No agents assigned';
+        agentList.appendChild(noAgents);
+      } else {
+        agents.forEach(function(a) {
+          var item = document.createElement('div');
+          item.className = 'team-agent-item';
+          var dot = document.createElement('span');
+          dot.className = 'team-agent-dot ' + (a.status === 'active' ? 'active' : 'offline');
+          item.appendChild(dot);
+          var nameSpan = document.createElement('span');
+          nameSpan.textContent = a.name;
+          item.appendChild(nameSpan);
+          var reqSpan = document.createElement('span');
+          reqSpan.style.cssText = 'color: var(--text-muted); font-size: 0.75rem; margin-left: auto;';
+          reqSpan.textContent = (a.requests_24h || 0) + ' req/24h';
+          item.appendChild(reqSpan);
+          agentList.appendChild(item);
+        });
+      }
+      agentSection.appendChild(agentList);
+      grid.appendChild(agentSection);
+
+      // ── Budget section ──
+      var budgetSection = document.createElement('div');
+      budgetSection.className = 'team-detail-section';
+      var budgetH4 = document.createElement('h4');
+      budgetH4.textContent = 'Budget';
+      budgetSection.appendChild(budgetH4);
+
+      var budgetDetail = document.createElement('div');
+      budgetDetail.className = 'team-budget-detail';
+
+      // Limit row with inline edit
+      var limitRow = document.createElement('div');
+      limitRow.className = 'team-budget-row';
+      var limitLabel = document.createElement('span');
+      limitLabel.className = 'team-budget-label';
+      limitLabel.textContent = 'Limit';
+      limitRow.appendChild(limitLabel);
+
+      var editWrapper = document.createElement('div');
+      editWrapper.className = 'inline-edit role-write-only';
+      var editInput = document.createElement('input');
+      editInput.type = 'number';
+      editInput.value = team.budget_limit_usd || 0;
+      editInput.min = '0';
+      editInput.step = '1';
+      editInput.id = 'budget-input-' + idx;
+      editInput.addEventListener('click', function(e) { e.stopPropagation(); });
+      editWrapper.appendChild(editInput);
+      var editBtn = document.createElement('button');
+      editBtn.className = 'inline-edit-save';
+      editBtn.textContent = 'Save';
+      editBtn.addEventListener('click', function(e) { e.stopPropagation(); saveBudget(idx); });
+      editWrapper.appendChild(editBtn);
+      limitRow.appendChild(editWrapper);
+
+      var limitValue = document.createElement('span');
+      limitValue.className = 'team-budget-value';
+      limitValue.style.marginLeft = '8px';
+      limitValue.textContent = formatUSD(team.budget_limit_usd);
+      limitRow.appendChild(limitValue);
+      budgetDetail.appendChild(limitRow);
+
+      // Used row
+      var usedRow = document.createElement('div');
+      usedRow.className = 'team-budget-row';
+      var usedLabel = document.createElement('span');
+      usedLabel.className = 'team-budget-label';
+      usedLabel.textContent = 'Used';
+      usedRow.appendChild(usedLabel);
+      var usedValue = document.createElement('span');
+      usedValue.className = 'team-budget-value';
+      usedValue.textContent = formatUSD(team.budget_used_usd);
+      usedRow.appendChild(usedValue);
+      budgetDetail.appendChild(usedRow);
+
+      // Remaining row
+      var remRow = document.createElement('div');
+      remRow.className = 'team-budget-row';
+      var remLabel = document.createElement('span');
+      remLabel.className = 'team-budget-label';
+      remLabel.textContent = 'Remaining';
+      remRow.appendChild(remLabel);
+      var remValue = document.createElement('span');
+      remValue.className = 'team-budget-value';
+      remValue.textContent = formatUSD(remaining);
+      remRow.appendChild(remValue);
+      budgetDetail.appendChild(remRow);
+
+      // Budget bar
+      var bar = document.createElement('div');
+      bar.className = 'team-budget-bar';
+      var barFill = document.createElement('div');
+      barFill.className = 'team-budget-bar-fill';
+      barFill.style.width = Math.min(pct, 100) + '%';
+      barFill.style.background = barColor;
+      bar.appendChild(barFill);
+      budgetDetail.appendChild(bar);
+
+      budgetSection.appendChild(budgetDetail);
+      grid.appendChild(budgetSection);
+
+      // ── Kill switch section ──
+      var killSection = document.createElement('div');
+      killSection.className = 'team-detail-section';
+      var killH4 = document.createElement('h4');
+      killH4.textContent = 'Kill Switch';
+      killSection.appendChild(killH4);
+
+      if (team.kill_switch) {
+        var killDiv = document.createElement('div');
+        killDiv.style.marginBottom = 'var(--sp-2)';
+        var killBadge = document.createElement('span');
+        killBadge.className = 'badge badge-killed';
+        killBadge.textContent = 'ACTIVE';
+        killDiv.appendChild(killBadge);
+        killSection.appendChild(killDiv);
+        if (team.kill_switch_reason) {
+          var reasonP = document.createElement('p');
+          reasonP.style.cssText = 'font-size: 0.8125rem; color: var(--text-secondary);';
+          reasonP.textContent = team.kill_switch_reason;
+          killSection.appendChild(reasonP);
+        }
+      } else {
+        var clearDiv = document.createElement('div');
+        var clearBadge = document.createElement('span');
+        clearBadge.className = 'badge badge-active';
+        clearBadge.textContent = 'CLEAR';
+        clearDiv.appendChild(clearBadge);
+        killSection.appendChild(clearDiv);
+        var clearP = document.createElement('p');
+        clearP.style.cssText = 'font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;';
+        clearP.textContent = 'No active kill switch for this team.';
+        killSection.appendChild(clearP);
+      }
+      grid.appendChild(killSection);
+
+      inner.appendChild(grid);
+
+      // ── Actions row ──
+      var actions = document.createElement('div');
+      actions.className = 'team-detail-actions';
+
+      var deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-danger role-write-only';
+      deleteBtn.style.cssText = 'padding: 6px 14px; font-size: 0.75rem;';
+      deleteBtn.textContent = 'Delete Team';
+      deleteBtn.addEventListener('click', function(e) { e.stopPropagation(); deleteTeam(idx); });
+      actions.appendChild(deleteBtn);
+
+      var killToggleBtn = document.createElement('button');
+      killToggleBtn.className = 'btn-cancel role-write-only';
+      killToggleBtn.style.cssText = 'padding: 6px 14px; font-size: 0.75rem;';
+      killToggleBtn.textContent = team.kill_switch ? 'Deactivate Kill Switch' : 'Activate Kill Switch';
+      killToggleBtn.addEventListener('click', function(e) { e.stopPropagation(); toggleKillSwitch(idx); });
+      actions.appendChild(killToggleBtn);
+
+      inner.appendChild(actions);
+
+      return inner;
+    }
+
+    // ── Expand/collapse ──────────────────────────────────
+    function toggleTeamDetail(idx) {
+      var row = document.querySelector('.team-row[data-idx="' + idx + '"]');
+      var detail = document.getElementById('team-detail-' + idx);
+      if (!row || !detail) return;
+
+      var isOpen = detail.classList.contains('open');
+
+      // Close all others
+      document.querySelectorAll('.team-detail.open').forEach(function(el) {
+        el.classList.remove('open');
+      });
+      document.querySelectorAll('.team-row.expanded').forEach(function(el) {
+        el.classList.remove('expanded');
+      });
+
+      if (!isOpen) {
+        detail.classList.add('open');
+        row.classList.add('expanded');
+      }
+    }
+
+    // ── Create team ──────────────────────────────────────
+    function showNewTeamForm() {
+      document.getElementById('new-team-form').style.display = 'block';
+      document.getElementById('new-team-btn').style.display = 'none';
+      document.getElementById('team-name').focus();
+    }
+
+    function hideNewTeamForm() {
+      document.getElementById('new-team-form').style.display = 'none';
+      document.getElementById('new-team-btn').style.display = '';
+    }
+
+    async function submitNewTeam() {
+      var name = document.getElementById('team-name').value.trim();
+      var budget = parseFloat(document.getElementById('team-budget').value) || 0;
+      var description = document.getElementById('team-description').value.trim();
+
+      if (!name) { showToast('Team name is required', 'error'); return; }
+
+      if (isDemo()) {
+        teamsData.push({
+          id: 'team-' + Date.now(),
+          name: name,
+          description: description,
+          budget_limit_usd: budget,
+          budget_used_usd: 0,
+          status: 'active',
+          kill_switch: false,
+          created_at: new Date().toISOString(),
+          agents: []
+        });
+        renderStats();
+        renderTeamsTable();
+        showToast('Team "' + name + '" created', 'success');
+        hideNewTeamForm();
+        document.getElementById('team-name').value = '';
+        document.getElementById('team-budget').value = '';
+        document.getElementById('team-description').value = '';
+        return;
+      }
+
+      try {
+        var resp = await authFetch('/api/v1/teams', {
+          method: 'POST',
+          body: JSON.stringify({ name: name, budget_limit_usd: budget, description: description })
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        showToast('Team "' + name + '" created', 'success');
+        hideNewTeamForm();
+        document.getElementById('team-name').value = '';
+        document.getElementById('team-budget').value = '';
+        document.getElementById('team-description').value = '';
+        loadTeams();
+      } catch (err) {
+        showToast('Failed to create team: ' + err.message, 'error');
+      }
+    }
+
+    // ── Delete team ──────────────────────────────────────
+    function deleteTeam(idx) {
+      var team = teamsData[idx];
+      if (!team) return;
+
+      showConfirmDialog(
+        'Delete Team',
+        'Permanently delete team "' + team.name + '"? This will remove all budget allocations and agent assignments. This cannot be undone.',
+        'Delete',
+        async function() {
+          if (isDemo()) {
+            teamsData.splice(idx, 1);
+            renderStats();
+            renderTeamsTable();
+            showToast('Team "' + team.name + '" deleted', 'success');
+            return;
+          }
+
+          try {
+            var resp = await authFetch('/api/v1/teams/' + encodeURIComponent(team.id || team.name), {
+              method: 'DELETE'
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            showToast('Team "' + team.name + '" deleted', 'success');
+            loadTeams();
+          } catch (err) {
+            showToast('Failed to delete team: ' + err.message, 'error');
+          }
+        }
+      );
+    }
+
+    // ── Toggle kill switch ───────────────────────────────
+    function toggleKillSwitch(idx) {
+      var team = teamsData[idx];
+      if (!team) return;
+
+      var isActive = team.kill_switch;
+      var title = isActive ? 'Deactivate Kill Switch' : 'Activate Kill Switch';
+      var message = isActive
+        ? 'Deactivate the kill switch for team "' + team.name + '"? Traffic will resume.'
+        : 'Activate the kill switch for team "' + team.name + '"? All LLM traffic from this team will be halted.';
+      var action = isActive ? 'Deactivate' : 'Activate';
+
+      showConfirmDialog(title, message, action, async function() {
+        if (isDemo()) {
+          teamsData[idx].kill_switch = !isActive;
+          if (!isActive) {
+            teamsData[idx].kill_switch_reason = 'Manual activation from console';
+          } else {
+            teamsData[idx].kill_switch_reason = '';
+          }
+          renderStats();
+          renderTeamsTable();
+          showToast('Kill switch ' + (isActive ? 'deactivated' : 'activated') + ' for "' + team.name + '"', isActive ? 'success' : 'error');
+          return;
+        }
+
+        try {
+          var method = isActive ? 'DELETE' : 'POST';
+          var opts = { method: method };
+          if (!isActive) {
+            opts.body = JSON.stringify({
+              reason: 'Manual activation from console',
+              actor: (getSession() || {}).org || 'console'
+            });
+          }
+          var resp = await authFetch('/api/v1/kill/team/' + encodeURIComponent(team.name), opts);
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          showToast('Kill switch ' + (isActive ? 'deactivated' : 'activated'), isActive ? 'success' : 'error');
+          loadTeams();
+        } catch (err) {
+          showToast('Failed: ' + err.message, 'error');
+        }
+      });
+    }
+
+    // ── Inline budget edit ───────────────────────────────
+    async function saveBudget(idx) {
+      var team = teamsData[idx];
+      if (!team) return;
+
+      var input = document.getElementById('budget-input-' + idx);
+      if (!input) return;
+      var newBudget = parseFloat(input.value) || 0;
+
+      if (newBudget < 0) { showToast('Budget must be non-negative', 'error'); return; }
+
+      if (isDemo()) {
+        teamsData[idx].budget_limit_usd = newBudget;
+        renderStats();
+        renderTeamsTable();
+        showToast('Budget updated for "' + team.name + '"', 'success');
+        return;
+      }
+
+      try {
+        var resp = await authFetch('/api/v1/teams/' + encodeURIComponent(team.id || team.name), {
+          method: 'PATCH',
+          body: JSON.stringify({ budget_limit_usd: newBudget })
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        showToast('Budget updated for "' + team.name + '"', 'success');
+        loadTeams();
+      } catch (err) {
+        showToast('Failed to update budget: ' + err.message, 'error');
+      }
+    }
+
+    // ── Init ─────────────────────────────────────────────
+    loadTeams();
+    startAutoRefresh(loadTeams, 30000);
+    connectSSE();
+    onSSE('kill_switch', loadTeams);
+    onSSE('budget_update', loadTeams);
+  </script>
+</body>
+</html>

@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Settings — Altrace Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/console.css?v=1">
+  <style>
+    .settings-container {
+      max-width: 780px;
+    }
+
+    .settings-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      margin-bottom: var(--sp-4);
+    }
+
+    .settings-section-header {
+      padding: var(--sp-4) var(--sp-4) var(--sp-2);
+    }
+
+    .settings-section-header h3 {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .settings-section-header p {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .settings-section-body {
+      padding: var(--sp-3) var(--sp-4) var(--sp-4);
+    }
+
+    .settings-field {
+      margin-bottom: var(--sp-3);
+    }
+
+    .settings-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .settings-field label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .settings-field input[type="text"],
+    .settings-field input[type="url"],
+    .settings-field input[type="email"],
+    .settings-field input[type="number"],
+    .settings-field select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      background: var(--bg);
+      color: var(--text-primary);
+      box-sizing: border-box;
+    }
+
+    .settings-field input:focus,
+    .settings-field select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .settings-field .field-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .settings-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+    }
+
+    /* Toggle switch */
+    .settings-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .settings-toggle:last-child {
+      border-bottom: none;
+    }
+
+    .settings-toggle-label {
+      flex: 1;
+    }
+
+    .settings-toggle-label span {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .settings-toggle-label small {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+      margin-left: var(--sp-3);
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 11px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--accent);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(18px);
+    }
+
+    .toggle-switch input:focus-visible + .toggle-slider {
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    /* Tokens table */
+    .tokens-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .token-row:last-child {
+      border-bottom: none;
+    }
+
+    .token-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .token-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .token-meta {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .token-value {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--bg);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .token-actions {
+      display: flex;
+      gap: var(--sp-2);
+      flex-shrink: 0;
+    }
+
+    .token-actions button {
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-copy-token {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .btn-copy-token:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-revoke-token {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .btn-revoke-token:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* Generate token form */
+    .generate-token-form {
+      display: none;
+      padding: var(--sp-3) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .generate-token-form.open {
+      display: block;
+    }
+
+    .generate-token-row {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: flex-end;
+    }
+
+    .generate-token-row .settings-field {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .generated-token-reveal {
+      display: none;
+      margin-top: var(--sp-3);
+      padding: var(--sp-3);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+    }
+
+    .generated-token-reveal.open {
+      display: block;
+    }
+
+    .generated-token-reveal p {
+      font-size: 0.8125rem;
+      color: var(--warning);
+      font-weight: 600;
+      margin-bottom: var(--sp-2);
+    }
+
+    .generated-token-value {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      word-break: break-all;
+      user-select: all;
+      margin-bottom: var(--sp-2);
+    }
+
+    /* Save bar */
+    .settings-save-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--sp-2);
+      padding-top: var(--sp-3);
+    }
+
+    /* Danger zone */
+    .settings-danger {
+      border-color: var(--danger);
+      border-width: 2px;
+    }
+
+    .settings-danger .settings-section-header h3 {
+      color: var(--danger);
+    }
+
+    .danger-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-3) 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .danger-item:last-child {
+      border-bottom: none;
+    }
+
+    .danger-item-info {
+      flex: 1;
+    }
+
+    .danger-item-info strong {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .danger-item-info span {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Dark mode overrides */
+    .dark .settings-field input,
+    .dark .settings-field select {
+      background: #0f0f14;
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+
+    .dark .token-value {
+      background: #13131a;
+      border-color: var(--border);
+    }
+
+    .dark .generated-token-reveal {
+      background: #13131a;
+    }
+
+    .dark .generated-token-value {
+      background: #0f0f14;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .settings-row {
+        grid-template-columns: 1fr;
+      }
+
+      .token-row {
+        flex-wrap: wrap;
+      }
+
+      .token-value {
+        max-width: 100%;
+        order: 3;
+        flex-basis: 100%;
+      }
+
+      .generate-token-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body class="console-page">
+  <aside id="console-sidebar" class="console-sidebar"></aside>
+
+  <div class="console-main">
+    <div class="console-topbar">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
+      <h2 class="topbar-title">Settings</h2>
+      <span class="topbar-status" id="sse-status">Connecting...</span>
+    </div>
+
+    <div class="console-content">
+      <div class="settings-container">
+
+        <!-- Organization -->
+        <div class="settings-section" id="section-org">
+          <div class="settings-section-header">
+            <h3>Organization</h3>
+            <p>General organization settings visible across the console.</p>
+          </div>
+          <div class="settings-section-body">
+            <div class="settings-row">
+              <div class="settings-field">
+                <label for="org-name">Organization ID</label>
+                <input type="text" id="org-name" placeholder="acme-corp">
+                <div class="field-hint">Lowercase identifier used in API calls and audit records.</div>
+              </div>
+              <div class="settings-field">
+                <label for="org-display">Display Name</label>
+                <input type="text" id="org-display" placeholder="Acme Corporation">
+                <div class="field-hint">Shown in the sidebar and exported reports.</div>
+              </div>
+            </div>
+            <div class="settings-save-bar">
+              <button class="btn btn-primary btn-nav" onclick="saveOrg()">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Tokens -->
+        <div class="settings-section" id="section-tokens">
+          <div class="settings-section-header">
+            <h3>API Tokens</h3>
+            <p>Manage tokens used for API access and agent authentication.</p>
+          </div>
+          <div class="settings-section-body">
+            <div style="margin-bottom: var(--sp-3);">
+              <button class="btn btn-secondary btn-nav" id="btn-show-generate" onclick="toggleGenerateForm()">Generate New Token</button>
+            </div>
+
+            <div class="generate-token-form" id="generate-token-form">
+              <div class="generate-token-row">
+                <div class="settings-field">
+                  <label for="new-token-name">Token Name</label>
+                  <input type="text" id="new-token-name" placeholder="ci-pipeline-prod">
+                </div>
+                <div class="settings-field">
+                  <label for="new-token-role">Role</label>
+                  <select id="new-token-role">
+                    <option value="admin">Admin</option>
+                    <option value="operator" selected>Operator</option>
+                    <option value="viewer">Viewer</option>
+                    <option value="agent">Agent</option>
+                  </select>
+                </div>
+                <div style="display: flex; gap: var(--sp-2); padding-bottom: 0;">
+                  <button class="btn btn-primary btn-nav" onclick="generateToken()">Generate</button>
+                  <button class="btn-cancel" style="padding: 8px 16px; font-size: 0.8125rem;" onclick="toggleGenerateForm()">Cancel</button>
+                </div>
+              </div>
+
+              <div class="generated-token-reveal" id="generated-token-reveal">
+                <p>This token will not be shown again. Copy it now.</p>
+                <div class="generated-token-value" id="generated-token-value"></div>
+                <button class="btn btn-secondary btn-nav" onclick="copyGeneratedToken()">Copy to Clipboard</button>
+              </div>
+            </div>
+
+            <div class="tokens-list" id="tokens-list"></div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-section" id="section-notifications">
+          <div class="settings-section-header">
+            <h3>Notifications</h3>
+            <p>Configure how you receive alerts for budget and kill switch events.</p>
+          </div>
+          <div class="settings-section-body">
+            <div class="settings-field">
+              <label for="webhook-url">Webhook URL</label>
+              <input type="url" id="webhook-url" placeholder="https://hooks.slack.com/services/...">
+              <div class="field-hint">Receives JSON payloads for kill switch activations and budget alerts.</div>
+            </div>
+            <div class="settings-field">
+              <label for="alert-email">Alert Email</label>
+              <input type="email" id="alert-email" placeholder="ops-team@acme.com">
+              <div class="field-hint">Budget warning emails are sent when any team crosses 80% utilization.</div>
+            </div>
+
+            <div style="margin-top: var(--sp-2);">
+              <div class="settings-toggle">
+                <div class="settings-toggle-label">
+                  <span>Kill switch notifications</span>
+                  <small>Send alert when any kill switch is activated or deactivated.</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notify-kill" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-toggle">
+                <div class="settings-toggle-label">
+                  <span>Budget threshold alerts</span>
+                  <small>Notify when a team exceeds 80% or 95% of monthly budget.</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notify-budget" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-toggle">
+                <div class="settings-toggle-label">
+                  <span>Policy deployment alerts</span>
+                  <small>Notify when a new policy version is deployed to the fleet.</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notify-policy">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-save-bar">
+              <button class="btn btn-primary btn-nav" onclick="saveNotifications()">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Configuration -->
+        <div class="settings-section" id="section-agent">
+          <div class="settings-section-header">
+            <h3>Agent Configuration</h3>
+            <p>Default settings applied to newly registered teams and agents.</p>
+          </div>
+          <div class="settings-section-body">
+            <div class="settings-row">
+              <div class="settings-field">
+                <label for="default-budget">Default Monthly Budget (USD)</label>
+                <input type="number" id="default-budget" placeholder="500" min="0" step="50">
+                <div class="field-hint">Applied to new teams unless overridden at creation time.</div>
+              </div>
+              <div class="settings-field">
+                <label for="enforcement-mode">Enforcement Mode</label>
+                <select id="enforcement-mode">
+                  <option value="governance">Governance (block violations)</option>
+                  <option value="advisory">Advisory (log only)</option>
+                </select>
+                <div class="field-hint">Governance enforces budgets and kill switches. Advisory logs without blocking.</div>
+              </div>
+            </div>
+            <div class="settings-field">
+              <label for="log-level">Log Level</label>
+              <select id="log-level">
+                <option value="info">Info</option>
+                <option value="debug">Debug</option>
+                <option value="warn">Warn</option>
+                <option value="error">Error</option>
+              </select>
+              <div class="field-hint">Controls agent-side log verbosity. Debug includes full request/response headers.</div>
+            </div>
+
+            <div class="settings-save-bar">
+              <button class="btn btn-primary btn-nav" onclick="saveAgent()">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="settings-section settings-danger" id="section-danger">
+          <div class="settings-section-header">
+            <h3>Danger Zone</h3>
+            <p>Irreversible actions. Proceed with caution.</p>
+          </div>
+          <div class="settings-section-body">
+            <div class="danger-item">
+              <div class="danger-item-info">
+                <strong>Reset All Budgets</strong>
+                <span>Set used amount to $0.00 for every team. Allocations are preserved.</span>
+              </div>
+              <button class="btn-danger" style="flex-shrink: 0;" onclick="confirmResetBudgets()">Reset Budgets</button>
+            </div>
+            <div class="danger-item">
+              <div class="danger-item-info">
+                <strong>Clear Audit Log</strong>
+                <span>Permanently delete all audit records, workflow traces, and causal chain data.</span>
+              </div>
+              <button class="btn-danger" style="flex-shrink: 0;" onclick="confirmClearAudit()">Clear Audit Log</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/console.js"></script>
+  <script>
+    initConsole('settings');
+
+    // ── Demo defaults ──────────────────────────────────────
+
+    var demoSettings = {
+      org: {
+        name: 'acme-corp',
+        display_name: 'Acme Corporation'
+      },
+      tokens: [
+        { id: 'tok-001', name: 'ci-pipeline-prod', role: 'operator', prefix: 'alt_op_7f3a...', created_at: '2026-02-01T10:00:00Z' },
+        { id: 'tok-002', name: 'dashboard-readonly', role: 'viewer', prefix: 'alt_vw_9b2e...', created_at: '2026-02-10T14:30:00Z' },
+        { id: 'tok-003', name: 'ml-agent-key', role: 'agent', prefix: 'alt_ag_4d1c...', created_at: '2026-03-01T09:15:00Z' }
+      ],
+      notifications: {
+        webhook_url: 'https://hooks.slack.com/services/T00000/B00000/xxxx',
+        alert_email: 'ops-team@acme.com',
+        notify_kill: true,
+        notify_budget: true,
+        notify_policy: false
+      },
+      agent: {
+        default_budget_usd: 500,
+        enforcement_mode: 'governance',
+        log_level: 'info'
+      }
+    };
+
+    // ── Load settings ──────────────────────────────────────
+
+    async function loadSettings() {
+      try {
+        var resp = await authFetch('/api/v1/settings');
+        var data;
+        if (resp.ok) {
+          data = await resp.json();
+          // In demo mode, the response is a generic stub — use demo defaults
+          if (data.status === 'demo' || !data.org) {
+            data = demoSettings;
+          }
+        } else {
+          data = demoSettings;
+        }
+        populateForm(data);
+      } catch (err) {
+        // Fallback to demo defaults
+        populateForm(demoSettings);
+      }
+    }
+
+    function populateForm(data) {
+      // Organization
+      var org = data.org || {};
+      document.getElementById('org-name').value = org.name || '';
+      document.getElementById('org-display').value = org.display_name || '';
+
+      // Tokens
+      renderTokens(data.tokens || []);
+
+      // Notifications
+      var n = data.notifications || {};
+      document.getElementById('webhook-url').value = n.webhook_url || '';
+      document.getElementById('alert-email').value = n.alert_email || '';
+      document.getElementById('notify-kill').checked = n.notify_kill !== false;
+      document.getElementById('notify-budget').checked = n.notify_budget !== false;
+      document.getElementById('notify-policy').checked = n.notify_policy === true;
+
+      // Agent
+      var a = data.agent || {};
+      document.getElementById('default-budget').value = a.default_budget_usd || 500;
+      document.getElementById('enforcement-mode').value = a.enforcement_mode || 'governance';
+      document.getElementById('log-level').value = a.log_level || 'info';
+    }
+
+    // ── Token rendering ────────────────────────────────────
+
+    var tokensData = [];
+
+    function renderTokens(tokens) {
+      tokensData = tokens;
+      var container = document.getElementById('tokens-list');
+      container.textContent = '';
+
+      if (tokens.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.style.padding = 'var(--sp-4) 0';
+        empty.textContent = 'No API tokens issued.';
+        container.appendChild(empty);
+        return;
+      }
+
+      tokens.forEach(function(t) {
+        var row = document.createElement('div');
+        row.className = 'token-row';
+
+        var info = document.createElement('div');
+        info.className = 'token-info';
+
+        var name = document.createElement('div');
+        name.className = 'token-name';
+        name.textContent = t.name;
+
+        var meta = document.createElement('div');
+        meta.className = 'token-meta';
+        meta.textContent = t.role.toUpperCase() + '  ·  Created ' + relativeTime(t.created_at);
+
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        var val = document.createElement('div');
+        val.className = 'token-value';
+        val.textContent = t.prefix || t.id;
+
+        var actions = document.createElement('div');
+        actions.className = 'token-actions';
+
+        var copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-copy-token';
+        copyBtn.textContent = 'Copy ID';
+        copyBtn.addEventListener('click', (function(tokenId) {
+          return function() {
+            navigator.clipboard.writeText(tokenId).then(function() {
+              showToast('Token ID copied', 'info', 2000);
+            });
+          };
+        })(t.id));
+
+        var revokeBtn = document.createElement('button');
+        revokeBtn.className = 'btn-revoke-token';
+        revokeBtn.textContent = 'Revoke';
+        revokeBtn.addEventListener('click', (function(tokenId, tokenName) {
+          return function() {
+            showConfirmDialog(
+              'Revoke Token',
+              'Permanently revoke "' + tokenName + '"? Any systems using this token will lose access immediately.',
+              'Revoke',
+              function() { revokeToken(tokenId); }
+            );
+          };
+        })(t.id, t.name));
+
+        actions.appendChild(copyBtn);
+        actions.appendChild(revokeBtn);
+
+        row.appendChild(info);
+        row.appendChild(val);
+        row.appendChild(actions);
+        container.appendChild(row);
+      });
+    }
+
+    // ── Generate token ─────────────────────────────────────
+
+    function toggleGenerateForm() {
+      var form = document.getElementById('generate-token-form');
+      form.classList.toggle('open');
+      document.getElementById('generated-token-reveal').classList.remove('open');
+      if (form.classList.contains('open')) {
+        document.getElementById('new-token-name').focus();
+      }
+    }
+
+    async function generateToken() {
+      var name = document.getElementById('new-token-name').value.trim();
+      var role = document.getElementById('new-token-role').value;
+
+      if (!name) {
+        showToast('Token name is required', 'error');
+        document.getElementById('new-token-name').focus();
+        return;
+      }
+
+      try {
+        var resp = await authFetch('/api/v1/settings/tokens', {
+          method: 'POST',
+          body: JSON.stringify({ name: name, role: role })
+        });
+
+        var generatedKey;
+        if (resp.ok) {
+          var result = await resp.json();
+          generatedKey = result.token || result.key || result.id;
+        }
+
+        // Demo fallback: generate a realistic-looking token
+        if (!generatedKey || (typeof generatedKey === 'object')) {
+          var prefix = role === 'admin' ? 'alt_ad_' : role === 'operator' ? 'alt_op_' : role === 'viewer' ? 'alt_vw_' : 'alt_ag_';
+          generatedKey = prefix + generateRandomHex(32);
+        }
+
+        // Show the generated token
+        document.getElementById('generated-token-value').textContent = generatedKey;
+        document.getElementById('generated-token-reveal').classList.add('open');
+
+        // Add to local list
+        var newToken = {
+          id: 'tok-' + generateRandomHex(6),
+          name: name,
+          role: role,
+          prefix: generatedKey.substring(0, 12) + '...',
+          created_at: new Date().toISOString()
+        };
+        tokensData.unshift(newToken);
+        renderTokens(tokensData);
+
+        // Clear input
+        document.getElementById('new-token-name').value = '';
+
+        showToast('Token generated', 'success');
+      } catch (err) {
+        showToast('Failed to generate token: ' + err.message, 'error');
+      }
+    }
+
+    function copyGeneratedToken() {
+      var value = document.getElementById('generated-token-value').textContent;
+      navigator.clipboard.writeText(value).then(function() {
+        showToast('Token copied to clipboard', 'info', 2000);
+      });
+    }
+
+    async function revokeToken(tokenId) {
+      try {
+        await authFetch('/api/v1/settings/tokens/' + encodeURIComponent(tokenId), {
+          method: 'DELETE'
+        });
+
+        tokensData = tokensData.filter(function(t) { return t.id !== tokenId; });
+        renderTokens(tokensData);
+        showToast('Token revoked', 'success');
+      } catch (err) {
+        showToast('Failed to revoke token: ' + err.message, 'error');
+      }
+    }
+
+    // ── Save handlers ──────────────────────────────────────
+
+    async function saveOrg() {
+      var payload = {
+        org: {
+          name: document.getElementById('org-name').value.trim(),
+          display_name: document.getElementById('org-display').value.trim()
+        }
+      };
+
+      try {
+        await authFetch('/api/v1/settings', {
+          method: 'PUT',
+          body: JSON.stringify(payload)
+        });
+        showToast('Organization settings saved', 'success');
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    async function saveNotifications() {
+      var payload = {
+        notifications: {
+          webhook_url: document.getElementById('webhook-url').value.trim(),
+          alert_email: document.getElementById('alert-email').value.trim(),
+          notify_kill: document.getElementById('notify-kill').checked,
+          notify_budget: document.getElementById('notify-budget').checked,
+          notify_policy: document.getElementById('notify-policy').checked
+        }
+      };
+
+      try {
+        await authFetch('/api/v1/settings', {
+          method: 'PUT',
+          body: JSON.stringify(payload)
+        });
+        showToast('Notification settings saved', 'success');
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    async function saveAgent() {
+      var payload = {
+        agent: {
+          default_budget_usd: parseInt(document.getElementById('default-budget').value) || 500,
+          enforcement_mode: document.getElementById('enforcement-mode').value,
+          log_level: document.getElementById('log-level').value
+        }
+      };
+
+      try {
+        await authFetch('/api/v1/settings', {
+          method: 'PUT',
+          body: JSON.stringify(payload)
+        });
+        showToast('Agent configuration saved', 'success');
+      } catch (err) {
+        showToast('Failed to save: ' + err.message, 'error');
+      }
+    }
+
+    // ── Danger zone ────────────────────────────────────────
+
+    function confirmResetBudgets() {
+      showConfirmDialog(
+        'Reset All Budgets',
+        'This will reset the used amount to $0.00 for every team. Budget allocations will remain unchanged. This action cannot be undone.',
+        'Reset Budgets',
+        resetBudgets
+      );
+    }
+
+    async function resetBudgets() {
+      try {
+        await authFetch('/api/v1/budget/reset', { method: 'POST' });
+        showToast('All budgets have been reset', 'success');
+      } catch (err) {
+        showToast('Failed to reset budgets: ' + err.message, 'error');
+      }
+    }
+
+    function confirmClearAudit() {
+      showConfirmDialog(
+        'Clear Audit Log',
+        'This will permanently delete all audit records, workflow traces, and causal chain data. This action cannot be undone.',
+        'Clear Audit Log',
+        clearAuditLog
+      );
+    }
+
+    async function clearAuditLog() {
+      try {
+        await authFetch('/api/v1/audit/clear', { method: 'POST' });
+        showToast('Audit log cleared', 'success');
+      } catch (err) {
+        showToast('Failed to clear audit log: ' + err.message, 'error');
+      }
+    }
+
+    // ── Utilities ──────────────────────────────────────────
+
+    function generateRandomHex(length) {
+      var chars = '0123456789abcdef';
+      var result = '';
+      for (var i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    // ── Init ───────────────────────────────────────────────
+
+    loadSettings();
+    connectSSE();
+  </script>
+</body>
+</html>
