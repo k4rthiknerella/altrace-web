@@ -725,7 +725,7 @@
 
         var meta = document.createElement('div');
         meta.className = 'token-meta';
-        meta.textContent = t.role.toUpperCase() + '  ·  Created ' + relativeTime(t.created_at);
+        meta.textContent = (t.role || 'unknown').toUpperCase() + '  ·  Created ' + relativeTime(t.created_at);
 
         info.appendChild(name);
         info.appendChild(meta);
