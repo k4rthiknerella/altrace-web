@@ -109,6 +109,17 @@ function initConsole(pageName) {
   const roleEl = document.getElementById('sidebar-role');
   if (roleEl) roleEl.textContent = session.role || 'viewer';
 
+  // CWE-306: Show prominent warning banner in demo mode.
+  // Demo sessions are read-only (viewer role) with no real data.
+  if (sessionStorage.getItem('altrace_demo') === 'true') {
+    var demoBanner = document.createElement('div');
+    demoBanner.id = 'demo-warning-banner';
+    demoBanner.style.cssText = 'background:#fef3c7;color:#92400e;padding:8px 16px;font-size:0.8rem;font-weight:600;text-align:center;border-bottom:1px solid #f59e0b;position:sticky;top:0;z-index:100;';
+    demoBanner.textContent = 'DEMO MODE — Read-only access with sample data. Connect a hub for live governance.';
+    var mainEl = document.querySelector('.console-main');
+    if (mainEl) mainEl.insertBefore(demoBanner, mainEl.firstChild);
+  }
+
   // Apply dark mode from localStorage
   if (localStorage.getItem('altrace_dark_mode') === '1') {
     document.body.classList.add('dark');
@@ -236,12 +247,15 @@ async function connectSSE() {
           try {
             const parsed = JSON.parse(data);
             dispatchSSE(type, parsed);
-          } catch {}
+          } catch (e) {
+            console.warn('[altrace] malformed SSE event:', e.message);
+          }
         }
       }
     }
   } catch (err) {
     if (err.name === 'AbortError') return;
+    console.error('[altrace] SSE stream error:', err.message || err);
   }
 
   updateSSEStatus(false);

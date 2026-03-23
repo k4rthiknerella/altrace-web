@@ -157,12 +157,12 @@
               </div>
               <div class="row-detail-item">
                 <label>Causal Hash</label>
-                <span>${cp && cp.latest_hash ? cp.latest_hash.substring(0, 16) + '...' : '--'}</span>
+                <span>${cp && cp.latest_hash ? escapeHtml(cp.latest_hash.substring(0, 16)) + '...' : '--'}</span>
               </div>
               ${inv && inv.degraded > 0 ? `
               <div class="row-detail-item" style="grid-column: 1 / -1;">
                 <label>Degraded Invariants</label>
-                <span style="color: var(--warning);">${(inv.degraded_ids || []).join(', ') || 'Unknown'}</span>
+                <span style="color: var(--warning);">${(inv.degraded_ids || []).map(id => escapeHtml(String(id))).join(', ') || 'Unknown'}</span>
               </div>` : ''}
             </div>
           </div>

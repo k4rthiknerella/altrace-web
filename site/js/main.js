@@ -105,8 +105,10 @@
             role:       data.role || null,
             use_case:   data.useCase || null
           }]);
-        } catch (_) {
-          // Silent fail — show success regardless
+        } catch (err) {
+          console.error('[altrace] lead capture failed:', err);
+          // Still show success to avoid leaking infrastructure details
+          // but log for debugging
         }
       }
 

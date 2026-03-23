@@ -315,7 +315,7 @@
 
   <!-- Corner labels -->
   <text x="20" y="25" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" opacity="0.6">altrace proxy</text>
-  <text x="580" y="25" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" text-anchor="end" opacity="0.6">14-stage chain</text>
+  <text x="580" y="25" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" text-anchor="end" opacity="0.6">25-stage chain</text>
   <text x="20" y="330" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" opacity="0.6">network layer</text>
   <text x="580" y="330" fill="#94a3b8" font-family="'IBM Plex Mono', monospace" font-size="9" text-anchor="end" opacity="0.6">enforcement</text>
 </svg>

@@ -59,7 +59,7 @@
 
           <div class="form-group">
             <label for="apiKey">API Key</label>
-            <input type="password" id="apiKey" name="apiKey" placeholder="Hub RBAC token" required>
+            <input type="password" id="apiKey" name="apiKey" placeholder="Hub RBAC token" required autocomplete="new-password">
           </div>
 
           <div class="form-group">
@@ -94,6 +94,36 @@
       window.location.href = '/dashboard.html';
     }
 
+    // CWE-307: Client-side login rate limiting to prevent brute-force.
+    // After 3 consecutive failed attempts the button is disabled for 5s
+    // and a warning is shown. After 5 total failures a 30s lockout
+    // is enforced. Server-side rate limiting on the Supabase auth
+    // endpoint provides the authoritative defense; this is defense-in-depth.
+    var _loginAttempts = 0;
+    var _loginLockoutUntil = 0;
+    var _loginCooldownTimer = null;
+
+    function _setLoginCooldown(btn, errorEl, seconds) {
+      btn.disabled = true;
+      var remaining = seconds;
+      errorEl.textContent = 'Too many failed attempts. Try again in ' + remaining + 's.';
+      errorEl.style.display = 'block';
+      btn.textContent = 'Wait ' + remaining + 's...';
+      _loginCooldownTimer = setInterval(function() {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(_loginCooldownTimer);
+          _loginCooldownTimer = null;
+          btn.disabled = false;
+          btn.textContent = 'Sign In';
+          errorEl.style.display = 'none';
+        } else {
+          btn.textContent = 'Wait ' + remaining + 's...';
+          errorEl.textContent = 'Too many failed attempts. Try again in ' + remaining + 's.';
+        }
+      }, 1000);
+    }
+
     document.getElementById('login-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const org = document.getElementById('org').value.trim();
@@ -101,6 +131,18 @@
       const role = document.getElementById('role').value;
       const errorEl = document.getElementById('login-error');
       const btn = this.querySelector('button[type="submit"]');
+
+      // CWE-307: Enforce hard lockout after 5 total failures (30s).
+      var now = Date.now();
+      if (_loginLockoutUntil > now) {
+        var remaining = Math.ceil((_loginLockoutUntil - now) / 1000);
+        errorEl.textContent = 'Too many failed attempts. Try again in ' + remaining + 's.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      // Block if cooldown timer is still running
+      if (_loginCooldownTimer) return;
 
       errorEl.style.display = 'none';
       btn.disabled = true;
@@ -112,6 +154,21 @@
         });
 
         if (resp.status === 401 || resp.status === 403) {
+          _loginAttempts++;
+          // After 5 failures: hard 30s lockout
+          if (_loginAttempts >= 5) {
+            _loginLockoutUntil = Date.now() + 30000;
+            _loginAttempts = 0;
+            _setLoginCooldown(btn, errorEl, 30);
+            return;
+          }
+          // After 3 failures: 5s cooldown with countdown
+          if (_loginAttempts >= 3) {
+            errorEl.textContent = 'Invalid API key. Too many attempts — slowing down.';
+            errorEl.style.display = 'block';
+            _setLoginCooldown(btn, errorEl, 5);
+            return;
+          }
           errorEl.textContent = 'Invalid API key. Check your hub RBAC token.';
           errorEl.style.display = 'block';
           btn.disabled = false;
@@ -127,6 +184,7 @@
           return;
         }
 
+        _loginAttempts = 0;
         setSession(org, apiKey, role);
         window.location.href = '/dashboard.html';
       } catch (err) {
@@ -137,8 +195,11 @@
       }
     });
 
+    // CWE-306: Demo mode uses viewer role (read-only) since no
+    // authentication is performed. Write/admin actions are hidden
+    // via CSS role gating (role-admin-only, role-write-only).
     document.getElementById('demo-btn').addEventListener('click', function() {
-      setSession('Demo Organization', 'demo-token', 'admin');
+      setSession('Demo Organization', 'demo-token', 'viewer');
       sessionStorage.setItem('altrace_demo', 'true');
       window.location.href = '/dashboard.html';
     });

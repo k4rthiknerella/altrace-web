@@ -108,7 +108,7 @@
           <p class="section-label">Capability</p>
           <h2>Bounded-latency kill switch</h2>
           <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C003</span><span class="fw-badge fw-enforced">C006</span></div>
-          <p>In Kubernetes deployments, the kill switch blocks new LLM requests within 1 millisecond and terminates active tunnels within 1.2 seconds. Kill state persists through restarts and power loss. Maximum cost overrun is bounded to $100 regardless of agent behavior.</p>
+          <p>In Kubernetes deployments, the kill switch blocks new LLM requests within 1 millisecond and terminates active tunnels within 1.2 seconds. Kill state persists through restarts and power loss. Budget pre-reservation bounds cost overrun to ~$0.60 regardless of agent behavior.</p>
           <p>The kill switch operates at three granularities: global (all agents), team (all agents in a team), and individual agent. Graduated enforcement escalates automatically through five levels: warning, throttle, quarantine, block, and kill.</p>
           <div class="tech-box">
             In Kubernetes: network-level enforcement, agents cannot bypass. In Docker/advisory mode: best-effort enforcement via proxy routing.
@@ -195,10 +195,10 @@
           <p class="section-label">Capability</p>
           <h2>Every decision. Immutable. Attributable.</h2>
           <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E004</span><span class="fw-badge fw-enforced">E008</span><span class="fw-badge fw-enforced">D003</span></div>
-          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 14-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
+          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 25-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
           <p>When an auditor asks what happened, you don't search through prompt logs. You have causal records: which agent, what it tried to do, which governance rule was evaluated, and the outcome — with full attribution chain.</p>
           <div class="tech-box">
-            EU AI Act Art. 52 requires transparency in automated decisions. Altrace produces machine-readable decision reasons for every governance action.
+            EU AI Act Art. 50 requires transparency in AI-generated content. Altrace produces machine-readable decision reasons and transparency headers for every governance action.
           </div>
         </div>
         <div class="terminal">
@@ -211,13 +211,118 @@
           <div class="terminal-body">
             <div class="terminal-line"><span class="t-time">14:22:58</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">research-1</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">gpt-4o</span> <span class="t-key">cost=</span><span class="t-cost">$0.032</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">chain=</span><span class="t-value">14/14 passed</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">chain=</span><span class="t-value">25/25 passed</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-7f3a</span></div>
             <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:00</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">claude-opus</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (3/14)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (4/25)</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">model_not_in_delegation_allowlist</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-2b91</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 4: MCP GOVERNANCE -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid reverse fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>MCP tool governance at the protocol layer</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C009</span><span class="fw-badge fw-enforced">B007</span></div>
+          <p>Altrace governs Model Context Protocol traffic with a six-layer defense: server registry authorization, tool-level fingerprint verification, supply chain attestation, tool description poisoning detection (53 RE2 patterns), per-tool cost caps, and team-scoped access control.</p>
+          <p>When a new MCP server appears in your infrastructure, Altrace detects it. When a tool description changes between calls — a rug pull attack — fingerprint verification blocks it. When tool descriptions contain hidden prompt injection, poisoning detection catches it before execution.</p>
+          <div class="tech-box">
+            OWASP MCP Top 10 coverage: tool poisoning (MCP03), privilege escalation (MCP02), audit trail (MCP08), and shadow MCP detection (MCP09). All enforcement decisions recorded with causal audit records.
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">altrace &mdash; mcp-governance.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-time">14:23:22</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">researcher</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">mcp_server=</span><span class="t-value">github-mcp</span> <span class="t-key">tool=</span><span class="t-value">search_repos</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">fingerprint=</span><span class="t-value">verified</span> <span class="t-key">attestation=</span><span class="t-value">valid</span></div>
+            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:25</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-7</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">mcp_server=</span><span class="t-value">unknown-mcp</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">mcp_poisoning (8/25)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">tool_description_contains_hidden_instruction</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 5: EVIDENCE GROUNDING -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>Agents must prove before they act</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">D005</span><span class="fw-badge fw-enforced">C004</span></div>
+          <p>Evidence grounding requires agents to demonstrate they've gathered prerequisite information before executing destructive operations. An agent can't issue a refund without first looking up the order. Can't delete a record without first verifying it exists.</p>
+          <p>Evidence rules are defined in the safety manifest. When an agent attempts a destructive tool call, Altrace checks the session's evidence trail — with time bounds. Stale evidence is rejected. Missing evidence is blocked. The agent receives a provider-native error response explaining exactly what evidence is missing, enabling self-correction.</p>
+          <div class="tech-box">
+            Self-repair feedback: block responses are formatted in each LLM provider's native error format (Anthropic, OpenAI, Gemini). Agents can parse the response and automatically retry with the correct prerequisite calls.
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">altrace &mdash; evidence-grounding.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-time">14:24:01</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">support-bot</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">issue_refund</span> <span class="t-key">action=</span><span class="t-value">destructive</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">missing=</span><span class="t-reason">lookup_order (required, max_age: 5m)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">self_repair=</span><span class="t-value">true</span></div>
+            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:24:05</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">support-bot</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">lookup_order</span> <span class="t-key">evidence=</span><span class="t-value">recorded</span></div>
+            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:24:08</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">support-bot</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">issue_refund</span> <span class="t-key">evidence=</span><span class="t-value">valid (3s ago)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY 6: STREAMING GOVERNANCE -->
+  <section class="capability">
+    <div class="container">
+      <div class="capability-grid reverse fade-in">
+        <div>
+          <p class="section-label">Capability</p>
+          <h2>Real-time stream scanning with mid-flight cancellation</h2>
+          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">A002</span><span class="fw-badge fw-enforced">C005</span></div>
+          <p>Altrace scans SSE streaming responses in real time as tokens arrive. Each event is classified against content governance policies. When a violation is detected — PII in the response, forbidden content, policy breach — the stream is cancelled immediately with a protocol-compliant SSE error event.</p>
+          <p>A sliding window reassembles content across event boundaries to detect PII that arrives split across multiple tokens. Provider-agnostic: same scanning pipeline for Anthropic, OpenAI, and Gemini streaming responses.</p>
+          <div class="tech-box">
+            Content-blind classification: RE2 regex patterns produce boolean labels only. Matched content is never extracted, stored, or transmitted. Your data stays in transit.
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">altrace &mdash; stream-scan.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-time">14:25:00</span> <span class="t-label t-info">SCAN</span> <span class="t-agent">analyst-2</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stream=</span><span class="t-value">active</span> <span class="t-key">events=</span><span class="t-value">47</span> <span class="t-key">status=</span><span class="t-value">clean</span></div>
+            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:25:12</span> <span class="t-label t-block">CANCEL</span> <span class="t-agent">writer-1</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stream=</span><span class="t-value">cancelled</span> <span class="t-key">at_event=</span><span class="t-value">23</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">label=</span><span class="t-reason">pii-ssn</span> <span class="t-key">window=</span><span class="t-value">cross-event</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">action=</span><span class="t-value">sse_error_injected + connection_closed</span></div>
           </div>
         </div>
       </div>
@@ -233,10 +338,14 @@
         <div class="logo-grid">
           <div class="logo-item">Anthropic</div>
           <div class="logo-item">OpenAI</div>
+          <div class="logo-item">Google Gemini</div>
           <div class="logo-item">Kubernetes</div>
           <div class="logo-item">Docker</div>
+          <div class="logo-item">MCP Servers</div>
+          <div class="logo-item">Helm</div>
+          <div class="logo-item">OPA / Cedar</div>
         </div>
-        <p style="color: var(--text-secondary); margin-top: var(--sp-3);">Deploy as a sidecar in Kubernetes. Connect via credentials anywhere. No SDK changes. No agent code modifications required.</p>
+        <p style="color: var(--text-secondary); margin-top: var(--sp-3);">Deploy as a sidecar in Kubernetes. Connect via credentials anywhere. Govern MCP tool calls with server registry and poisoning detection. No SDK changes required — optional SDKs available for Python, TypeScript, and Go.</p>
       </div>
     </div>
   </section>

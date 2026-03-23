@@ -165,7 +165,7 @@
             <h3>Cut LLM access for any agent within 1.2 seconds</h3>
             <p>In Kubernetes deployments, one API call blocks all new LLM requests for a team or individual agent. The kill switch is enforced at the network layer — the agent process has no route to bypass it. Kill state persists through restarts and power loss.</p>
             <div class="tech-box" style="margin-top: var(--sp-3);">
-              Maximum cost overrun bounded to $100 worst-case, regardless of agent behavior.
+              Budget pre-reservation bounds cost overrun to ~$0.60 worst-case, regardless of agent behavior.
             </div>
           </div>
           <div class="terminal">

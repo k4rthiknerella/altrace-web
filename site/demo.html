@@ -163,10 +163,12 @@
 
   <script src="js/auth.js"></script>
   <script>
-    // Auto-enter demo mode when visiting this page
+    // CWE-306: Auto-enter demo mode as viewer (read-only).
+    // Demo sessions must never grant admin or operator privileges
+    // because no authentication is performed.
     (function() {
       if (!getSession() || !isDemo()) {
-        setSession('Demo Organization', 'demo-token', 'admin');
+        setSession('Demo Organization', 'demo-token', 'viewer');
         sessionStorage.setItem('altrace_demo', 'true');
       }
     })();

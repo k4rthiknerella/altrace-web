@@ -565,8 +565,11 @@
     }
 
     function generateInstallCommands() {
-      var session = getSession();
-      var token = session ? session.token : '<YOUR_API_TOKEN>';
+      // CWE-200: Never embed the real session token into generated install
+      // commands — they are displayed on screen and may be copy-pasted into
+      // shared channels, screenshots, or support tickets. Use a placeholder
+      // and instruct users to set the env var or replace the value.
+      var token = '$ALTRACE_TOKEN';
       var team = document.getElementById('setup-team').value.trim() || 'default';
       var budget = document.getElementById('setup-budget').value || '500';
 

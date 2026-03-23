@@ -3,16 +3,48 @@
    Token stored in sessionStorage (cleared on tab close). */
 
 const AUTH_KEY = 'altrace_session';
+const SESSION_TTL_MS = 8 * 60 * 60 * 1000;  // 8 hours
+const SESSION_IDLE_MS = 30 * 60 * 1000;      // 30 minutes idle timeout
 
 function getSession() {
   try {
     const raw = sessionStorage.getItem(AUTH_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+
+    // Check absolute session expiry (CWE-613)
+    if (session.created_at && Date.now() - session.created_at > SESSION_TTL_MS) {
+      clearSession();
+      return null;
+    }
+
+    // Check idle timeout (CWE-613)
+    if (session.last_active && Date.now() - session.last_active > SESSION_IDLE_MS) {
+      clearSession();
+      return null;
+    }
+
+    return session;
   } catch { return null; }
 }
 
 function setSession(org, token, role) {
-  sessionStorage.setItem(AUTH_KEY, JSON.stringify({ org, token, role: role || 'operator' }));
+  const now = Date.now();
+  sessionStorage.setItem(AUTH_KEY, JSON.stringify({
+    org, token, role: role || 'operator',
+    created_at: now,
+    last_active: now
+  }));
+}
+
+function touchSession() {
+  try {
+    const raw = sessionStorage.getItem(AUTH_KEY);
+    if (!raw) return;
+    const session = JSON.parse(raw);
+    session.last_active = Date.now();
+    sessionStorage.setItem(AUTH_KEY, JSON.stringify(session));
+  } catch { /* noop */ }
 }
 
 function clearSession() {
@@ -194,6 +226,7 @@ function demoResponse(data) {
 async function authFetch(path, opts = {}) {
   const session = getSession();
   if (!session) { clearSession(); throw new Error('No session'); }
+  touchSession();
 
   // Demo mode: return mock data without hitting the hub
   if (isDemo()) {
