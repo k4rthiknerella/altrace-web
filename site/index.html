@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/main.css?v=3">
 </head>
 <body>
 
@@ -16,10 +16,39 @@
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-links">
-        <a href="product.html" class="nav-link">Product</a>
-        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
-        <a href="compliance-public.html" class="nav-link">Compliance</a>
-        <a href="request-access.html" class="nav-link">Request Access</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Product</button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-label">Capabilities</div>
+            <a href="product.html">Platform Overview</a>
+            <a href="product.html#kill-switch">Kill Switches</a>
+            <a href="product.html#budget">Budget Enforcement</a>
+            <a href="product.html#chain">Decision Chain</a>
+            <a href="product.html#content">Content Governance</a>
+            <a href="product.html#mcp">MCP Security</a>
+            <a href="product.html#evidence">Evidence Grounding</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-label">Deployment</div>
+            <a href="product.html#providers">Providers</a>
+            <a href="product.html#deployment">Deployment Modes</a>
+            <a href="product.html#sdks">SDKs</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Solutions</button>
+          <div class="nav-dropdown-menu">
+            <a href="why-altrace.html">Why Altrace</a>
+            <a href="compliance-public.html">Compliance Frameworks</a>
+            <a href="pricing.html">Pricing</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Resources</button>
+          <div class="nav-dropdown-menu">
+            <a href="sandbox.html">Sandbox (Try in 2 min)</a>
+            <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
         <a href="/login.html" class="nav-link">Console</a>
       </div>
       <button class="nav-hamburger" aria-label="Toggle menu">
@@ -40,6 +69,8 @@
     <a href="product.html">Product</a>
     <a href="why-altrace.html">Why Altrace</a>
     <a href="compliance-public.html">Compliance</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="sandbox.html">Sandbox</a>
     <a href="request-access.html">Request Access</a>
     <a href="/login.html">Console</a>
   </div>
@@ -55,6 +86,7 @@
           <p class="hero-body fade-in fade-in-delay-2">Altrace is the control plane for AI agent authority. What they can access, what they can spend, what they can do — enforced at the infrastructure layer. In Kubernetes, agents have no route around it. And every decision is recorded.</p>
           <div class="hero-ctas fade-in fade-in-delay-3">
             <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+            <a href="sandbox.html" class="btn btn-secondary btn-large">Try in 2 Minutes</a>
             <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
           </div>
         </div>
@@ -65,25 +97,37 @@
     </div>
   </section>
 
-  <!-- STATS BAR -->
+  <!-- SOCIAL PROOF STATS BAR -->
   <section class="proof-bar" style="padding: 0;">
     <div class="container" style="padding-top: var(--sp-5); padding-bottom: var(--sp-5);">
       <div class="stats-bar fade-in">
         <div class="stat-item">
-          <div class="stat-number">17.2x</div>
-          <div class="stat-desc">Error amplification in multi-agent systems</div>
-          <div class="stat-source">DeepMind, 2024</div>
+          <div class="stat-number">25</div>
+          <div class="stat-desc">Decision chain stages evaluated on every request</div>
+          <div class="stat-source">Governance pipeline</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">Aug 2, 2026</div>
-          <div class="stat-desc">EU AI Act Art. 14 deadline for mandatory human oversight</div>
-          <div class="stat-source">Regulation (EU) 2024/1689</div>
+          <div class="stat-number">260K+</div>
+          <div class="stat-desc">Lines of production code across 6 repositories</div>
+          <div class="stat-source">Go, Python, TypeScript</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">&lt;1ms</div>
           <div class="stat-desc">New-request block latency in Kubernetes deployments</div>
-          <div class="stat-source">Kubernetes deployments</div>
+          <div class="stat-source">Governance-grade enforcement</div>
         </div>
+      </div>
+      <!-- Integration badges -->
+      <div class="integration-badges fade-in fade-in-delay-1">
+        <span class="integration-badge">Anthropic</span>
+        <span class="integration-badge">OpenAI</span>
+        <span class="integration-badge">Azure OpenAI</span>
+        <span class="integration-badge">Google Gemini</span>
+        <span class="integration-badge">Kubernetes</span>
+        <span class="integration-badge">Helm</span>
+        <span class="integration-badge">LangChain</span>
+        <span class="integration-badge">CrewAI</span>
+        <span class="integration-badge">MCP</span>
       </div>
     </div>
   </section>
@@ -140,6 +184,54 @@
         <p>There's a fourth option.</p>
         <div class="altrace-large">
           Altrace <span class="arrow">&darr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES GRID -->
+  <section id="capabilities">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Platform</p>
+        <h2 class="section-title">Everything you need to govern AI agents at scale</h2>
+      </div>
+      <div class="capabilities-grid stagger-reveal">
+        <div class="capability-card">
+          <div class="capability-card-icon">KS</div>
+          <h4>Kill Switches</h4>
+          <p>Three-scope hierarchy: global, team, and individual agent. SQLite WAL persistence across restarts. New requests blocked in &lt;1ms, active tunnels terminated within 1.2 seconds.</p>
+          <a href="product.html#kill-switch" class="capability-link">Learn more &rarr;</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">BE</div>
+          <h4>Budget Enforcement</h4>
+          <p>Pre-request cost estimation with atomic budget checks. TOCTOU pre-reservation bounds overrun to ~$0.60 worst-case. Per-team and per-agent limits with graduated escalation.</p>
+          <a href="product.html#budget" class="capability-link">Learn more &rarr;</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">25</div>
+          <h4>25-Stage Decision Chain</h4>
+          <p>Every request evaluated against 25 governance stages: delegation, manifest, model filter, MCP registry, tool permissions, evidence grounding, OPA, Cedar, and more.</p>
+          <a href="product.html#chain" class="capability-link">Learn more &rarr;</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">CG</div>
+          <h4>Content Governance</h4>
+          <p>PII detection with RE2 regex patterns. Real-time SSE stream scanning with sliding window reassembly. Mid-flight stream cancellation on policy violation. Content-blind: labels only, never extraction.</p>
+          <a href="product.html#content" class="capability-link">Learn more &rarr;</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">MC</div>
+          <h4>MCP Security</h4>
+          <p>Server registry authorization, tool fingerprint verification, supply chain attestation, description poisoning detection (53 RE2 patterns), per-tool cost caps, and team-scoped access control.</p>
+          <a href="product.html#mcp" class="capability-link">Learn more &rarr;</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">EG</div>
+          <h4>Evidence Grounding</h4>
+          <p>Destructive tool calls blocked without prerequisite evidence-gathering calls. Time-bounded, session-scoped evidence with provider-native self-repair feedback for LLM self-correction.</p>
+          <a href="product.html#evidence" class="capability-link">Learn more &rarr;</a>
         </div>
       </div>
     </div>
@@ -307,31 +399,34 @@
         <span class="proof-label">SOC 2</span>
         <span class="proof-label">NIST 800-53</span>
         <span class="proof-label">HIPAA</span>
+        <span class="proof-label">ISO 42001</span>
+        <span class="proof-label">OWASP LLM Top 10</span>
+        <span class="proof-label">NIST AI RMF</span>
       </div>
       <div class="grid-4">
         <div class="card compliance-item fade-in">
-          <div class="compliance-icon">&#x1F6E1;</div>
+          <div class="compliance-icon">A1</div>
           <div>
             <h4>AIUC-1</h4>
             <p>12 of 14 controls enforced at the infrastructure layer across 5 governance domains</p>
           </div>
         </div>
         <div class="card compliance-item fade-in fade-in-delay-1">
-          <div class="compliance-icon">&#x1F3DB;</div>
+          <div class="compliance-icon">EU</div>
           <div>
             <h4>EU AI Act</h4>
-            <p>Art. 9, 14, 52 — human oversight, risk management, and transparency enforcement</p>
+            <p>Art. 9, 14, 50 — human oversight, risk management, and transparency enforcement</p>
           </div>
         </div>
         <div class="card compliance-item fade-in fade-in-delay-2">
-          <div class="compliance-icon">&#x2705;</div>
+          <div class="compliance-icon">S2</div>
           <div>
             <h4>SOC 2 Type II</h4>
             <p>Tamper-evident audit logs with hash-chain integrity for continuous compliance evidence</p>
           </div>
         </div>
         <div class="card compliance-item fade-in fade-in-delay-3">
-          <div class="compliance-icon">&#x1F512;</div>
+          <div class="compliance-icon">NI</div>
           <div>
             <h4>NIST &middot; HIPAA</h4>
             <p>Content-blind governance — your data never leaves your infrastructure</p>
@@ -344,16 +439,49 @@
     </div>
   </section>
 
+  <!-- TRUST SECTION -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Trust</p>
+        <h2 class="section-title">Your container. Your network. Zero phone-home.</h2>
+        <p class="section-subtitle">Altrace runs entirely within your infrastructure. No external API calls, no telemetry, no data exfiltration. Verify it yourself.</p>
+      </div>
+      <div class="trust-badges fade-in">
+        <div class="trust-badge">
+          <div class="trust-badge-icon">NET</div>
+          <div class="trust-badge-label">NetworkPolicy<br>Verified</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">IMG</div>
+          <div class="trust-badge-label">Signed Container<br>Images</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">AUD</div>
+          <div class="trust-badge-label">Tamper-Evident<br>Audit Chain</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">SRC</div>
+          <div class="trust-badge-label">Open Source<br>Audit</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">I-4</div>
+          <div class="trust-badge-label">Content-Blind<br>Architecture</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="cta-section">
     <div class="container">
       <h2 class="fade-in">Ready to govern your agents?</h2>
-      <p class="fade-in fade-in-delay-1">Request early access. We're onboarding a limited number of enterprise teams.</p>
+      <p class="fade-in fade-in-delay-1">Request early access or try the Docker sandbox in 2 minutes.</p>
       <form id="cta-form" class="cta-form fade-in fade-in-delay-2">
         <input type="email" placeholder="Work email" required>
         <button type="submit" class="btn btn-primary">Request Access</button>
       </form>
-      <p class="cta-subtext fade-in fade-in-delay-3">We respond within 24 hours.</p>
+      <p class="cta-subtext fade-in fade-in-delay-3">We respond within 24 hours. Or <a href="sandbox.html" style="color: var(--accent); font-weight: 600;">try the sandbox now</a>.</p>
     </div>
   </section>
 
@@ -370,13 +498,19 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">How It Works</a>
-          <a href="why-altrace.html">Why Altrace</a>
-          <a href="compliance-public.html">Compliance</a>
-          <a href="request-access.html">Request Access</a>
+          <a href="product.html">Platform Overview</a>
+          <a href="product.html#kill-switch">Kill Switches</a>
+          <a href="product.html#budget">Budget Enforcement</a>
+          <a href="product.html#chain">Decision Chain</a>
+          <a href="product.html#mcp">MCP Security</a>
+          <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">
-          <h4>Connect</h4>
+          <h4>Resources</h4>
+          <a href="sandbox.html">Sandbox</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance-public.html">Compliance</a>
+          <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
           <a href="mailto:hello@altrace.io">hello@altrace.io</a>
         </div>
       </div>
@@ -389,6 +523,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
