@@ -2082,6 +2082,83 @@ section {
 }
 
 /* ============================================================
+   REQUEST FLOW DIAGRAMS
+   ============================================================ */
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.flow-step {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--sp-4);
+  min-width: 160px;
+  max-width: 200px;
+  text-align: center;
+  transition: border-color 0.3s var(--ease);
+}
+
+.flow-step-agent { border-color: var(--accent); }
+.flow-step-altrace { border-color: #2563EB; background: #f0f4ff; }
+.flow-step-provider { border-color: var(--text-muted); }
+.flow-step-operator { border-color: var(--accent-copper); }
+.flow-step-result { border-width: 3px; }
+
+.flow-step-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: var(--sp-2);
+  color: var(--text-primary);
+}
+
+.flow-step-detail {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.flow-arrow {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+.flow-arrow-blocked {
+  color: var(--danger);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.flow-caption {
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .flow-diagram {
+    flex-direction: column;
+  }
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+  .flow-step {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ============================================================
    PRICING TIERS
    ============================================================ */
 .pricing-grid {

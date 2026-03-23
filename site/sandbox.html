@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandbox — Try Altrace in 2 Minutes</title>
-  <meta name="description" content="Try Altrace in Docker with a single command. Budget enforcement, kill switches, and audit trail running on real LLM traffic in under 2 minutes.">
+  <title>How It Works — Altrace</title>
+  <meta name="description" content="See how Altrace governs AI agent traffic. Request flows for budget enforcement, kill switches, prompt injection detection, and MCP tool governance.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=3">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=4">
 </head>
 <body>
 
@@ -45,8 +45,8 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger">Resources</button>
           <div class="nav-dropdown-menu">
-            <a href="sandbox.html">Sandbox (Try in 2 min)</a>
-            <a href="https://altrace.io" target="_blank" rel="noopener">GitHub</a>
+            <a href="sandbox.html">How It Works</a>
+            <a href="https://docs.altrace.io" target="_blank" rel="noopener">Documentation</a>
           </div>
         </div>
         <a href="/login.html" class="nav-link">Console</a>
@@ -70,7 +70,7 @@
     <a href="why-altrace.html">Why Altrace</a>
     <a href="compliance-public.html">Compliance</a>
     <a href="pricing.html">Pricing</a>
-    <a href="sandbox.html">Sandbox</a>
+    <a href="sandbox.html">How It Works</a>
     <a href="request-access.html">Request Access</a>
     <a href="/login.html">Console</a>
   </div>
@@ -79,175 +79,223 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="container hero-content hero-centered">
-      <p class="section-label fade-in">Sandbox</p>
-      <h1 class="fade-in fade-in-delay-1">Try Altrace in 2 minutes</h1>
-      <p class="section-subtitle fade-in fade-in-delay-2">Run a fully functional Altrace governance proxy in Docker. Real budget enforcement, kill switches, and audit trail on real LLM traffic. No credit card, no sales call, no waiting.</p>
+      <p class="section-label fade-in">How It Works</p>
+      <h1 class="fade-in fade-in-delay-1">Every request. Governed.</h1>
+      <p class="section-subtitle fade-in fade-in-delay-2" style="max-width: 640px; margin: 0 auto;">Altrace sits transparently between your AI agents and LLM providers. Here's what happens when a request passes through.</p>
     </div>
   </section>
 
-  <!-- PREREQUISITES -->
+  <!-- FLOW 1: NORMAL REQUEST -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">Prerequisites</p>
-        <h2 class="section-title">What you need</h2>
+        <p class="section-label">Scenario 1</p>
+        <h2 class="section-title">A normal request passes through</h2>
       </div>
-      <div class="grid-3 fade-in">
-        <div class="card">
-          <h4>Docker</h4>
-          <p>Docker Engine 20+ or Docker Desktop. Docker Compose V2 included.</p>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-agent">
+          <div class="flow-step-label">Your Agent</div>
+          <div class="flow-step-detail">Calls Claude API</div>
         </div>
-        <div class="card">
-          <h4>curl</h4>
-          <p>For interacting with the Altrace control API and verifying governance decisions.</p>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Identity verified<br>Budget checked<br>Content scanned<br>All clear</div>
         </div>
-        <div class="card">
-          <h4>LLM API Key</h4>
-          <p>An Anthropic or OpenAI API key. The sandbox proxies real traffic — you'll see real governance in action.</p>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-provider">
+          <div class="flow-step-label">Anthropic</div>
+          <div class="flow-step-detail">Request forwarded</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--success);">
+          <div class="flow-step-label" style="color: var(--success);">Allowed</div>
+          <div class="flow-step-detail">Response returned<br>Cost recorded<br>Audit logged</div>
         </div>
       </div>
+      <p class="flow-caption fade-in">Typical latency overhead: <strong>&lt;1ms</strong>. The agent never knows Altrace is there.</p>
     </div>
   </section>
 
-  <!-- STEPS -->
+  <!-- FLOW 2: BUDGET EXCEEDED -->
+  <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Scenario 2</p>
+        <h2 class="section-title">An agent exceeds its budget</h2>
+      </div>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-agent">
+          <div class="flow-step-label">Your Agent</div>
+          <div class="flow-step-detail">Calls GPT-4 API<br>$487 spent of $500 budget</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Estimates request cost: $18<br>$487 + $18 = $505<br>Exceeds $500 limit</div>
+        </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
+          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
+          <div class="flow-step-detail">HTTP 402 returned<br>LLM never called<br>Zero cost incurred</div>
+        </div>
+      </div>
+      <p class="flow-caption fade-in">The request is blocked <strong>before</strong> it reaches the LLM. Your bill stays within the limit you set.</p>
+    </div>
+  </section>
+
+  <!-- FLOW 3: KILL SWITCH -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">Quickstart</p>
-        <h2 class="section-title">From zero to governed in 3 steps</h2>
+        <p class="section-label">Scenario 3</p>
+        <h2 class="section-title">You activate a kill switch</h2>
       </div>
-      <div class="sandbox-steps fade-in">
-        <div class="sandbox-step">
-          <h3>Clone and start</h3>
-          <p>Clone the repository and start the sandbox with Docker Compose. This pulls the Altrace proxy image and starts it with a default configuration.</p>
-          <div class="sandbox-command">
-            <code>git clone https://altrace.io/altrace-agent.git && cd altrace-agent && docker compose up -d</code>
-          </div>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-operator">
+          <div class="flow-step-label">You</div>
+          <div class="flow-step-detail">One API call:<br><code style="font-size:0.75rem;">POST /kill/team/finance</code></div>
         </div>
-        <div class="sandbox-step">
-          <h3>Send a governed request</h3>
-          <p>Route an LLM API call through the Altrace proxy. The proxy intercepts it, evaluates 25 governance stages, tracks cost, and forwards to the provider. You'll see governance headers in the response.</p>
-          <div class="sandbox-command">
-            <code>curl -x http://localhost:8080 \<br>&nbsp;&nbsp;-H "X-Altrace-Team: sandbox-team" \<br>&nbsp;&nbsp;-H "X-Altrace-Agent: test-agent" \<br>&nbsp;&nbsp;https://api.anthropic.com/v1/messages \<br>&nbsp;&nbsp;-H "x-api-key: $ANTHROPIC_API_KEY" \<br>&nbsp;&nbsp;-H "anthropic-version: 2023-06-01" \<br>&nbsp;&nbsp;-H "content-type: application/json" \<br>&nbsp;&nbsp;-d '{"model":"claude-sonnet-4-5-20250929","max_tokens":100,"messages":[{"role":"user","content":"Hello"}]}'</code>
-          </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Kill switch persisted<br>All new requests blocked<br>Active connections severed</div>
         </div>
-        <div class="sandbox-step">
-          <h3>Check the governance state</h3>
-          <p>Query the control API to see budget status, audit records, and enforcement state. Every decision is recorded with full attribution.</p>
-          <div class="sandbox-command">
-            <code>curl http://localhost:8080/api/v1/budget/status | jq</code>
-          </div>
-          <div class="sandbox-command" style="margin-top: var(--sp-2);">
-            <code>curl http://localhost:8080/api/v1/audit/records | jq</code>
-          </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
+          <div class="flow-step-label" style="color: var(--danger);">All Traffic Stopped</div>
+          <div class="flow-step-detail">HTTP 503 for new requests<br>Active streams cancelled<br>Survives proxy restart</div>
         </div>
       </div>
+      <p class="flow-caption fade-in">Every agent on the "finance" team is stopped. New requests get <strong>HTTP 503</strong>. Active streaming connections are terminated. The kill switch persists through restarts.</p>
     </div>
   </section>
 
-  <!-- WHAT YOU'LL SEE -->
+  <!-- FLOW 4: PROMPT INJECTION DETECTED -->
+  <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Scenario 4</p>
+        <h2 class="section-title">A prompt injection is detected</h2>
+      </div>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-agent">
+          <div class="flow-step-label">Your Agent</div>
+          <div class="flow-step-detail">Processes user input<br>containing hidden injection</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Ingress scan detects injection<br>Multiple detection layers confirm<br>Session risk level elevated</div>
+        </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
+          <div class="flow-step-label" style="color: var(--danger);">Blocked + Tightened</div>
+          <div class="flow-step-detail">Request blocked<br>Session constraints tightened<br>Future requests face stricter limits</div>
+        </div>
+      </div>
+      <p class="flow-caption fade-in">The injection is caught before it reaches the LLM. The agent's session is automatically placed under tighter constraints. No manual intervention required.</p>
+    </div>
+  </section>
+
+  <!-- FLOW 5: MCP TOOL GOVERNANCE -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">What You'll See</p>
-        <h2 class="section-title">Working governance in under 2 minutes</h2>
+        <p class="section-label">Scenario 5</p>
+        <h2 class="section-title">An agent calls a tool without prerequisites</h2>
       </div>
-      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
-        <ul class="sandbox-feature-list">
-          <li>Budget tracking with per-request cost attribution in response headers</li>
-          <li>Kill switch API — activate and watch all subsequent requests get blocked (HTTP 503)</li>
-          <li>Tamper-evident audit trail with SHA-256 hash chain</li>
-          <li>25-stage decision chain evaluated on every request</li>
-          <li>Response headers: X-Altrace-Action, X-Altrace-Cost-USD, X-Altrace-Budget-Remaining</li>
-          <li>Team and agent attribution in every audit record</li>
-          <li>Content classification labels (when content governance enabled)</li>
-        </ul>
-        <div class="tech-box" style="margin-top: var(--sp-5);">
-          <strong>Advisory mode:</strong> The Docker sandbox runs in advisory mode. Budget enforcement and kill switches work at the application level, but agents can bypass the proxy. For governance-grade enforcement where agents cannot bypass, deploy in Kubernetes with the iptables init container.
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-agent">
+          <div class="flow-step-label">Your Agent</div>
+          <div class="flow-step-detail">Calls <code style="font-size:0.75rem;">issue_refund</code><br>without first calling<br><code style="font-size:0.75rem;">lookup_order</code></div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Evidence grounding check fails<br>Required prerequisite missing<br>Tells the agent what to do</div>
+        </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--warning);">
+          <div class="flow-step-label" style="color: var(--warning);">Self-Repair</div>
+          <div class="flow-step-detail">Agent receives remediation hint:<br>"Call lookup_order first"<br>Agent self-corrects and retries</div>
         </div>
       </div>
+      <p class="flow-caption fade-in">Destructive operations require evidence of prior research. The agent is told exactly what prerequisite is missing, enabling <strong>automatic self-correction</strong>.</p>
     </div>
   </section>
 
-  <!-- TERMINAL PREVIEW -->
-  <section style="border-top: 1px solid var(--border);">
+  <!-- FLOW 6: STREAMING RESPONSE SCAN -->
+  <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">Response Headers</p>
-        <h2 class="section-title">Every request is governed and attributed</h2>
+        <p class="section-label">Scenario 6</p>
+        <h2 class="section-title">PII appears in a streaming response</h2>
       </div>
-      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">Response Headers</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-key">X-Altrace-Action:</span> <span class="t-value">allow</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Decision-Reason:</span> <span class="t-value">under_limit</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Cost-USD:</span> <span class="t-cost">0.000847</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Input-Tokens:</span> <span class="t-value">12</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Output-Tokens:</span> <span class="t-value">34</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Budget-Remaining:</span> <span class="t-cost">999.15</span></div>
-            <div class="terminal-line"><span class="t-key">X-Altrace-Request-ID:</span> <span class="t-value">a1b2c3d4</span></div>
-          </div>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-provider">
+          <div class="flow-step-label">LLM Provider</div>
+          <div class="flow-step-detail">Streaming response<br>Token by token via SSE</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Scans each event in real time<br>SSN pattern detected at event 47<br>Policy violation triggered</div>
+        </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
+          <div class="flow-step-label" style="color: var(--danger);">Stream Cancelled</div>
+          <div class="flow-step-detail">SSE error event injected<br>Connection closed<br>Violation logged</div>
         </div>
       </div>
+      <p class="flow-caption fade-in">Unlike competitors that buffer the entire response (losing real-time streaming), Altrace scans <strong>each token as it arrives</strong> and cancels mid-stream when violations are found.</p>
     </div>
   </section>
 
-  <!-- NEXT STEPS CTA -->
-  <section class="cta-section">
+  <!-- CTA -->
+  <section style="border-top: 1px solid var(--border); text-align: center;">
     <div class="container">
-      <h2 class="fade-in">Ready for production?</h2>
-      <p class="fade-in fade-in-delay-1">The sandbox shows advisory-mode governance. For governance-grade enforcement where agents cannot bypass the proxy, deploy in Kubernetes.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
-        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
-        <a href="product.html#deployment" class="btn btn-secondary btn-large">Compare Deployment Modes</a>
-      </div>
+      <h2 class="fade-in">See it in action</h2>
+      <p class="section-subtitle fade-in fade-in-delay-1" style="margin: var(--sp-3) auto var(--sp-5); max-width: 520px;">Request a walkthrough with our team. We'll show you these flows running on real LLM traffic in your environment.</p>
+      <a href="request-access.html" class="btn btn-primary btn-large fade-in fade-in-delay-2">Request Access</a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" style="border-top: 1px solid var(--border); padding: var(--sp-7) 0;">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
+        <div>
           <a href="index.html" class="nav-logo">
             <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
             Altrace
           </a>
-          <p>The authority layer for autonomous AI agents.</p>
+          <p style="margin-top: var(--sp-3); font-size: 0.875rem; color: var(--text-muted);">AI runtime governance.</p>
         </div>
-        <div class="footer-links">
-          <h4>Product</h4>
-          <a href="product.html">Platform Overview</a>
-          <a href="product.html#kill-switch">Kill Switches</a>
-          <a href="product.html#budget">Budget Enforcement</a>
-          <a href="product.html#chain">Decision Chain</a>
-          <a href="product.html#mcp">MCP Security</a>
-          <a href="pricing.html">Pricing</a>
+        <div>
+          <h4 style="margin-bottom: var(--sp-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Product</h4>
+          <a href="product.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Platform</a>
+          <a href="pricing.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Pricing</a>
+          <a href="sandbox.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">How It Works</a>
         </div>
-        <div class="footer-links">
-          <h4>Resources</h4>
-          <a href="sandbox.html">Sandbox</a>
-          <a href="why-altrace.html">Why Altrace</a>
-          <a href="compliance-public.html">Compliance</a>
-          <a href="https://altrace.io" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        <div>
+          <h4 style="margin-bottom: var(--sp-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Company</h4>
+          <a href="why-altrace.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Why Altrace</a>
+          <a href="compliance-public.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Compliance</a>
+          <a href="request-access.html" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Request Access</a>
+        </div>
+        <div>
+          <h4 style="margin-bottom: var(--sp-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Resources</h4>
+          <a href="https://docs.altrace.io" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Documentation</a>
+          <a href="mailto:hello@altrace.io" style="display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--sp-2);">Contact</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
-        <div class="footer-bottom-links">
-          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
-        </div>
+      <div style="margin-top: var(--sp-6); padding-top: var(--sp-4); border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); text-align: center;">
+        &copy; 2026 Altrace. All rights reserved.
       </div>
     </div>
   </footer>
 
-  <script src="js/main.js?v=3"></script>
+  <script src="js/main.js?v=4"></script>
 </body>
 </html>
