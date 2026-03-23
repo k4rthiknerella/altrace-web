@@ -10,19 +10,19 @@
 }
 
 :root {
-  /* Colors — Balanced copper + deep green */
-  --bg: #F2EAE0;
-  --surface: #F9F4ED;
-  --surface-warm: #E8DFCF;
-  --border: #CFC2AE;
+  /* Colors — Subtle warmth + deep green */
+  --bg: #F5F1EB;
+  --surface: #FAF8F4;
+  --surface-warm: #EEEBE4;
+  --border: #D8D2C8;
   --accent: #3D6B4A;
   --accent-hover: #2F5A3C;
   --accent-glow: rgba(61, 107, 74, 0.18);
   --accent-copper: #9B6B3E;
   --accent-copper-hover: #7D5530;
-  --text-primary: #2A2218;
-  --text-secondary: #544838;
-  --text-muted: #857662;
+  --text-primary: #252218;
+  --text-secondary: #524A3E;
+  --text-muted: #8A8070;
   --success: #3D6B4A;
   --warning: #9B6B3E;
   --danger: #8B3A3A;
