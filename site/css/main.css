@@ -10,21 +10,21 @@
 }
 
 :root {
-  /* Colors — Copper background + sage green buttons */
-  --bg: #EDE0D0;
-  --surface: #F5EBE0;
-  --surface-warm: #E3D5C3;
-  --border: #C9B9A3;
-  --accent: #5A8F6A;
-  --accent-hover: #4A7A58;
-  --accent-glow: rgba(90, 143, 106, 0.15);
-  --accent-copper: #A07040;
-  --accent-copper-hover: #8A5C32;
-  --text-primary: #2C2418;
-  --text-secondary: #5C4E3E;
-  --text-muted: #8A7C6C;
-  --success: #5A8F6A;
-  --warning: #A07040;
+  /* Colors — Balanced copper + deep green */
+  --bg: #F2EAE0;
+  --surface: #F9F4ED;
+  --surface-warm: #E8DFCF;
+  --border: #CFC2AE;
+  --accent: #3D6B4A;
+  --accent-hover: #2F5A3C;
+  --accent-glow: rgba(61, 107, 74, 0.18);
+  --accent-copper: #9B6B3E;
+  --accent-copper-hover: #7D5530;
+  --text-primary: #2A2218;
+  --text-secondary: #544838;
+  --text-muted: #857662;
+  --success: #3D6B4A;
+  --warning: #9B6B3E;
   --danger: #8B3A3A;
 
   /* Typography */
