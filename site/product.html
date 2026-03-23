@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How It Works — Altrace</title>
-  <meta name="description" content="Altrace governs what your agents are authorized to do — and enforces it. At the network layer in Kubernetes. At the credential layer everywhere else.">
+  <title>Platform — Altrace</title>
+  <meta name="description" content="Altrace is the authority plane for AI agents. Stop runaway spend, enforce boundaries, and prove compliance — without touching your agent code.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,17 +21,17 @@
           <div class="nav-dropdown-menu">
             <div class="dropdown-label">Capabilities</div>
             <a href="product.html">Platform Overview</a>
-            <a href="product.html#kill-switch">Kill Switches</a>
-            <a href="product.html#budget">Budget Enforcement</a>
-            <a href="product.html#chain">Decision Chain</a>
-            <a href="product.html#content">Content Governance</a>
-            <a href="product.html#mcp">MCP Security</a>
-            <a href="product.html#evidence">Evidence Grounding</a>
+            <a href="product.html#controls">Kill Switches</a>
+            <a href="product.html#controls">Budget Enforcement</a>
+            <a href="product.html#controls">Decision Chain</a>
+            <a href="product.html#controls">Content Governance</a>
+            <a href="product.html#controls">MCP Security</a>
+            <a href="product.html#controls">Evidence Grounding</a>
             <div class="dropdown-divider"></div>
             <div class="dropdown-label">Deployment</div>
-            <a href="product.html#providers">Providers</a>
-            <a href="product.html#deployment">Deployment Modes</a>
-            <a href="product.html#sdks">SDKs</a>
+            <a href="product.html#works-with">Providers</a>
+            <a href="product.html#different">Deployment Modes</a>
+            <a href="product.html#works-with">SDKs</a>
           </div>
         </div>
         <div class="nav-dropdown">
@@ -76,510 +76,106 @@
   </div>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero hero-centered">
     <div class="hero-bg"></div>
-    <div class="container hero-content hero-centered">
-      <h1 class="fade-in">The Authority Plane for AI Agents</h1>
-      <p class="section-subtitle fade-in fade-in-delay-1">Altrace governs what your agents are authorized to do — and enforces it. At the network layer in Kubernetes. At the credential layer everywhere else. Every decision recorded, every delegation contract enforced, every violation surfaced immediately.</p>
+    <div class="container">
+      <div class="hero-content">
+        <p class="section-label fade-in">Platform</p>
+        <h1 class="fade-in fade-in-delay-1">The authority plane<br>for AI agents.</h1>
+        <p class="section-subtitle fade-in fade-in-delay-2">
+          Altrace sits between your agents and the outside world. It decides what they're allowed to do — and enforces it, whether they cooperate or not.
+        </p>
+        <div class="hero-ctas fade-in fade-in-delay-3">
+          <a href="request-access.html" class="btn btn-primary btn-large">Request a demo</a>
+          <a href="why-altrace.html" class="btn btn-secondary btn-large">Why Altrace →</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ARCHITECTURE: TWO ENFORCEMENT LAYERS -->
-  <section>
+  <!-- WHAT ALTRACE CONTROLS -->
+  <section class="section" id="controls">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">Architecture</p>
-        <h2 class="section-title">Two Enforcement Layers, One Control Plane</h2>
+        <p class="section-label">What Altrace controls</p>
+        <h2 class="section-title">Every decision, before it reaches the model.</h2>
       </div>
-      <div class="fade-in" style="max-width: 900px; margin: 0 auto;">
-        <div class="dual-arch">
-          <!-- Left lane: Kubernetes -->
-          <div class="dual-arch-lane">
-            <div class="dual-arch-lane-title">Kubernetes</div>
-            <div class="dual-arch-box agent">Agent Process</div>
-            <div class="dual-arch-arrow">&darr; all traffic forced</div>
-            <div class="dual-arch-box enforcement">Altrace Sidecar</div>
-            <div class="dual-arch-arrow">&darr; governed</div>
-            <div class="dual-arch-box provider-box">LLM Provider</div>
-          </div>
-
-          <!-- Divider -->
-          <div class="dual-arch-divider">
-            <div class="dual-arch-divider-label">Same control plane</div>
-          </div>
-
-          <!-- Right lane: All environments -->
-          <div class="dual-arch-lane">
-            <div class="dual-arch-lane-title">All Environments</div>
-            <div class="dual-arch-box agent">Agent (any env)</div>
-            <div class="dual-arch-arrow">&darr; uses virtual key</div>
-            <div class="dual-arch-box credential">Credential Layer</div>
-            <div class="dual-arch-arrow">&darr; governed</div>
-            <div class="dual-arch-box provider-box">LLM Provider</div>
-          </div>
-
-          <!-- Shared control plane -->
-          <div class="dual-arch-shared">
-            <div class="dual-arch-shared-item">Kill Switch</div>
-            <div class="dual-arch-shared-item">Delegation Contracts</div>
-            <div class="dual-arch-shared-item">Audit Trail</div>
-            <div class="dual-arch-shared-item">Budget Controls</div>
-          </div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="capability-card">
+          <div class="capability-card-icon">⏹</div>
+          <h4>Kill switches</h4>
+          <p>Stop any agent — instantly — by team, agent, or globally. Mid-conversation.</p>
+          <a href="request-access.html" class="capability-link">See it in action →</a>
         </div>
-        <p style="margin-top: var(--sp-4); text-align: center; max-width: 720px; margin-left: auto; margin-right: auto;">In Kubernetes, agents have no route around governance — traffic is forced through the sidecar at the network level. In all environments, credential-based enforcement governs LLM access. Both paths feed the same control plane: same kill switch, same audit trail, same delegation contracts.</p>
+        <div class="capability-card">
+          <div class="capability-card-icon">$</div>
+          <h4>Spend limits</h4>
+          <p>Hard budget ceilings per team or agent. No overruns, no surprises on the bill.</p>
+          <a href="request-access.html" class="capability-link">Request a demo →</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">🔍</div>
+          <h4>Content governance</h4>
+          <p>Detect PII, sensitive data, and policy violations in requests and responses.</p>
+          <a href="request-access.html" class="capability-link">Request a demo →</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">🔗</div>
+          <h4>MCP security</h4>
+          <p>Authorize every tool call. Block unregistered servers. Detect poisoned instructions.</p>
+          <a href="request-access.html" class="capability-link">Request a demo →</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">⚖</div>
+          <h4>Evidence grounding</h4>
+          <p>Require agents to verify before they act. No order lookup? No refund issued.</p>
+          <a href="request-access.html" class="capability-link">Request a demo →</a>
+        </div>
+        <div class="capability-card">
+          <div class="capability-card-icon">🧠</div>
+          <h4>Behavioral anomaly detection</h4>
+          <p>Catch unknown agents and escalate drift before it becomes an incident.</p>
+          <a href="request-access.html" class="capability-link">Request a demo →</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- DECISION CHAIN VISUALIZATION -->
-  <section id="chain" style="border-top: 1px solid var(--border);">
+  <!-- HOW IT'S DIFFERENT -->
+  <section class="section" id="different" style="background: var(--surface-2);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">Decision Chain</p>
-        <h2 class="section-title">31 governance stages on every request</h2>
-        <p class="section-subtitle">Every LLM API request passes through a 31-stage decision chain. Each stage can block, allow, or annotate. Short-circuit evaluation means blocked requests exit immediately — no unnecessary processing.</p>
+        <p class="section-label">How it's different</p>
+        <h2 class="section-title">Governance that doesn't ask permission.</h2>
+        <p class="section-subtitle">Most tools govern through the SDK — which means agents can ignore them. Altrace operates at a layer agents cannot reach.</p>
       </div>
-      <div class="chain-visual fade-in">
-        <div class="chain-stage"><span class="chain-stage-number">1.</span> delegation</div>
-        <div class="chain-stage"><span class="chain-stage-number">2.</span> manifest</div>
-        <div class="chain-stage"><span class="chain-stage-number">3.</span> ingress_scan</div>
-        <div class="chain-stage"><span class="chain-stage-number">4.</span> policy</div>
-        <div class="chain-stage"><span class="chain-stage-number">5.</span> model_filter</div>
-        <div class="chain-stage"><span class="chain-stage-number">6.</span> mcp_registry</div>
-        <div class="chain-stage"><span class="chain-stage-number">7.</span> mcp_reputation</div>
-        <div class="chain-stage"><span class="chain-stage-number">8.</span> mcp_fingerprint</div>
-        <div class="chain-stage"><span class="chain-stage-number">9.</span> mcp_attestation</div>
-        <div class="chain-stage"><span class="chain-stage-number">10.</span> mcp_poisoning</div>
-        <div class="chain-stage"><span class="chain-stage-number">11.</span> tool_perm</div>
-        <div class="chain-stage"><span class="chain-stage-number">12.</span> tbac</div>
-        <div class="chain-stage"><span class="chain-stage-number">13.</span> evidence_grounding</div>
-        <div class="chain-stage"><span class="chain-stage-number">14.</span> action_level</div>
-        <div class="chain-stage"><span class="chain-stage-number">15.</span> approval_gate</div>
-        <div class="chain-stage"><span class="chain-stage-number">16.</span> cost_tool</div>
-        <div class="chain-stage"><span class="chain-stage-number">17.</span> dow_breaker</div>
-        <div class="chain-stage"><span class="chain-stage-number">18.</span> trust_contagion</div>
-        <div class="chain-stage"><span class="chain-stage-number">19.</span> network_trust</div>
-        <div class="chain-stage"><span class="chain-stage-number">20.</span> frontier</div>
-        <div class="chain-stage"><span class="chain-stage-number">21.</span> taint_flow</div>
-        <div class="chain-stage"><span class="chain-stage-number">22.</span> ssn_guard</div>
-        <div class="chain-stage"><span class="chain-stage-number">23.</span> rtl_guard</div>
-        <div class="chain-stage"><span class="chain-stage-number">24.</span> content_gov</div>
-        <div class="chain-stage"><span class="chain-stage-number">25.</span> chain_detect</div>
-        <div class="chain-stage"><span class="chain-stage-number">26.</span> prompt_registry</div>
-        <div class="chain-stage"><span class="chain-stage-number">27.</span> external_classifier</div>
-        <div class="chain-stage"><span class="chain-stage-number">28.</span> opa</div>
-        <div class="chain-stage"><span class="chain-stage-number">29.</span> cedar</div>
-        <div class="chain-stage"><span class="chain-stage-number">30.</span> cel</div>
-        <div class="chain-stage"><span class="chain-stage-number">31.</span> allow_fallback</div>
-      </div>
-      <div class="stats-bar fade-in" style="max-width: 720px; margin: var(--sp-5) auto 0;">
-        <div class="stat-item">
-          <div class="stat-number">2.3us</div>
-          <div class="stat-desc">All-allow latency (17-stage benchmark)</div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card card-accent-top">
+          <h4>Network-level enforcement</h4>
+          <p>In Kubernetes, traffic is intercepted at the network layer. No SDK required. No agent cooperation needed. Governance is not optional.</p>
+          <a href="request-access.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">Learn how →</a>
         </div>
-        <div class="stat-item">
-          <div class="stat-number">412ns</div>
-          <div class="stat-desc">Early-block short-circuit</div>
+        <div class="card card-accent-top">
+          <h4>Your data never leaves</h4>
+          <p>Altrace runs inside your infrastructure. No content is extracted, stored, or transmitted. Classification happens locally and disappears.</p>
+          <a href="why-altrace.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">Learn more →</a>
         </div>
-        <div class="stat-item">
-          <div class="stat-number">1us</div>
-          <div class="stat-desc">Parallel evaluation (8-core)</div>
+        <div class="card card-accent-top">
+          <h4>Tamper-evident audit trail</h4>
+          <p>Every governance decision is chained together cryptographically. You can prove — to an auditor — exactly what happened and when.</p>
+          <a href="compliance-public.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">See compliance coverage →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CAPABILITY 1: KILL SWITCH -->
-  <section id="kill-switch" class="capability">
-    <div class="container">
-      <div class="capability-grid fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>Bounded-latency kill switch</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C003</span><span class="fw-badge fw-enforced">C006</span></div>
-          <p>In Kubernetes deployments, the kill switch blocks new LLM requests within 1 millisecond and terminates active tunnels within 1.2 seconds. Kill state persists through restarts and power loss. Budget pre-reservation bounds cost overrun to ~$0.60 regardless of agent behavior.</p>
-          <p>The kill switch operates at three granularities: global (all agents), team (all agents in a team), and individual agent. Graduated enforcement escalates automatically through five levels: warning, throttle, quarantine, block, and kill.</p>
-          <div class="tech-box">
-            In Kubernetes: network-level enforcement, agents cannot bypass. In Docker/advisory mode: best-effort enforcement via proxy routing.
-          </div>
-        </div>
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">altrace &mdash; enforcement.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-time">14:23:00</span> <span class="t-label t-warn">WARN</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">80%</span> <span class="t-key">level=</span><span class="t-value">WARNING</span></div>
-            <div class="terminal-line"><span class="t-time">14:23:12</span> <span class="t-label t-warn">WARN</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">100%</span> <span class="t-key">level=</span><span class="t-value">SOFT_LIMIT</span></div>
-            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span> <span class="t-key">budget=</span><span class="t-cost">120%</span> <span class="t-key">level=</span><span class="t-value">HARD_LIMIT</span></div>
-            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-kill">KILL</span> <span class="t-key">scope=</span><span class="t-value">agent</span> <span class="t-key">persist=</span><span class="t-value">true</span></div>
-            <div class="terminal-line"><span class="t-time">14:23:18</span> <span class="t-label t-info">INFO</span> <span class="t-key">new_requests=</span><span class="t-value">blocked</span> <span class="t-key">tunnels=</span><span class="t-value">draining</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITY 2: BUDGET ENFORCEMENT -->
-  <section id="budget" class="capability">
-    <div class="container">
-      <div class="capability-grid reverse fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>Authority that can only attenuate, never escalate</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E005</span><span class="fw-badge fw-enforced">B004</span><span class="fw-badge fw-enforced">B006</span></div>
-          <p>When an orchestrator delegates to a worker agent, Altrace enforces that the worker's authority is a strict subset of what it was granted. Budget limits, model access, tool permissions, data classification, time windows, rate limits, and geographic constraints — all governed by cryptographically signed delegation contracts.</p>
-          <p>This isn't policy-enforced. It's mathematically enforced. Authority attenuation makes escalation structurally impossible, not just prohibited.</p>
-          <div class="tech-box">
-            Content-blind: Altrace never reads the content of prompts or responses. Only boolean governance labels flow through the system — your data stays with your agents.
-          </div>
-        </div>
-        <div class="delegation-visual">
-          <div class="delegation-chain">
-            <div class="delegation-node">
-              <div class="delegation-badge operator">Operator</div>
-              <div class="delegation-perms">
-                <span class="delegation-perm">gpt-4o</span>
-                <span class="delegation-perm">claude-sonnet</span>
-                <span class="delegation-perm">$500/day</span>
-                <span class="delegation-perm">tools: all</span>
-                <span class="delegation-perm">PII: allowed</span>
-              </div>
-            </div>
-            <div class="delegation-arrow">delegates &darr; authority attenuated</div>
-            <div class="delegation-node">
-              <div class="delegation-badge orchestrator">Orchestrator</div>
-              <div class="delegation-perms">
-                <span class="delegation-perm">gpt-4o</span>
-                <span class="delegation-perm revoked">claude-sonnet</span>
-                <span class="delegation-perm">$200/day</span>
-                <span class="delegation-perm">tools: search, db-read</span>
-                <span class="delegation-perm revoked">PII: allowed</span>
-              </div>
-            </div>
-            <div class="delegation-arrow">delegates &darr; authority attenuated</div>
-            <div class="delegation-node">
-              <div class="delegation-badge worker">Worker Agent</div>
-              <div class="delegation-perms">
-                <span class="delegation-perm">gpt-4o</span>
-                <span class="delegation-perm revoked">claude-sonnet</span>
-                <span class="delegation-perm">$50/day</span>
-                <span class="delegation-perm">tools: search</span>
-                <span class="delegation-perm revoked">PII: allowed</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITY 3: CAUSAL AUDIT TRAIL -->
-  <section class="capability">
-    <div class="container">
-      <div class="capability-grid fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>Every decision. Immutable. Attributable.</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E004</span><span class="fw-badge fw-enforced">E008</span><span class="fw-badge fw-enforced">D003</span></div>
-          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 31-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
-          <p>When an auditor asks what happened, you don't search through prompt logs. You have causal records: which agent, what it tried to do, which governance rule was evaluated, and the outcome — with full attribution chain.</p>
-          <div class="tech-box">
-            EU AI Act Art. 50 requires transparency in AI-generated content. Altrace produces machine-readable decision reasons and transparency headers for every governance action.
-          </div>
-        </div>
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">altrace &mdash; audit-trail.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-time">14:22:58</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">research-1</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">gpt-4o</span> <span class="t-key">cost=</span><span class="t-cost">$0.032</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">chain=</span><span class="t-value">25/25 passed</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-7f3a</span></div>
-            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:00</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">claude-opus</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (4/31)</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">model_not_in_delegation_allowlist</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-2b91</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITY 4: MCP GOVERNANCE -->
-  <section id="mcp" class="capability">
-    <div class="container">
-      <div class="capability-grid reverse fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>MCP tool governance at the protocol layer</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C009</span><span class="fw-badge fw-enforced">B007</span></div>
-          <p>Altrace governs Model Context Protocol traffic with a six-layer defense: server registry authorization, tool-level fingerprint verification, supply chain attestation, tool description poisoning detection (89 RE2 patterns), per-tool cost caps, and team-scoped access control.</p>
-          <p>When a new MCP server appears in your infrastructure, Altrace detects it. When a tool description changes between calls — a rug pull attack — fingerprint verification blocks it. When tool descriptions contain hidden prompt injection, poisoning detection catches it before execution.</p>
-          <div class="tech-box">
-            OWASP MCP Top 10 coverage: tool poisoning (MCP03), privilege escalation (MCP02), audit trail (MCP08), and shadow MCP detection (MCP09). All enforcement decisions recorded with causal audit records.
-          </div>
-        </div>
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">altrace &mdash; mcp-governance.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-time">14:23:22</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">researcher</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">mcp_server=</span><span class="t-value">github-mcp</span> <span class="t-key">tool=</span><span class="t-value">search_repos</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">fingerprint=</span><span class="t-value">verified</span> <span class="t-key">attestation=</span><span class="t-value">valid</span></div>
-            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:25</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-7</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">mcp_server=</span><span class="t-value">unknown-mcp</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">mcp_poisoning (9/31)</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">tool_description_contains_hidden_instruction</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITY 5: EVIDENCE GROUNDING -->
-  <section id="evidence" class="capability">
-    <div class="container">
-      <div class="capability-grid fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>Agents must prove before they act</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">D005</span><span class="fw-badge fw-enforced">C004</span></div>
-          <p>Evidence grounding requires agents to demonstrate they've gathered prerequisite information before executing destructive operations. An agent can't issue a refund without first looking up the order. Can't delete a record without first verifying it exists.</p>
-          <p>Evidence rules are defined in the safety manifest. When an agent attempts a destructive tool call, Altrace checks the session's evidence trail — with time bounds. Stale evidence is rejected. Missing evidence is blocked. The agent receives a provider-native error response explaining exactly what evidence is missing, enabling self-correction.</p>
-          <div class="tech-box">
-            Self-repair feedback: block responses are formatted in each LLM provider's native error format (Anthropic, OpenAI, Gemini). Agents can parse the response and automatically retry with the correct prerequisite calls.
-          </div>
-        </div>
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">altrace &mdash; evidence-grounding.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-time">14:24:01</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">support-bot</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">issue_refund</span> <span class="t-key">action=</span><span class="t-value">destructive</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">missing=</span><span class="t-reason">lookup_order (required, max_age: 5m)</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">self_repair=</span><span class="t-value">true</span></div>
-            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:24:05</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">support-bot</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">lookup_order</span> <span class="t-key">evidence=</span><span class="t-value">recorded</span></div>
-            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:24:08</span> <span class="t-label t-allow">ALLOW</span> <span class="t-agent">support-bot</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">tool=</span><span class="t-value">issue_refund</span> <span class="t-key">evidence=</span><span class="t-value">valid (3s ago)</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITY 6: STREAMING GOVERNANCE -->
-  <section id="content" class="capability">
-    <div class="container">
-      <div class="capability-grid reverse fade-in">
-        <div>
-          <p class="section-label">Capability</p>
-          <h2>Real-time stream scanning with mid-flight cancellation</h2>
-          <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">A002</span><span class="fw-badge fw-enforced">C005</span></div>
-          <p>Altrace scans SSE streaming responses in real time as tokens arrive. Each event is classified against content governance policies. When a violation is detected — PII in the response, forbidden content, policy breach — the stream is cancelled immediately with a protocol-compliant SSE error event.</p>
-          <p>A sliding window reassembles content across event boundaries to detect PII that arrives split across multiple tokens. Provider-agnostic: same scanning pipeline for Anthropic, OpenAI, and Gemini streaming responses.</p>
-          <div class="tech-box">
-            Content-blind classification: RE2 regex patterns produce boolean labels only. Matched content is never extracted, stored, or transmitted. Your data stays in transit.
-          </div>
-        </div>
-        <div class="terminal">
-          <div class="terminal-header">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">altrace &mdash; stream-scan.log</span>
-          </div>
-          <div class="terminal-body">
-            <div class="terminal-line"><span class="t-time">14:25:00</span> <span class="t-label t-info">SCAN</span> <span class="t-agent">analyst-2</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stream=</span><span class="t-value">active</span> <span class="t-key">events=</span><span class="t-value">47</span> <span class="t-key">status=</span><span class="t-value">clean</span></div>
-            <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:25:12</span> <span class="t-label t-block">CANCEL</span> <span class="t-agent">writer-1</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stream=</span><span class="t-value">cancelled</span> <span class="t-key">at_event=</span><span class="t-value">23</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">label=</span><span class="t-reason">pii-ssn</span> <span class="t-key">window=</span><span class="t-value">cross-event</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">action=</span><span class="t-value">sse_error_injected + connection_closed</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROVIDERS -->
-  <section id="providers" style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">Provider Support</p>
-        <h2 class="section-title">Native support for every major LLM provider</h2>
-      </div>
-      <div class="provider-grid fade-in">
-        <div class="provider-card">
-          <div class="provider-card-name">Anthropic</div>
-          <div class="provider-card-detail">Claude 4 / Sonnet / Haiku</div>
-        </div>
-        <div class="provider-card">
-          <div class="provider-card-name">OpenAI</div>
-          <div class="provider-card-detail">GPT-4o / o1 / Responses API</div>
-        </div>
-        <div class="provider-card">
-          <div class="provider-card-name">Azure OpenAI</div>
-          <div class="provider-card-detail">All Azure-hosted models</div>
-        </div>
-        <div class="provider-card">
-          <div class="provider-card-name">Google Gemini</div>
-          <div class="provider-card-detail">Gemini Pro / Ultra</div>
-        </div>
-      </div>
-      <p style="text-align: center; margin-top: var(--sp-4); font-size: 0.875rem; color: var(--text-muted);">Each provider has a dedicated handler with native SSE stream extraction, cost parsing, and block feedback formatting. No generic proxy behavior — purpose-built governance for each API.</p>
-    </div>
-  </section>
-
-  <!-- DEPLOYMENT MODES -->
-  <section id="deployment" style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">Deployment</p>
-        <h2 class="section-title">Choose the enforcement level that fits your environment</h2>
-      </div>
-      <div class="fade-in" style="max-width: 900px; margin: 0 auto; overflow-x: auto;">
-        <table class="deploy-table">
-          <thead>
-            <tr>
-              <th>Mode</th>
-              <th>Enforcement Level</th>
-              <th>Mechanism</th>
-              <th>Requirements</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Kubernetes + iptables</strong></td>
-              <td><span class="deploy-level governance">Governance-Grade</span></td>
-              <td>iptables NAT REDIRECT + filter DROP. Agents have no route around the proxy.</td>
-              <td>CAP_NET_ADMIN, init container</td>
-            </tr>
-            <tr>
-              <td><strong>Kubernetes + Cilium</strong></td>
-              <td><span class="deploy-level governance">Governance-Grade</span></td>
-              <td>CiliumLocalRedirectPolicy + CiliumNetworkPolicy CRDs.</td>
-              <td>Cilium CNI (1.13+)</td>
-            </tr>
-            <tr>
-              <td><strong>Kubernetes + VirtualKey</strong></td>
-              <td><span class="deploy-level strong">Strong</span></td>
-              <td>Agent only has proxy token. Real LLM keys stay in the proxy.</td>
-              <td>VirtualKey credential authority</td>
-            </tr>
-            <tr>
-              <td><strong>Docker / Docker Compose</strong></td>
-              <td><span class="deploy-level advisory">Advisory</span></td>
-              <td>Application-level proxy. Budget + kill switch functional but bypassable.</td>
-              <td>HTTP_PROXY env var</td>
-            </tr>
-            <tr>
-              <td><strong>Gateway (Fargate)</strong></td>
-              <td><span class="deploy-level strong">Strong</span></td>
-              <td>AWS Network Firewall routes traffic through Altrace Gateway on EC2/EKS.</td>
-              <td>Gateway binary + Network Firewall</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- SDK SECTION -->
-  <section id="sdks" style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">SDKs</p>
-        <h2 class="section-title">Optional SDKs for deeper integration</h2>
-        <p class="section-subtitle">Altrace works without any SDK changes — it's a transparent proxy. But optional SDKs add evidence headers, budget awareness, and framework integration.</p>
-      </div>
-      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
-        <div class="sdk-tabs">
-          <button class="sdk-tab active" data-sdk="sdk-python">Python</button>
-          <button class="sdk-tab" data-sdk="sdk-typescript">TypeScript</button>
-          <button class="sdk-tab" data-sdk="sdk-go">Go (Native)</button>
-        </div>
-        <div id="sdk-python" class="sdk-content active">
-          <div class="sdk-code">
-<pre><span class="code-keyword">from</span> altrace <span class="code-keyword">import</span> <span class="code-func">AltraceClient</span>
-
-<span class="code-comment"># Drop-in replacement for anthropic.Anthropic()</span>
-<span class="code-var">client</span> = <span class="code-func">AltraceClient</span>(
-    provider=<span class="code-string">"anthropic"</span>,
-    team=<span class="code-string">"research"</span>,
-    agent=<span class="code-string">"data-analyst-1"</span>,
-)
-
-<span class="code-comment"># Evidence headers attached automatically</span>
-<span class="code-var">response</span> = client.messages.create(
-    model=<span class="code-string">"claude-sonnet-4-5-20250929"</span>,
-    messages=[{<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: <span class="code-string">"Analyze Q3 data"</span>}],
-)
-
-<span class="code-comment"># Budget-aware: client.budget_remaining returns float</span>
-<span class="code-keyword">print</span>(f<span class="code-string">"Remaining: ${client.budget_remaining:.2f}"</span>)</pre>
-          </div>
-        </div>
-        <div id="sdk-typescript" class="sdk-content">
-          <div class="sdk-code">
-<pre><span class="code-keyword">import</span> { <span class="code-func">AltraceClient</span> } <span class="code-keyword">from</span> <span class="code-string">'altrace'</span>;
-
-<span class="code-comment">// Drop-in replacement for OpenAI()</span>
-<span class="code-keyword">const</span> <span class="code-var">client</span> = <span class="code-keyword">new</span> <span class="code-func">AltraceClient</span>({
-  provider: <span class="code-string">'openai'</span>,
-  team: <span class="code-string">'engineering'</span>,
-  agent: <span class="code-string">'code-review-bot'</span>,
-});
-
-<span class="code-comment">// Governance headers injected transparently</span>
-<span class="code-keyword">const</span> <span class="code-var">completion</span> = <span class="code-keyword">await</span> client.chat.completions.create({
-  model: <span class="code-string">'gpt-4o'</span>,
-  messages: [{ role: <span class="code-string">'user'</span>, content: <span class="code-string">'Review this PR'</span> }],
-});</pre>
-          </div>
-        </div>
-        <div id="sdk-go" class="sdk-content">
-          <div class="sdk-code">
-<pre><span class="code-comment">// No SDK needed — Altrace is a transparent proxy</span>
-<span class="code-comment">// Set HTTP_PROXY and use any Go HTTP client</span>
-
-<span class="code-var">os</span>.<span class="code-func">Setenv</span>(<span class="code-string">"HTTP_PROXY"</span>, <span class="code-string">"http://localhost:8080"</span>)
-<span class="code-var">os</span>.<span class="code-func">Setenv</span>(<span class="code-string">"HTTPS_PROXY"</span>, <span class="code-string">"http://localhost:8080"</span>)
-
-<span class="code-comment">// In Kubernetes with iptables, even this is unnecessary</span>
-<span class="code-comment">// — all port 443 traffic is automatically redirected</span>
-
-<span class="code-var">client</span> := <span class="code-func">anthropic.NewClient</span>()
-<span class="code-var">resp</span>, <span class="code-var">err</span> := client.<span class="code-func">CreateMessage</span>(ctx, params)</pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- INTEGRATIONS -->
-  <section class="integration-section">
+  <!-- WORKS WITH -->
+  <section class="integration-section" id="works-with">
     <div class="container">
       <div class="fade-in">
-        <p class="section-label">Integrations</p>
-        <h2>Works with your stack</h2>
-        <div class="logo-grid">
+        <p class="section-label">Works with</p>
+        <h2>Your stack. Your cloud. Your agents.</h2>
+        <div class="logo-grid" style="margin-top: var(--sp-5);">
           <div class="logo-item">Anthropic</div>
           <div class="logo-item">OpenAI</div>
           <div class="logo-item">Azure OpenAI</div>
@@ -587,13 +183,12 @@
           <div class="logo-item">Kubernetes</div>
           <div class="logo-item">Docker</div>
           <div class="logo-item">MCP Servers</div>
-          <div class="logo-item">Helm</div>
-          <div class="logo-item">OPA / Cedar</div>
           <div class="logo-item">LangChain</div>
           <div class="logo-item">CrewAI</div>
           <div class="logo-item">AutoGen</div>
+          <div class="logo-item">OPA / Cedar</div>
+          <div class="logo-item">Helm</div>
         </div>
-        <p style="color: var(--text-secondary); margin-top: var(--sp-3);">Deploy as a sidecar in Kubernetes. Connect via credentials anywhere. Govern MCP tool calls with server registry and poisoning detection. No SDK changes required — optional SDKs available for Python, TypeScript, and Go.</p>
       </div>
     </div>
   </section>
@@ -601,11 +196,11 @@
   <!-- BOTTOM CTA -->
   <section class="cta-section">
     <div class="container">
-      <h2 class="fade-in">See it in action</h2>
-      <p class="fade-in fade-in-delay-1">Request early access or try the Docker sandbox in 2 minutes.</p>
+      <h2 class="fade-in">See it on your infrastructure.</h2>
+      <p class="fade-in fade-in-delay-1">We'll walk through a live deployment on your environment — or on ours. No slides.</p>
       <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
-        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
-        <a href="sandbox.html" class="btn btn-secondary btn-large">Try the Sandbox</a>
+        <a href="request-access.html" class="btn btn-primary btn-large">Request a demo</a>
+        <a href="sandbox.html" class="btn btn-secondary btn-large">Try the sandbox →</a>
       </div>
     </div>
   </section>
@@ -624,10 +219,10 @@
         <div class="footer-links">
           <h4>Product</h4>
           <a href="product.html">Platform Overview</a>
-          <a href="product.html#kill-switch">Kill Switches</a>
-          <a href="product.html#budget">Budget Enforcement</a>
-          <a href="product.html#chain">Decision Chain</a>
-          <a href="product.html#mcp">MCP Security</a>
+          <a href="product.html#controls">Kill Switches</a>
+          <a href="product.html#controls">Budget Enforcement</a>
+          <a href="product.html#controls">Decision Chain</a>
+          <a href="product.html#controls">MCP Security</a>
           <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">
@@ -648,6 +243,24 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=3"></script>
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Nav dropdown
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+      dd.addEventListener('mouseenter', () => dd.classList.add('open'));
+      dd.addEventListener('mouseleave', () => dd.classList.remove('open'));
+    });
+
+    // Mobile nav
+    document.querySelector('.nav-hamburger')?.addEventListener('click', () => {
+      document.querySelector('.nav-mobile')?.classList.toggle('open');
+    });
+  </script>
+
 </body>
 </html>
