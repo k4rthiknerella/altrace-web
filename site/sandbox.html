@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sandbox — Try Altrace in 2 Minutes</title>
+  <meta name="description" content="Try Altrace in Docker with a single command. Budget enforcement, kill switches, and audit trail running on real LLM traffic in under 2 minutes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=3">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Product</button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-label">Capabilities</div>
+            <a href="product.html">Platform Overview</a>
+            <a href="product.html#kill-switch">Kill Switches</a>
+            <a href="product.html#budget">Budget Enforcement</a>
+            <a href="product.html#chain">Decision Chain</a>
+            <a href="product.html#content">Content Governance</a>
+            <a href="product.html#mcp">MCP Security</a>
+            <a href="product.html#evidence">Evidence Grounding</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-label">Deployment</div>
+            <a href="product.html#providers">Providers</a>
+            <a href="product.html#deployment">Deployment Modes</a>
+            <a href="product.html#sdks">SDKs</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Solutions</button>
+          <div class="nav-dropdown-menu">
+            <a href="why-altrace.html">Why Altrace</a>
+            <a href="compliance-public.html">Compliance Frameworks</a>
+            <a href="pricing.html">Pricing</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Resources</button>
+          <div class="nav-dropdown-menu">
+            <a href="sandbox.html">Sandbox (Try in 2 min)</a>
+            <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <a href="/login.html" class="nav-link">Console</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="request-access.html" class="btn btn-primary btn-nav">Request Access</a>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="compliance-public.html">Compliance</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="sandbox.html">Sandbox</a>
+    <a href="request-access.html">Request Access</a>
+    <a href="/login.html">Console</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content hero-centered">
+      <p class="section-label fade-in">Sandbox</p>
+      <h1 class="fade-in fade-in-delay-1">Try Altrace in 2 minutes</h1>
+      <p class="section-subtitle fade-in fade-in-delay-2">Run a fully functional Altrace governance proxy in Docker. Real budget enforcement, kill switches, and audit trail on real LLM traffic. No credit card, no sales call, no waiting.</p>
+    </div>
+  </section>
+
+  <!-- PREREQUISITES -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Prerequisites</p>
+        <h2 class="section-title">What you need</h2>
+      </div>
+      <div class="grid-3 fade-in">
+        <div class="card">
+          <h4>Docker</h4>
+          <p>Docker Engine 20+ or Docker Desktop. Docker Compose V2 included.</p>
+        </div>
+        <div class="card">
+          <h4>curl</h4>
+          <p>For interacting with the Altrace control API and verifying governance decisions.</p>
+        </div>
+        <div class="card">
+          <h4>LLM API Key</h4>
+          <p>An Anthropic or OpenAI API key. The sandbox proxies real traffic — you'll see real governance in action.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Quickstart</p>
+        <h2 class="section-title">From zero to governed in 3 steps</h2>
+      </div>
+      <div class="sandbox-steps fade-in">
+        <div class="sandbox-step">
+          <h3>Clone and start</h3>
+          <p>Clone the repository and start the sandbox with Docker Compose. This pulls the Altrace proxy image and starts it with a default configuration.</p>
+          <div class="sandbox-command">
+            <code>git clone https://github.com/altrace-dev-role/altrace-agent.git && cd altrace-agent && docker compose up -d</code>
+          </div>
+        </div>
+        <div class="sandbox-step">
+          <h3>Send a governed request</h3>
+          <p>Route an LLM API call through the Altrace proxy. The proxy intercepts it, evaluates 25 governance stages, tracks cost, and forwards to the provider. You'll see governance headers in the response.</p>
+          <div class="sandbox-command">
+            <code>curl -x http://localhost:8080 \<br>&nbsp;&nbsp;-H "X-Altrace-Team: sandbox-team" \<br>&nbsp;&nbsp;-H "X-Altrace-Agent: test-agent" \<br>&nbsp;&nbsp;https://api.anthropic.com/v1/messages \<br>&nbsp;&nbsp;-H "x-api-key: $ANTHROPIC_API_KEY" \<br>&nbsp;&nbsp;-H "anthropic-version: 2023-06-01" \<br>&nbsp;&nbsp;-H "content-type: application/json" \<br>&nbsp;&nbsp;-d '{"model":"claude-sonnet-4-5-20250929","max_tokens":100,"messages":[{"role":"user","content":"Hello"}]}'</code>
+          </div>
+        </div>
+        <div class="sandbox-step">
+          <h3>Check the governance state</h3>
+          <p>Query the control API to see budget status, audit records, and enforcement state. Every decision is recorded with full attribution.</p>
+          <div class="sandbox-command">
+            <code>curl http://localhost:8080/api/v1/budget/status | jq</code>
+          </div>
+          <div class="sandbox-command" style="margin-top: var(--sp-2);">
+            <code>curl http://localhost:8080/api/v1/audit/records | jq</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU'LL SEE -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">What You'll See</p>
+        <h2 class="section-title">Working governance in under 2 minutes</h2>
+      </div>
+      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
+        <ul class="sandbox-feature-list">
+          <li>Budget tracking with per-request cost attribution in response headers</li>
+          <li>Kill switch API — activate and watch all subsequent requests get blocked (HTTP 503)</li>
+          <li>Tamper-evident audit trail with SHA-256 hash chain</li>
+          <li>25-stage decision chain evaluated on every request</li>
+          <li>Response headers: X-Altrace-Action, X-Altrace-Cost-USD, X-Altrace-Budget-Remaining</li>
+          <li>Team and agent attribution in every audit record</li>
+          <li>Content classification labels (when content governance enabled)</li>
+        </ul>
+        <div class="tech-box" style="margin-top: var(--sp-5);">
+          <strong>Advisory mode:</strong> The Docker sandbox runs in advisory mode. Budget enforcement and kill switches work at the application level, but agents can bypass the proxy. For governance-grade enforcement where agents cannot bypass, deploy in Kubernetes with the iptables init container.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINAL PREVIEW -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Response Headers</p>
+        <h2 class="section-title">Every request is governed and attributed</h2>
+      </div>
+      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">Response Headers</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-key">X-Altrace-Action:</span> <span class="t-value">allow</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Decision-Reason:</span> <span class="t-value">under_limit</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Cost-USD:</span> <span class="t-cost">0.000847</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Input-Tokens:</span> <span class="t-value">12</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Output-Tokens:</span> <span class="t-value">34</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Budget-Remaining:</span> <span class="t-cost">999.15</span></div>
+            <div class="terminal-line"><span class="t-key">X-Altrace-Request-ID:</span> <span class="t-value">a1b2c3d4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Ready for production?</h2>
+      <p class="fade-in fade-in-delay-1">The sandbox shows advisory-mode governance. For governance-grade enforcement where agents cannot bypass the proxy, deploy in Kubernetes.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+        <a href="product.html#deployment" class="btn btn-secondary btn-large">Compare Deployment Modes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">Platform Overview</a>
+          <a href="product.html#kill-switch">Kill Switches</a>
+          <a href="product.html#budget">Budget Enforcement</a>
+          <a href="product.html#chain">Decision Chain</a>
+          <a href="product.html#mcp">MCP Security</a>
+          <a href="pricing.html">Pricing</a>
+        </div>
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <a href="sandbox.html">Sandbox</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance-public.html">Compliance</a>
+          <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

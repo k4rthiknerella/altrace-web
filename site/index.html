@@ -7,7 +7,7 @@
   <meta name="description" content="Altrace governs AI agent access to LLMs at the network layer. Credential authority, bounded-latency kill, and tamper-evident audit — enforced below the application.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=3">
 </head>
 <body>
@@ -81,9 +81,9 @@
     <div class="container hero-content">
       <div class="hero-grid">
         <div class="hero-text">
-          <h1 class="fade-in">Your AI agents are one bad request away.</h1>
-          <p class="hero-sub fade-in fade-in-delay-1">From a compliance violation. A data breach. A six-figure cloud bill.</p>
-          <p class="hero-body fade-in fade-in-delay-2">Altrace is the control plane for AI agent authority. What they can access, what they can spend, what they can do — enforced at the infrastructure layer. In Kubernetes, agents have no route around it. And every decision is recorded.</p>
+          <h1 class="fade-in">Govern your AI agents.</h1>
+          <p class="hero-sub fade-in fade-in-delay-1">Control what they access. Limit what they spend. Stop them instantly.</p>
+          <p class="hero-body fade-in fade-in-delay-2">Altrace is a transparent proxy that sits between your AI agents and LLM providers. Kill switches, budget limits, prompt injection detection, and audit trails — enforced at the network layer. Agents cannot bypass it.</p>
           <div class="hero-ctas fade-in fade-in-delay-3">
             <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
             <a href="sandbox.html" class="btn btn-secondary btn-large">Try in 2 Minutes</a>
@@ -102,19 +102,19 @@
     <div class="container" style="padding-top: var(--sp-5); padding-bottom: var(--sp-5);">
       <div class="stats-bar fade-in">
         <div class="stat-item">
-          <div class="stat-number">25</div>
-          <div class="stat-desc">Decision chain stages evaluated on every request</div>
+          <div class="stat-number">31</div>
+          <div class="stat-desc">Decision chain stages on every request</div>
           <div class="stat-source">Governance pipeline</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">260K+</div>
-          <div class="stat-desc">Lines of production code across 6 repositories</div>
-          <div class="stat-source">Go, Python, TypeScript</div>
+          <div class="stat-number">275+</div>
+          <div class="stat-desc">Detection patterns across 6 independent layers</div>
+          <div class="stat-source">RE2, Dempster-Shafer fusion</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">&lt;1ms</div>
-          <div class="stat-desc">New-request block latency in Kubernetes deployments</div>
-          <div class="stat-source">Governance-grade enforcement</div>
+          <div class="stat-desc">Kill switch latency in Kubernetes</div>
+          <div class="stat-source">Network-layer enforcement</div>
         </div>
       </div>
       <!-- Integration badges -->
@@ -136,21 +136,21 @@
   <section>
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">The Risk Is Real</p>
-        <h2 class="section-title">Multi-agent systems amplify errors. Governance shrinks them.</h2>
+        <p class="section-label">Without Governance</p>
+        <h2 class="section-title">What happens when agents have no limits.</h2>
       </div>
       <div class="grid-3">
         <div class="card card-accent-top stat-card fade-in">
-          <div class="stat-value" style="font-size: 1.5rem;">Runaway Spend</div>
-          <p class="stat-label">An agent hits a loop, burns through your LLM budget in minutes. Without cost governance, there's no circuit breaker — just a bill.</p>
+          <div class="stat-value" style="font-size: 1.5rem;">Runaway Costs</div>
+          <p class="stat-label">An agent loops. Your LLM bill spikes. No circuit breaker exists. Altrace caps spending before the call leaves your network.</p>
         </div>
         <div class="card card-accent-top stat-card fade-in fade-in-delay-1">
-          <div class="stat-value" style="font-size: 1.5rem;">Authority Escalation</div>
-          <p class="stat-label">A worker agent inherits its orchestrator's full authority. One delegation mistake, and a subordinate agent can access models and tools it was never meant to touch.</p>
+          <div class="stat-value" style="font-size: 1.5rem;">Prompt Injection</div>
+          <p class="stat-label">An attacker manipulates your agent through its inputs. It leaks data, calls unauthorized tools, or ignores its instructions. Altrace detects and blocks this in real time.</p>
         </div>
         <div class="card card-accent-top stat-card fade-in fade-in-delay-2">
-          <div class="stat-value" style="font-size: 1.5rem;">Audit Gap</div>
-          <p class="stat-label">When something goes wrong, you need to know what happened, which agent did it, and why the system allowed it. Prompt logs don't answer those questions.</p>
+          <div class="stat-value" style="font-size: 1.5rem;">No Kill Switch</div>
+          <p class="stat-label">Something goes wrong and you can't stop it. Altrace gives you a single API call to halt any agent, any team, or everything — instantly.</p>
         </div>
       </div>
     </div>

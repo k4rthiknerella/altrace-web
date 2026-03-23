@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing — Altrace</title>
-  <meta name="description" content="Altrace pricing for enterprise AI agent governance. Deployment assistance, priority support, and custom integrations for production-critical workloads.">
+  <meta name="description" content="Altrace pricing for AI agent governance. Community, Team, and Enterprise tiers for every stage of your AI deployment.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/main.css?v=3">
 </head>
 <body>
 
@@ -16,10 +16,39 @@
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-links">
-        <a href="product.html" class="nav-link">Product</a>
-        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
-        <a href="compliance-public.html" class="nav-link">Compliance</a>
-        <a href="request-access.html" class="nav-link">Request Access</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Product</button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-label">Capabilities</div>
+            <a href="product.html">Platform Overview</a>
+            <a href="product.html#kill-switch">Kill Switches</a>
+            <a href="product.html#budget">Budget Enforcement</a>
+            <a href="product.html#chain">Decision Chain</a>
+            <a href="product.html#content">Content Governance</a>
+            <a href="product.html#mcp">MCP Security</a>
+            <a href="product.html#evidence">Evidence Grounding</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-label">Deployment</div>
+            <a href="product.html#providers">Providers</a>
+            <a href="product.html#deployment">Deployment Modes</a>
+            <a href="product.html#sdks">SDKs</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Solutions</button>
+          <div class="nav-dropdown-menu">
+            <a href="why-altrace.html">Why Altrace</a>
+            <a href="compliance-public.html">Compliance Frameworks</a>
+            <a href="pricing.html">Pricing</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Resources</button>
+          <div class="nav-dropdown-menu">
+            <a href="sandbox.html">Sandbox (Try in 2 min)</a>
+            <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
         <a href="/login.html" class="nav-link">Console</a>
       </div>
       <button class="nav-hamburger" aria-label="Toggle menu">
@@ -40,6 +69,8 @@
     <a href="product.html">Product</a>
     <a href="why-altrace.html">Why Altrace</a>
     <a href="compliance-public.html">Compliance</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="sandbox.html">Sandbox</a>
     <a href="request-access.html">Request Access</a>
     <a href="/login.html">Console</a>
   </div>
@@ -49,38 +80,241 @@
     <div class="hero-bg"></div>
     <div class="container hero-content hero-centered">
       <p class="section-label fade-in">Pricing</p>
-      <h1 class="fade-in fade-in-delay-1">Enterprise AI Agent Governance</h1>
-      <p class="section-subtitle fade-in fade-in-delay-2">Altrace deploys in your Kubernetes cluster. Your data and governance decisions never leave your infrastructure. Pricing is tailored to your deployment size and support requirements.</p>
+      <h1 class="fade-in fade-in-delay-1">Governance that scales with you</h1>
+      <p class="section-subtitle fade-in fade-in-delay-2">Start with the Docker sandbox for free. Move to Kubernetes enforcement when you're ready for production. Your data and governance decisions never leave your infrastructure.</p>
     </div>
   </section>
 
-  <!-- PRICING -->
+  <!-- PRICING TIERS -->
   <section>
     <div class="container">
-      <div class="stagger-reveal" style="max-width: 560px; margin: 0 auto;">
-        <div class="card" style="border-top: 2px solid var(--accent);">
-          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: var(--sp-3);">Enterprise</p>
-          <h2 style="margin-bottom: var(--sp-2);">Contact Us</h2>
-          <p style="margin-bottom: var(--sp-5);">Full governance engine with deployment assistance, priority support, and custom integrations for production-critical workloads.</p>
-          <ul style="list-style: none; padding: 0; margin-bottom: var(--sp-5);">
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Sidecar proxy with network-layer enforcement</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">VirtualKey credential authority</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Kill switch (global, team, agent)</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Delegation contracts</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Budget enforcement</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Tamper-evident audit trail</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">OPA policy engine</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Governance console</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Deployment assistance & architecture review</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Priority support with SLA</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Custom policy development</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Compliance assessment & framework mapping</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">SSO & RBAC integration</li>
-            <li style="padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; color: var(--text-secondary);">Multi-cluster management</li>
-            <li style="padding: var(--sp-2) 0; font-size: 0.9375rem; color: var(--text-secondary);">Dedicated onboarding</li>
+      <div class="pricing-grid stagger-reveal">
+        <!-- Community (Free) -->
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Community</div>
+          <div class="pricing-tier-price">Free</div>
+          <div class="pricing-tier-desc">Docker advisory mode. Visibility into your AI agent traffic with basic governance controls.</div>
+          <ul class="pricing-tier-features">
+            <li>Docker Compose deployment</li>
+            <li>1 team, 5 agents</li>
+            <li>Budget tracking (advisory)</li>
+            <li>Kill switch (advisory)</li>
+            <li>Basic audit trail</li>
+            <li>Community support</li>
+            <li>25-stage decision chain</li>
+            <li>Anthropic + OpenAI support</li>
           </ul>
-          <a href="request-access.html" class="btn btn-primary btn-large btn-full">Contact Sales</a>
+          <a href="sandbox.html" class="btn btn-secondary btn-large btn-full">Try the Sandbox</a>
         </div>
+
+        <!-- Team -->
+        <div class="pricing-tier featured">
+          <div class="pricing-tier-name">Team</div>
+          <div class="pricing-tier-price">Contact Us</div>
+          <div class="pricing-tier-desc">Kubernetes governance-grade enforcement. Network-level controls that agents cannot bypass.</div>
+          <ul class="pricing-tier-features">
+            <li>Kubernetes sidecar deployment</li>
+            <li>Unlimited teams and agents</li>
+            <li>Governance-grade enforcement (iptables)</li>
+            <li>Kill switch with SQLite persistence</li>
+            <li>Budget enforcement with pre-reservation</li>
+            <li>SSE stream scanning</li>
+            <li>MCP tool governance</li>
+            <li>Evidence grounding</li>
+            <li>Tamper-evident audit trail</li>
+            <li>Governance console</li>
+            <li>All 4 LLM providers</li>
+            <li>OPA + Cedar policy engines</li>
+            <li>Email support</li>
+          </ul>
+          <a href="request-access.html" class="btn btn-primary btn-large btn-full">Request Access</a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Enterprise</div>
+          <div class="pricing-tier-price">Custom</div>
+          <div class="pricing-tier-desc">Everything in Team, plus dedicated support, compliance assistance, and custom integrations.</div>
+          <ul class="pricing-tier-features">
+            <li>Everything in Team</li>
+            <li>Deployment assistance + architecture review</li>
+            <li>Priority support with SLA</li>
+            <li>Custom policy development</li>
+            <li>Compliance assessment + framework mapping</li>
+            <li>SSO + RBAC integration</li>
+            <li>Multi-cluster management (Hub)</li>
+            <li>VirtualKey credential authority</li>
+            <li>SIEM export integration</li>
+            <li>Dedicated onboarding</li>
+            <li>Custom integrations</li>
+          </ul>
+          <a href="request-access.html" class="btn btn-secondary btn-large btn-full">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE COMPARISON TABLE -->
+  <section class="feature-compare" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Compare</p>
+        <h2 class="section-title">Detailed feature comparison</h2>
+      </div>
+      <div class="fade-in" style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Community</th>
+              <th>Team</th>
+              <th>Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="category-row"><td colspan="4">Enforcement</td></tr>
+            <tr>
+              <td>Deployment mode</td>
+              <td>Docker (advisory)</td>
+              <td>Kubernetes (governance-grade)</td>
+              <td>Kubernetes + Gateway</td>
+            </tr>
+            <tr>
+              <td>iptables network enforcement</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Cilium enforcement backend</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Kill switch (global/team/agent)</td>
+              <td>Advisory</td>
+              <td class="check">Enforced</td>
+              <td class="check">Enforced</td>
+            </tr>
+            <tr>
+              <td>Budget enforcement</td>
+              <td>Advisory</td>
+              <td class="check">Pre-reservation</td>
+              <td class="check">Pre-reservation</td>
+            </tr>
+
+            <tr class="category-row"><td colspan="4">Governance</td></tr>
+            <tr>
+              <td>Decision chain stages</td>
+              <td>25</td>
+              <td>25</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>SSE stream scanning</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>MCP tool governance</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Evidence grounding</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Graduated enforcement</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>OPA + Cedar policy engines</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+
+            <tr class="category-row"><td colspan="4">Providers</td></tr>
+            <tr>
+              <td>Anthropic + OpenAI</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Azure OpenAI + Gemini</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+
+            <tr class="category-row"><td colspan="4">Operations</td></tr>
+            <tr>
+              <td>Governance console</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>VirtualKey credential authority</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Hub (multi-cluster)</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>SIEM export</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>SSO + RBAC</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+
+            <tr class="category-row"><td colspan="4">Support</td></tr>
+            <tr>
+              <td>Community</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Email support</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Priority support + SLA</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Deployment assistance</td>
+              <td class="dash">--</td>
+              <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -95,15 +329,27 @@
       <div class="stagger-reveal" style="max-width: 720px; margin: 0 auto;">
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>How is Altrace deployed?</h4>
-          <p>Altrace runs in your Kubernetes cluster as a sidecar proxy. Your data and governance decisions never leave your infrastructure. We assist with deployment, architecture review, and ongoing support.</p>
+          <p>Altrace runs in your infrastructure. In Kubernetes, it deploys as a sidecar proxy via Helm chart with an init container for network enforcement. In Docker, it runs as a standalone container. Your data and governance decisions never leave your environment.</p>
+        </div>
+        <div class="card" style="margin-bottom: var(--sp-3);">
+          <h4>What is the difference between advisory and governance-grade?</h4>
+          <p>Advisory mode (Docker) provides budget tracking, kill switches, and audit trails, but applications can bypass the proxy by not routing through it. Governance-grade (Kubernetes with iptables or Cilium) uses kernel-level network rules to force all LLM traffic through Altrace — agents have no route around it.</p>
+        </div>
+        <div class="card" style="margin-bottom: var(--sp-3);">
+          <h4>Does Altrace see my prompts or responses?</h4>
+          <p>Altrace uses content-blind architecture. Classification uses RE2 regex patterns that produce boolean labels only (e.g., "contains PII: true/false"). The matched content is never extracted, stored, or transmitted. Your data stays in transit between your agents and the LLM provider.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What about the governance console?</h4>
-          <p>Included. The console is a web application that connects to your Altrace hub. It ships with the Helm chart and provides fleet management, audit trail, compliance reporting, and policy management.</p>
+          <p>Included with Team and Enterprise tiers. The console is a web application that connects to your Altrace hub. It ships with the Helm chart and provides fleet management, audit trail, compliance reporting, and policy management.</p>
         </div>
-        <div class="card">
+        <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>Do you offer a hosted version?</h4>
           <p>Not currently. Altrace is designed to run in your infrastructure — your data and governance decisions never leave your environment. This is by design for a security product.</p>
+        </div>
+        <div class="card">
+          <h4>Can I try it before committing?</h4>
+          <p>Yes. The Community tier is free and runs in Docker Compose. You can have a working governance proxy scanning real LLM traffic in under 2 minutes. No credit card, no sales call.</p>
         </div>
       </div>
     </div>
@@ -113,9 +359,10 @@
   <section class="cta-section">
     <div class="container">
       <h2 class="fade-in">Ready to get started?</h2>
-      <p class="fade-in fade-in-delay-1">Talk to us about deploying Altrace in your infrastructure.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
-        <a href="request-access.html" class="btn btn-primary btn-large">Contact Sales</a>
+      <p class="fade-in fade-in-delay-1">Try the free Docker sandbox or contact us for Kubernetes deployment.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
+        <a href="sandbox.html" class="btn btn-primary btn-large">Try the Sandbox</a>
+        <a href="request-access.html" class="btn btn-secondary btn-large">Contact Sales</a>
       </div>
     </div>
   </section>
@@ -133,13 +380,19 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">How It Works</a>
-          <a href="why-altrace.html">Why Altrace</a>
-          <a href="compliance-public.html">Compliance</a>
-          <a href="request-access.html">Request Access</a>
+          <a href="product.html">Platform Overview</a>
+          <a href="product.html#kill-switch">Kill Switches</a>
+          <a href="product.html#budget">Budget Enforcement</a>
+          <a href="product.html#chain">Decision Chain</a>
+          <a href="product.html#mcp">MCP Security</a>
+          <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">
-          <h4>Connect</h4>
+          <h4>Resources</h4>
+          <a href="sandbox.html">Sandbox</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance-public.html">Compliance</a>
+          <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
           <a href="mailto:hello@altrace.io">hello@altrace.io</a>
         </div>
       </div>
@@ -152,6 +405,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>

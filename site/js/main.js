@@ -6,9 +6,9 @@
   'use strict';
 
   /* --- Nav scroll state --- */
-  const nav = document.querySelector('.nav');
+  var nav = document.querySelector('.nav');
   if (nav) {
-    const onScroll = () => {
+    var onScroll = function () {
       nav.classList.toggle('scrolled', window.scrollY > 10);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -16,18 +16,18 @@
   }
 
   /* --- Mobile hamburger --- */
-  const hamburger = document.querySelector('.nav-hamburger');
-  const mobileNav = document.querySelector('.nav-mobile');
+  var hamburger = document.querySelector('.nav-hamburger');
+  var mobileNav = document.querySelector('.nav-mobile');
   if (hamburger && mobileNav) {
-    hamburger.addEventListener('click', () => {
+    hamburger.addEventListener('click', function () {
       hamburger.classList.toggle('open');
       mobileNav.classList.toggle('open');
       document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
     });
 
     // Close on link click
-    mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    mobileNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
         hamburger.classList.remove('open');
         mobileNav.classList.remove('open');
         document.body.style.overflow = '';
@@ -35,25 +35,55 @@
     });
   }
 
+  /* --- Nav dropdown menus --- */
+  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  dropdowns.forEach(function (dropdown) {
+    var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.contains('open');
+      // Close all dropdowns first
+      dropdowns.forEach(function (d) { d.classList.remove('open'); });
+      // Toggle this one
+      if (!isOpen) {
+        dropdown.classList.add('open');
+      }
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function () {
+    dropdowns.forEach(function (d) { d.classList.remove('open'); });
+  });
+
+  // Close dropdowns on escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      dropdowns.forEach(function (d) { d.classList.remove('open'); });
+    }
+  });
+
   /* --- Smooth scroll for anchor links --- */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
+      var target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
+        var offset = 80;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
       }
     });
   });
 
   /* --- Scroll-triggered fade-in and stagger-reveal --- */
-  const animEls = document.querySelectorAll('.fade-in, .stagger-reveal');
+  var animEls = document.querySelectorAll('.fade-in, .stagger-reveal');
   if (animEls.length > 0) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             observer.unobserve(entry.target);
@@ -62,38 +92,54 @@
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
-    animEls.forEach(el => observer.observe(el));
+    animEls.forEach(function (el) { observer.observe(el); });
   }
 
   /* --- Product page step tabs --- */
-  const stepTabs = document.querySelectorAll('.step-tab');
-  const stepContents = document.querySelectorAll('.step-content');
+  var stepTabs = document.querySelectorAll('.step-tab');
+  var stepContents = document.querySelectorAll('.step-content');
   if (stepTabs.length > 0) {
-    stepTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const target = tab.dataset.step;
-        stepTabs.forEach(t => t.classList.remove('active'));
-        stepContents.forEach(c => c.classList.remove('active'));
+    stepTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.dataset.step;
+        stepTabs.forEach(function (t) { t.classList.remove('active'); });
+        stepContents.forEach(function (c) { c.classList.remove('active'); });
         tab.classList.add('active');
-        const content = document.getElementById(target);
+        var content = document.getElementById(target);
+        if (content) content.classList.add('active');
+      });
+    });
+  }
+
+  /* --- SDK tabs (product page) --- */
+  var sdkTabs = document.querySelectorAll('.sdk-tab');
+  var sdkContents = document.querySelectorAll('.sdk-content');
+  if (sdkTabs.length > 0) {
+    sdkTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.dataset.sdk;
+        sdkTabs.forEach(function (t) { t.classList.remove('active'); });
+        sdkContents.forEach(function (c) { c.classList.remove('active'); });
+        tab.classList.add('active');
+        var content = document.getElementById(target);
         if (content) content.classList.add('active');
       });
     });
   }
 
   /* --- Request Access form (Supabase + email fallback) --- */
-  const form = document.getElementById('access-form');
+  var form = document.getElementById('access-form');
   if (form) {
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+      var formData = new FormData(form);
+      var data = Object.fromEntries(formData.entries());
 
       // Submit to Supabase
       if (typeof supabase !== 'undefined' && supabase.createClient) {
         try {
-          const sb = supabase.createClient(
+          var sb = supabase.createClient(
             'https://najmkpfmmcthefbnbskp.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ham1rcGZtbWN0aGVmYm5ic2twIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNjYyMDksImV4cCI6MjA4NzY0MjIwOX0.L9PoN_vlw8wV42F1dint_JjswX5ge5xe2GKw1-D3hvo'
           );
@@ -117,36 +163,36 @@
   }
 
   function showSuccess() {
-    const formEl = document.getElementById('access-form');
-    const successEl = document.getElementById('form-success');
+    var formEl = document.getElementById('access-form');
+    var successEl = document.getElementById('form-success');
     if (formEl) formEl.style.display = 'none';
     if (successEl) successEl.classList.add('show');
   }
 
   /* --- Homepage CTA form --- */
-  const ctaForm = document.getElementById('cta-form');
+  var ctaForm = document.getElementById('cta-form');
   if (ctaForm) {
     ctaForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      const email = ctaForm.querySelector('input[type="email"]').value;
+      var email = ctaForm.querySelector('input[type="email"]').value;
       if (email) {
-        window.location.href = `request-access.html?email=${encodeURIComponent(email)}`;
+        window.location.href = 'request-access.html?email=' + encodeURIComponent(email);
       }
     });
   }
 
   /* --- Pre-fill email from URL param --- */
-  const urlParams = new URLSearchParams(window.location.search);
-  const emailParam = urlParams.get('email');
+  var urlParams = new URLSearchParams(window.location.search);
+  var emailParam = urlParams.get('email');
   if (emailParam) {
-    const emailInput = document.querySelector('input[name="email"]');
+    var emailInput = document.querySelector('input[name="email"]');
     if (emailInput) emailInput.value = emailParam;
   }
 
   /* --- Set active nav link --- */
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
+  var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(function (link) {
+    var href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
       link.classList.add('active');
     }

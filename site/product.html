@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=2">
+  <link rel="stylesheet" href="css/main.css?v=3">
 </head>
 <body>
 
@@ -16,10 +16,39 @@
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-links">
-        <a href="product.html" class="nav-link">Product</a>
-        <a href="why-altrace.html" class="nav-link">Why Altrace</a>
-        <a href="compliance-public.html" class="nav-link">Compliance</a>
-        <a href="request-access.html" class="nav-link">Request Access</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Product</button>
+          <div class="nav-dropdown-menu">
+            <div class="dropdown-label">Capabilities</div>
+            <a href="product.html">Platform Overview</a>
+            <a href="product.html#kill-switch">Kill Switches</a>
+            <a href="product.html#budget">Budget Enforcement</a>
+            <a href="product.html#chain">Decision Chain</a>
+            <a href="product.html#content">Content Governance</a>
+            <a href="product.html#mcp">MCP Security</a>
+            <a href="product.html#evidence">Evidence Grounding</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-label">Deployment</div>
+            <a href="product.html#providers">Providers</a>
+            <a href="product.html#deployment">Deployment Modes</a>
+            <a href="product.html#sdks">SDKs</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Solutions</button>
+          <div class="nav-dropdown-menu">
+            <a href="why-altrace.html">Why Altrace</a>
+            <a href="compliance-public.html">Compliance Frameworks</a>
+            <a href="pricing.html">Pricing</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Resources</button>
+          <div class="nav-dropdown-menu">
+            <a href="sandbox.html">Sandbox (Try in 2 min)</a>
+            <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
         <a href="/login.html" class="nav-link">Console</a>
       </div>
       <button class="nav-hamburger" aria-label="Toggle menu">
@@ -40,6 +69,8 @@
     <a href="product.html">Product</a>
     <a href="why-altrace.html">Why Altrace</a>
     <a href="compliance-public.html">Compliance</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="sandbox.html">Sandbox</a>
     <a href="request-access.html">Request Access</a>
     <a href="/login.html">Console</a>
   </div>
@@ -100,8 +131,60 @@
     </div>
   </section>
 
+  <!-- DECISION CHAIN VISUALIZATION -->
+  <section id="chain" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Decision Chain</p>
+        <h2 class="section-title">25 governance stages on every request</h2>
+        <p class="section-subtitle">Every LLM API request passes through a 25-stage decision chain. Each stage can block, allow, or annotate. Short-circuit evaluation means blocked requests exit immediately — no unnecessary processing.</p>
+      </div>
+      <div class="chain-visual fade-in">
+        <div class="chain-stage"><span class="chain-stage-number">1.</span> delegation</div>
+        <div class="chain-stage"><span class="chain-stage-number">2.</span> manifest</div>
+        <div class="chain-stage"><span class="chain-stage-number">3.</span> policy</div>
+        <div class="chain-stage"><span class="chain-stage-number">4.</span> model_filter</div>
+        <div class="chain-stage"><span class="chain-stage-number">5.</span> mcp_registry</div>
+        <div class="chain-stage"><span class="chain-stage-number">6.</span> mcp_fingerprint</div>
+        <div class="chain-stage"><span class="chain-stage-number">7.</span> mcp_attestation</div>
+        <div class="chain-stage"><span class="chain-stage-number">8.</span> tool_perm</div>
+        <div class="chain-stage"><span class="chain-stage-number">9.</span> evidence_grounding</div>
+        <div class="chain-stage"><span class="chain-stage-number">10.</span> action_level</div>
+        <div class="chain-stage"><span class="chain-stage-number">11.</span> approval_gate</div>
+        <div class="chain-stage"><span class="chain-stage-number">12.</span> cost_tool</div>
+        <div class="chain-stage"><span class="chain-stage-number">13.</span> dow_breaker</div>
+        <div class="chain-stage"><span class="chain-stage-number">14.</span> trust_contagion</div>
+        <div class="chain-stage"><span class="chain-stage-number">15.</span> network_trust</div>
+        <div class="chain-stage"><span class="chain-stage-number">16.</span> frontier</div>
+        <div class="chain-stage"><span class="chain-stage-number">17.</span> taint_flow</div>
+        <div class="chain-stage"><span class="chain-stage-number">18.</span> ssn_guard</div>
+        <div class="chain-stage"><span class="chain-stage-number">19.</span> rtl_guard</div>
+        <div class="chain-stage"><span class="chain-stage-number">20.</span> content_gov</div>
+        <div class="chain-stage"><span class="chain-stage-number">21.</span> prompt_registry</div>
+        <div class="chain-stage"><span class="chain-stage-number">22.</span> external_classifier</div>
+        <div class="chain-stage"><span class="chain-stage-number">23.</span> opa</div>
+        <div class="chain-stage"><span class="chain-stage-number">24.</span> cedar</div>
+        <div class="chain-stage"><span class="chain-stage-number">25.</span> allow_fallback</div>
+      </div>
+      <div class="stats-bar fade-in" style="max-width: 720px; margin: var(--sp-5) auto 0;">
+        <div class="stat-item">
+          <div class="stat-number">2.3us</div>
+          <div class="stat-desc">All-allow latency (17-stage benchmark)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">412ns</div>
+          <div class="stat-desc">Early-block short-circuit</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1us</div>
+          <div class="stat-desc">Parallel evaluation (8-core)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CAPABILITY 1: KILL SWITCH -->
-  <section class="capability">
+  <section id="kill-switch" class="capability">
     <div class="container">
       <div class="capability-grid fade-in">
         <div>
@@ -133,8 +216,8 @@
     </div>
   </section>
 
-  <!-- CAPABILITY 2: DELEGATION ENFORCEMENT -->
-  <section class="capability">
+  <!-- CAPABILITY 2: BUDGET ENFORCEMENT -->
+  <section id="budget" class="capability">
     <div class="container">
       <div class="capability-grid reverse fade-in">
         <div>
@@ -225,7 +308,7 @@
   </section>
 
   <!-- CAPABILITY 4: MCP GOVERNANCE -->
-  <section class="capability">
+  <section id="mcp" class="capability">
     <div class="container">
       <div class="capability-grid reverse fade-in">
         <div>
@@ -260,7 +343,7 @@
   </section>
 
   <!-- CAPABILITY 5: EVIDENCE GROUNDING -->
-  <section class="capability">
+  <section id="evidence" class="capability">
     <div class="container">
       <div class="capability-grid fade-in">
         <div>
@@ -296,7 +379,7 @@
   </section>
 
   <!-- CAPABILITY 6: STREAMING GOVERNANCE -->
-  <section class="capability">
+  <section id="content" class="capability">
     <div class="container">
       <div class="capability-grid reverse fade-in">
         <div>
@@ -329,6 +412,161 @@
     </div>
   </section>
 
+  <!-- PROVIDERS -->
+  <section id="providers" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Provider Support</p>
+        <h2 class="section-title">Native support for every major LLM provider</h2>
+      </div>
+      <div class="provider-grid fade-in">
+        <div class="provider-card">
+          <div class="provider-card-name">Anthropic</div>
+          <div class="provider-card-detail">Claude 4 / Sonnet / Haiku</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-card-name">OpenAI</div>
+          <div class="provider-card-detail">GPT-4o / o1 / Responses API</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-card-name">Azure OpenAI</div>
+          <div class="provider-card-detail">All Azure-hosted models</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-card-name">Google Gemini</div>
+          <div class="provider-card-detail">Gemini Pro / Ultra</div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: var(--sp-4); font-size: 0.875rem; color: var(--text-muted);">Each provider has a dedicated handler with native SSE stream extraction, cost parsing, and block feedback formatting. No generic proxy behavior — purpose-built governance for each API.</p>
+    </div>
+  </section>
+
+  <!-- DEPLOYMENT MODES -->
+  <section id="deployment" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Deployment</p>
+        <h2 class="section-title">Choose the enforcement level that fits your environment</h2>
+      </div>
+      <div class="fade-in" style="max-width: 900px; margin: 0 auto; overflow-x: auto;">
+        <table class="deploy-table">
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Enforcement Level</th>
+              <th>Mechanism</th>
+              <th>Requirements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kubernetes + iptables</strong></td>
+              <td><span class="deploy-level governance">Governance-Grade</span></td>
+              <td>iptables NAT REDIRECT + filter DROP. Agents have no route around the proxy.</td>
+              <td>CAP_NET_ADMIN, init container</td>
+            </tr>
+            <tr>
+              <td><strong>Kubernetes + Cilium</strong></td>
+              <td><span class="deploy-level governance">Governance-Grade</span></td>
+              <td>CiliumLocalRedirectPolicy + CiliumNetworkPolicy CRDs.</td>
+              <td>Cilium CNI (1.13+)</td>
+            </tr>
+            <tr>
+              <td><strong>Kubernetes + VirtualKey</strong></td>
+              <td><span class="deploy-level strong">Strong</span></td>
+              <td>Agent only has proxy token. Real LLM keys stay in the proxy.</td>
+              <td>VirtualKey credential authority</td>
+            </tr>
+            <tr>
+              <td><strong>Docker / Docker Compose</strong></td>
+              <td><span class="deploy-level advisory">Advisory</span></td>
+              <td>Application-level proxy. Budget + kill switch functional but bypassable.</td>
+              <td>HTTP_PROXY env var</td>
+            </tr>
+            <tr>
+              <td><strong>Gateway (Fargate)</strong></td>
+              <td><span class="deploy-level strong">Strong</span></td>
+              <td>AWS Network Firewall routes traffic through Altrace Gateway on EC2/EKS.</td>
+              <td>Gateway binary + Network Firewall</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK SECTION -->
+  <section id="sdks" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">SDKs</p>
+        <h2 class="section-title">Optional SDKs for deeper integration</h2>
+        <p class="section-subtitle">Altrace works without any SDK changes — it's a transparent proxy. But optional SDKs add evidence headers, budget awareness, and framework integration.</p>
+      </div>
+      <div class="fade-in" style="max-width: 720px; margin: 0 auto;">
+        <div class="sdk-tabs">
+          <button class="sdk-tab active" data-sdk="sdk-python">Python</button>
+          <button class="sdk-tab" data-sdk="sdk-typescript">TypeScript</button>
+          <button class="sdk-tab" data-sdk="sdk-go">Go (Native)</button>
+        </div>
+        <div id="sdk-python" class="sdk-content active">
+          <div class="sdk-code">
+<pre><span class="code-keyword">from</span> altrace <span class="code-keyword">import</span> <span class="code-func">AltraceClient</span>
+
+<span class="code-comment"># Drop-in replacement for anthropic.Anthropic()</span>
+<span class="code-var">client</span> = <span class="code-func">AltraceClient</span>(
+    provider=<span class="code-string">"anthropic"</span>,
+    team=<span class="code-string">"research"</span>,
+    agent=<span class="code-string">"data-analyst-1"</span>,
+)
+
+<span class="code-comment"># Evidence headers attached automatically</span>
+<span class="code-var">response</span> = client.messages.create(
+    model=<span class="code-string">"claude-sonnet-4-5-20250929"</span>,
+    messages=[{<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: <span class="code-string">"Analyze Q3 data"</span>}],
+)
+
+<span class="code-comment"># Budget-aware: client.budget_remaining returns float</span>
+<span class="code-keyword">print</span>(f<span class="code-string">"Remaining: ${client.budget_remaining:.2f}"</span>)</pre>
+          </div>
+        </div>
+        <div id="sdk-typescript" class="sdk-content">
+          <div class="sdk-code">
+<pre><span class="code-keyword">import</span> { <span class="code-func">AltraceClient</span> } <span class="code-keyword">from</span> <span class="code-string">'altrace'</span>;
+
+<span class="code-comment">// Drop-in replacement for OpenAI()</span>
+<span class="code-keyword">const</span> <span class="code-var">client</span> = <span class="code-keyword">new</span> <span class="code-func">AltraceClient</span>({
+  provider: <span class="code-string">'openai'</span>,
+  team: <span class="code-string">'engineering'</span>,
+  agent: <span class="code-string">'code-review-bot'</span>,
+});
+
+<span class="code-comment">// Governance headers injected transparently</span>
+<span class="code-keyword">const</span> <span class="code-var">completion</span> = <span class="code-keyword">await</span> client.chat.completions.create({
+  model: <span class="code-string">'gpt-4o'</span>,
+  messages: [{ role: <span class="code-string">'user'</span>, content: <span class="code-string">'Review this PR'</span> }],
+});</pre>
+          </div>
+        </div>
+        <div id="sdk-go" class="sdk-content">
+          <div class="sdk-code">
+<pre><span class="code-comment">// No SDK needed — Altrace is a transparent proxy</span>
+<span class="code-comment">// Set HTTP_PROXY and use any Go HTTP client</span>
+
+<span class="code-var">os</span>.<span class="code-func">Setenv</span>(<span class="code-string">"HTTP_PROXY"</span>, <span class="code-string">"http://localhost:8080"</span>)
+<span class="code-var">os</span>.<span class="code-func">Setenv</span>(<span class="code-string">"HTTPS_PROXY"</span>, <span class="code-string">"http://localhost:8080"</span>)
+
+<span class="code-comment">// In Kubernetes with iptables, even this is unnecessary</span>
+<span class="code-comment">// — all port 443 traffic is automatically redirected</span>
+
+<span class="code-var">client</span> := <span class="code-func">anthropic.NewClient</span>()
+<span class="code-var">resp</span>, <span class="code-var">err</span> := client.<span class="code-func">CreateMessage</span>(ctx, params)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- INTEGRATIONS -->
   <section class="integration-section">
     <div class="container">
@@ -338,12 +576,16 @@
         <div class="logo-grid">
           <div class="logo-item">Anthropic</div>
           <div class="logo-item">OpenAI</div>
+          <div class="logo-item">Azure OpenAI</div>
           <div class="logo-item">Google Gemini</div>
           <div class="logo-item">Kubernetes</div>
           <div class="logo-item">Docker</div>
           <div class="logo-item">MCP Servers</div>
           <div class="logo-item">Helm</div>
           <div class="logo-item">OPA / Cedar</div>
+          <div class="logo-item">LangChain</div>
+          <div class="logo-item">CrewAI</div>
+          <div class="logo-item">AutoGen</div>
         </div>
         <p style="color: var(--text-secondary); margin-top: var(--sp-3);">Deploy as a sidecar in Kubernetes. Connect via credentials anywhere. Govern MCP tool calls with server registry and poisoning detection. No SDK changes required — optional SDKs available for Python, TypeScript, and Go.</p>
       </div>
@@ -354,9 +596,10 @@
   <section class="cta-section">
     <div class="container">
       <h2 class="fade-in">See it in action</h2>
-      <p class="fade-in fade-in-delay-1">Request early access and we'll walk you through a live demo.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+      <p class="fade-in fade-in-delay-1">Request early access or try the Docker sandbox in 2 minutes.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
         <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+        <a href="sandbox.html" class="btn btn-secondary btn-large">Try the Sandbox</a>
       </div>
     </div>
   </section>
@@ -374,13 +617,19 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">How It Works</a>
-          <a href="why-altrace.html">Why Altrace</a>
-          <a href="compliance-public.html">Compliance</a>
-          <a href="request-access.html">Request Access</a>
+          <a href="product.html">Platform Overview</a>
+          <a href="product.html#kill-switch">Kill Switches</a>
+          <a href="product.html#budget">Budget Enforcement</a>
+          <a href="product.html#chain">Decision Chain</a>
+          <a href="product.html#mcp">MCP Security</a>
+          <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">
-          <h4>Connect</h4>
+          <h4>Resources</h4>
+          <a href="sandbox.html">Sandbox</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance-public.html">Compliance</a>
+          <a href="https://github.com/altrace-dev-role" target="_blank" rel="noopener">GitHub</a>
           <a href="mailto:hello@altrace.io">hello@altrace.io</a>
         </div>
       </div>
@@ -393,6 +642,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>
