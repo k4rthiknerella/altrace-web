@@ -136,35 +136,41 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">Decision Chain</p>
-        <h2 class="section-title">25 governance stages on every request</h2>
-        <p class="section-subtitle">Every LLM API request passes through a 25-stage decision chain. Each stage can block, allow, or annotate. Short-circuit evaluation means blocked requests exit immediately — no unnecessary processing.</p>
+        <h2 class="section-title">31 governance stages on every request</h2>
+        <p class="section-subtitle">Every LLM API request passes through a 31-stage decision chain. Each stage can block, allow, or annotate. Short-circuit evaluation means blocked requests exit immediately — no unnecessary processing.</p>
       </div>
       <div class="chain-visual fade-in">
         <div class="chain-stage"><span class="chain-stage-number">1.</span> delegation</div>
         <div class="chain-stage"><span class="chain-stage-number">2.</span> manifest</div>
-        <div class="chain-stage"><span class="chain-stage-number">3.</span> policy</div>
-        <div class="chain-stage"><span class="chain-stage-number">4.</span> model_filter</div>
-        <div class="chain-stage"><span class="chain-stage-number">5.</span> mcp_registry</div>
-        <div class="chain-stage"><span class="chain-stage-number">6.</span> mcp_fingerprint</div>
-        <div class="chain-stage"><span class="chain-stage-number">7.</span> mcp_attestation</div>
-        <div class="chain-stage"><span class="chain-stage-number">8.</span> tool_perm</div>
-        <div class="chain-stage"><span class="chain-stage-number">9.</span> evidence_grounding</div>
-        <div class="chain-stage"><span class="chain-stage-number">10.</span> action_level</div>
-        <div class="chain-stage"><span class="chain-stage-number">11.</span> approval_gate</div>
-        <div class="chain-stage"><span class="chain-stage-number">12.</span> cost_tool</div>
-        <div class="chain-stage"><span class="chain-stage-number">13.</span> dow_breaker</div>
-        <div class="chain-stage"><span class="chain-stage-number">14.</span> trust_contagion</div>
-        <div class="chain-stage"><span class="chain-stage-number">15.</span> network_trust</div>
-        <div class="chain-stage"><span class="chain-stage-number">16.</span> frontier</div>
-        <div class="chain-stage"><span class="chain-stage-number">17.</span> taint_flow</div>
-        <div class="chain-stage"><span class="chain-stage-number">18.</span> ssn_guard</div>
-        <div class="chain-stage"><span class="chain-stage-number">19.</span> rtl_guard</div>
-        <div class="chain-stage"><span class="chain-stage-number">20.</span> content_gov</div>
-        <div class="chain-stage"><span class="chain-stage-number">21.</span> prompt_registry</div>
-        <div class="chain-stage"><span class="chain-stage-number">22.</span> external_classifier</div>
-        <div class="chain-stage"><span class="chain-stage-number">23.</span> opa</div>
-        <div class="chain-stage"><span class="chain-stage-number">24.</span> cedar</div>
-        <div class="chain-stage"><span class="chain-stage-number">25.</span> allow_fallback</div>
+        <div class="chain-stage"><span class="chain-stage-number">3.</span> ingress_scan</div>
+        <div class="chain-stage"><span class="chain-stage-number">4.</span> policy</div>
+        <div class="chain-stage"><span class="chain-stage-number">5.</span> model_filter</div>
+        <div class="chain-stage"><span class="chain-stage-number">6.</span> mcp_registry</div>
+        <div class="chain-stage"><span class="chain-stage-number">7.</span> mcp_reputation</div>
+        <div class="chain-stage"><span class="chain-stage-number">8.</span> mcp_fingerprint</div>
+        <div class="chain-stage"><span class="chain-stage-number">9.</span> mcp_attestation</div>
+        <div class="chain-stage"><span class="chain-stage-number">10.</span> mcp_poisoning</div>
+        <div class="chain-stage"><span class="chain-stage-number">11.</span> tool_perm</div>
+        <div class="chain-stage"><span class="chain-stage-number">12.</span> tbac</div>
+        <div class="chain-stage"><span class="chain-stage-number">13.</span> evidence_grounding</div>
+        <div class="chain-stage"><span class="chain-stage-number">14.</span> action_level</div>
+        <div class="chain-stage"><span class="chain-stage-number">15.</span> approval_gate</div>
+        <div class="chain-stage"><span class="chain-stage-number">16.</span> cost_tool</div>
+        <div class="chain-stage"><span class="chain-stage-number">17.</span> dow_breaker</div>
+        <div class="chain-stage"><span class="chain-stage-number">18.</span> trust_contagion</div>
+        <div class="chain-stage"><span class="chain-stage-number">19.</span> network_trust</div>
+        <div class="chain-stage"><span class="chain-stage-number">20.</span> frontier</div>
+        <div class="chain-stage"><span class="chain-stage-number">21.</span> taint_flow</div>
+        <div class="chain-stage"><span class="chain-stage-number">22.</span> ssn_guard</div>
+        <div class="chain-stage"><span class="chain-stage-number">23.</span> rtl_guard</div>
+        <div class="chain-stage"><span class="chain-stage-number">24.</span> content_gov</div>
+        <div class="chain-stage"><span class="chain-stage-number">25.</span> chain_detect</div>
+        <div class="chain-stage"><span class="chain-stage-number">26.</span> prompt_registry</div>
+        <div class="chain-stage"><span class="chain-stage-number">27.</span> external_classifier</div>
+        <div class="chain-stage"><span class="chain-stage-number">28.</span> opa</div>
+        <div class="chain-stage"><span class="chain-stage-number">29.</span> cedar</div>
+        <div class="chain-stage"><span class="chain-stage-number">30.</span> cel</div>
+        <div class="chain-stage"><span class="chain-stage-number">31.</span> allow_fallback</div>
       </div>
       <div class="stats-bar fade-in" style="max-width: 720px; margin: var(--sp-5) auto 0;">
         <div class="stat-item">
@@ -278,7 +284,7 @@
           <p class="section-label">Capability</p>
           <h2>Every decision. Immutable. Attributable.</h2>
           <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">E004</span><span class="fw-badge fw-enforced">E008</span><span class="fw-badge fw-enforced">D003</span></div>
-          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 25-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
+          <p>Altrace records every enforcement decision in a tamper-evident audit log. Request ID, agent identity, the specific stage in the 31-stage decision chain that produced the result, delegation contract reference, and machine-readable reason code — all signed and stored.</p>
           <p>When an auditor asks what happened, you don't search through prompt logs. You have causal records: which agent, what it tried to do, which governance rule was evaluated, and the outcome — with full attribution chain.</p>
           <div class="tech-box">
             EU AI Act Art. 50 requires transparency in AI-generated content. Altrace produces machine-readable decision reasons and transparency headers for every governance action.
@@ -298,7 +304,7 @@
             <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-7f3a</span></div>
             <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:00</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-3</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">model=</span><span class="t-model">claude-opus</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (4/25)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">model_filter (4/31)</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">model_not_in_delegation_allowlist</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">delegation=</span><span class="t-value">contract-2b91</span></div>
           </div>
@@ -315,7 +321,7 @@
           <p class="section-label">Capability</p>
           <h2>MCP tool governance at the protocol layer</h2>
           <div style="display: flex; gap: 6px; margin-bottom: var(--sp-3);"><span class="fw-badge fw-enforced">C009</span><span class="fw-badge fw-enforced">B007</span></div>
-          <p>Altrace governs Model Context Protocol traffic with a six-layer defense: server registry authorization, tool-level fingerprint verification, supply chain attestation, tool description poisoning detection (53 RE2 patterns), per-tool cost caps, and team-scoped access control.</p>
+          <p>Altrace governs Model Context Protocol traffic with a six-layer defense: server registry authorization, tool-level fingerprint verification, supply chain attestation, tool description poisoning detection (89 RE2 patterns), per-tool cost caps, and team-scoped access control.</p>
           <p>When a new MCP server appears in your infrastructure, Altrace detects it. When a tool description changes between calls — a rug pull attack — fingerprint verification blocks it. When tool descriptions contain hidden prompt injection, poisoning detection catches it before execution.</p>
           <div class="tech-box">
             OWASP MCP Top 10 coverage: tool poisoning (MCP03), privilege escalation (MCP02), audit trail (MCP08), and shadow MCP detection (MCP09). All enforcement decisions recorded with causal audit records.
@@ -334,7 +340,7 @@
             <div class="terminal-line">&nbsp; <span class="t-key">fingerprint=</span><span class="t-value">verified</span> <span class="t-key">attestation=</span><span class="t-value">valid</span></div>
             <div class="terminal-line" style="margin-top: 6px;"><span class="t-time">14:23:25</span> <span class="t-label t-block">BLOCK</span> <span class="t-agent">worker-7</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">mcp_server=</span><span class="t-value">unknown-mcp</span></div>
-            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">mcp_poisoning (8/25)</span></div>
+            <div class="terminal-line">&nbsp; <span class="t-key">stage=</span><span class="t-value">mcp_poisoning (9/31)</span></div>
             <div class="terminal-line">&nbsp; <span class="t-key">reason=</span><span class="t-reason">tool_description_contains_hidden_instruction</span></div>
           </div>
         </div>
