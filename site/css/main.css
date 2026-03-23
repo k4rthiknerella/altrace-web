@@ -10,22 +10,22 @@
 }
 
 :root {
-  /* Colors — Copper-forward governance palette */
-  --bg: #F8F0E6;
-  --surface: #FDF8F2;
-  --surface-warm: #EFE5D8;
-  --border: #D4C4AD;
-  --accent: #9B6B3E;
-  --accent-hover: #7D5530;
-  --accent-glow: rgba(155, 107, 62, 0.15);
-  --accent-copper: #9B6B3E;
-  --accent-copper-hover: #7D5530;
-  --text-primary: #2A1F14;
-  --text-secondary: #5C4A36;
-  --text-muted: #8C7A66;
-  --success: #5A7C4A;
-  --warning: #B8845A;
-  --danger: #A04040;
+  /* Colors — Copper background + sage green buttons */
+  --bg: #EDE0D0;
+  --surface: #F5EBE0;
+  --surface-warm: #E3D5C3;
+  --border: #C9B9A3;
+  --accent: #5A8F6A;
+  --accent-hover: #4A7A58;
+  --accent-glow: rgba(90, 143, 106, 0.15);
+  --accent-copper: #A07040;
+  --accent-copper-hover: #8A5C32;
+  --text-primary: #2C2418;
+  --text-secondary: #5C4E3E;
+  --text-muted: #8A7C6C;
+  --success: #5A8F6A;
+  --warning: #A07040;
+  --danger: #8B3A3A;
 
   /* Typography */
   --font-heading: 'Fraunces', 'DM Serif Display', Georgia, serif;
@@ -154,7 +154,7 @@ section {
   right: 0;
   height: var(--nav-height);
   z-index: 1000;
-  background: #ffffff;
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
   transition: box-shadow 0.3s var(--ease);
 }
@@ -268,7 +268,7 @@ section {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #ffffff;
+  background: var(--surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 999;
@@ -315,23 +315,29 @@ section {
 
 .btn-primary {
   background: var(--accent);
-  color: white;
+  color: #F5EBE0;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
-  box-shadow: 0 0 24px var(--accent-glow);
+  box-shadow: 0 4px 16px var(--accent-glow);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
 }
 
 .btn-secondary:hover {
-  border-color: var(--text-muted);
-  background: var(--surface);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(90, 143, 106, 0.06);
 }
 
 .btn-large {
