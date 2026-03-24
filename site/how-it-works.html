@@ -78,25 +78,25 @@
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-agent">
           <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Calls Claude API</div>
+          <div class="flow-step-detail">Sends request</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Inbound: identity, budget, content scanned<br>Outbound: response scanned, cost recorded<br>All clear</div>
+          <div class="flow-step-detail">Scans request &rarr; forwards<br>Scans response &larr; returns<br>Cost recorded, audit logged</div>
         </div>
-        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-arrow">&harr;</div>
         <div class="flow-step flow-step-provider">
-          <div class="flow-step-label">Anthropic</div>
-          <div class="flow-step-detail">Request forwarded</div>
+          <div class="flow-step-label">Claude</div>
+          <div class="flow-step-detail">Processes request<br>Returns response</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--success);">
           <div class="flow-step-label" style="color: var(--success);">Allowed</div>
-          <div class="flow-step-detail">Response returned<br>Cost recorded<br>Audit logged</div>
+          <div class="flow-step-detail">Agent receives response<br>Both directions scanned<br>Zero friction</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Typical governance overhead: <strong>microseconds per decision</strong>. The agent doesn't notice.</p>
+      <p class="flow-caption fade-in">Governance adds <strong>milliseconds</strong>. The model takes seconds. The overhead is invisible.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-normal.mp4" type="video/mp4">
