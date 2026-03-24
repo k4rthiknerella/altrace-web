@@ -2775,13 +2775,46 @@ section {
     grid-template-columns: 1fr;
   }
 
-  .enforce-cell:first-child {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+  .enforce-row-header {
+    display: none;
   }
 
-  .enforce-cell.header.theirs::before { content: 'Monitoring: '; }
-  .enforce-cell.header.ours::before { content: 'Altrace: '; }
+  .enforce-cell {
+    padding: var(--sp-3);
+    font-size: 0.875rem;
+  }
+
+  .enforce-cell:first-child {
+    border-right: none;
+    border-bottom: none;
+    opacity: 0.6;
+    font-size: 0.8125rem;
+    padding-bottom: 4px;
+  }
+
+  .enforce-cell:first-child::before {
+    content: 'Others: ';
+    font-weight: 600;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .enforce-cell.ours-cell::before {
+    content: 'Altrace: ';
+    font-weight: 600;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+
+  .enforce-cell.ours-cell {
+    padding-top: 4px;
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--border);
+  }
 
   .dual-arch {
     grid-template-columns: 1fr;
