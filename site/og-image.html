@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  /* Render at 1200x630 and screenshot to og-image.png */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #FAF8F4;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #8B6914, #C49A2A, #8B6914);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .logo svg { height: 40px; color: #1A1A18; }
+  .logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1A1A18;
+    letter-spacing: -0.03em;
+  }
+  h1 {
+    font-size: 56px;
+    font-weight: 400;
+    color: #1A1A18;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  p {
+    font-size: 22px;
+    color: #6B6960;
+    line-height: 1.5;
+    max-width: 800px;
+  }
+  .domains {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .domain {
+    background: #EEEBE4;
+    color: #4A4740;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .url {
+    position: absolute;
+    bottom: 40px;
+    right: 100px;
+    font-size: 16px;
+    color: #A09E96;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-bar"></div>
+  <div class="logo">
+    <svg viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+    <span class="logo-text">Altrace</span>
+  </div>
+  <h1>Deterministic governance<br>for AI agents.</h1>
+  <p>Nine enforcement domains. 31 decision stages. Microsecond-level decisions. No ML in the loop.</p>
+  <div class="domains">
+    <span class="domain">Behavioral Contracts</span>
+    <span class="domain">Evidence Grounding</span>
+    <span class="domain">Credential Indirection</span>
+    <span class="domain">Graduated Response</span>
+    <span class="domain">Content Governance</span>
+    <span class="domain">Infrastructure Enforcement</span>
+    <span class="domain">Streaming Scanning</span>
+    <span class="domain">Tamper-Evident Forensics</span>
+    <span class="domain">Agent Identity</span>
+  </div>
+  <span class="url">altrace.io</span>
+</body>
+</html>
