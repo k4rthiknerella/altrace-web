@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Altrace — The Authority Layer for AI Agents</title>
-  <meta name="description" content="Altrace is a deterministic AI agent governance runtime. Nine enforcement domains — behavioral contracts, evidence grounding, credential indirection, graduated response, content governance, streaming scanning, tamper-evident forensics, agent identity, and infrastructure-level enforcement. No ML. Microsecond-level decisions.">
+  <meta name="description" content="Altrace is a deterministic AI agent governance runtime. Nine enforcement domains. Infrastructure-level controls that agents cannot bypass. Microsecond-level decisions. No ML in the loop.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Altrace — The Authority Layer for AI Agents">
-  <meta property="og:description" content="Altrace is a deterministic AI agent governance runtime. Nine enforcement domains — behavioral contracts, evidence grounding, credential indirection, graduated response, content governance, streaming s">
+  <meta property="og:description" content="Altrace is a deterministic AI agent governance runtime. Nine enforcement domains. Infrastructure-level controls that agents cannot bypass. Microsecond-level decisions. No ML in the loop.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -63,7 +63,7 @@
   <section class="hero-home" style="text-align: center;">
     <div class="container">
       <h1 style="font-size: clamp(2.75rem, 6vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; max-width: 800px; margin: 0 auto;" class="fade-in">Your agents don't follow rules.<br>Altrace enforces them.</h1>
-      <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin: 32px auto 48px; max-width: 600px; line-height: 1.6;" class="fade-in fade-in-delay-1">A deterministic governance runtime that enforces behavioral contracts on AI agents at the infrastructure level. Nine enforcement domains. 31 decision stages. Microsecond-level decisions. No ML in the loop.</p>
+      <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin: 32px auto 48px; max-width: 600px; line-height: 1.6;" class="fade-in fade-in-delay-1">A deterministic governance runtime that enforces behavioral contracts on AI agents at the infrastructure level. Nine enforcement domains. Microsecond-level decisions. No ML in the loop.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
         <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request Access</a>
         <a href="how-it-works.html" class="btn btn-secondary btn-large">How It Works</a>
@@ -95,7 +95,7 @@
         <div class="fade-in">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">01</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Behavioral Contracts</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Every agent declares what it's allowed to do — tools, models, destinations, actions. A 31-stage decision chain enforces those declarations before every request reaches the LLM.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Every agent declares what it's allowed to do — tools, models, destinations, actions. A multi-stage governance engine enforces those declarations before every request reaches the LLM.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
@@ -109,49 +109,49 @@
         <div class="fade-in fade-in-delay-2">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">03</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Credential Indirection</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Agents never hold real API keys. Virtual keys with AES-256-GCM encryption. Instant per-agent revocation. Per-key budget limits and model scoping.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Agents never hold real API keys. Virtual keys encrypted at rest. Instant per-agent revocation. Per-key budget limits and model scoping.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">04</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Graduated Response</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Not binary allow/deny. Five escalation levels from monitoring to quarantine. Asymmetric de-escalation prevents oscillation. Behavioral fingerprinting detects unknown agents.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Not binary allow/deny. Five escalation levels from monitoring to quarantine. Escalation is fast, de-escalation is deliberate. Unknown agents are detected and fingerprinted automatically.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-1">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">05</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Bidirectional Content Governance</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Scans both inbound requests and outbound responses. Six detection layers fused with Dempster-Shafer evidence theory. 275+ RE2 patterns. No ML. Response-side scanning catches injection that succeeded — not just attempts, but actual compromises in LLM output.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Scans both inbound requests and outbound responses. Multiple independent detection layers, each catching what the others miss — combined with mathematical rigor. No ML dependency. Response-side scanning catches injection that succeeded — not just attempts, but actual compromises in LLM output.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-2">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">06</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Infrastructure Enforcement</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Kernel-level iptables/nftables/cilium rules capture all traffic. Applications cannot bypass the proxy. Four enforcement backends for any Kubernetes distribution.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Kernel-level network rules capture all traffic. Applications cannot bypass the proxy. Multiple enforcement backends for any Kubernetes distribution.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">07</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Streaming Scanning</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Per-SSE-event classification with 8KB sliding window. Mid-stream cancellation injects provider-native errors. PII in event 47 of a stream? Cancelled at event 47.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Every streaming fragment classified as it arrives, with sliding window reassembly for cross-fragment detection. Mid-stream cancellation injects provider-native errors. PII detected mid-stream? Stream cancelled at the exact point of violation.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-1">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">08</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Tamper-Evident Forensics</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">SHA-256 hash chain where every decision is cryptographically linked to the previous one. Insertion, deletion, and reordering are all detectable. Not logging — proof.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">A tamper-evident audit trail where every decision is cryptographically linked to the previous one. Insertion, deletion, and reordering are all detectable. Not logging — proof.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-2">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">09</p>
           <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Agent Identity</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">SCIM 2.0 provisioning. SAML and OIDC SSO. SPIFFE JWT-SVID for zero-trust service identity. Four-role RBAC. Agents get real identity infrastructure.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Enterprise identity provisioning. Single sign-on. Zero-trust service identity. Role-based access control. Agents get the same identity infrastructure your humans use.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
