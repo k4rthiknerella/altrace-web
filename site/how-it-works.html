@@ -83,7 +83,7 @@
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Identity verified<br>Budget checked<br>Content scanned<br>All clear</div>
+          <div class="flow-step-detail">Inbound: identity, budget, content scanned<br>Outbound: response scanned, cost recorded<br>All clear</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-provider">
@@ -96,7 +96,7 @@
           <div class="flow-step-detail">Response returned<br>Cost recorded<br>Audit logged</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Typical latency overhead: <strong>&lt;1ms</strong>. The agent never knows Altrace is there.</p>
+      <p class="flow-caption fade-in">Typical governance overhead: <strong>microseconds per decision</strong>. The agent doesn't notice.</p>
       <div class="demo-video-placeholder fade-in" style="margin-top: 32px; padding: 48px 24px; border: 1px dashed var(--border); border-radius: 8px; text-align: center; background: var(--surface);">
         <p style="font-size: 0.875rem; color: var(--text-tertiary); font-weight: 500;">Demo video coming soon</p>
         <p style="font-size: 0.8125rem; color: var(--text-tertiary); margin-top: 4px;">60-second walkthrough with real API traffic</p>
@@ -182,7 +182,7 @@
         </div>
       </div>
       <p class="flow-caption fade-in">The injection is caught before it reaches the LLM. The agent's session is automatically placed under tighter constraints. No manual intervention required.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions — inbound requests, outbound responses, and per-event during SSE streams. If an injection bypasses the input filter and the LLM starts leaking its system prompt in the output, response-side detection catches it.</p>
+      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions: inbound requests before the model, outbound responses after the model, and per event during SSE streams. If an injection bypasses the input filter and the LLM starts leaking its system prompt in the output, response-side detection catches it.</p>
     </div>
   </section>
 
@@ -210,6 +210,7 @@
         </div>
       </div>
       <p class="flow-caption fade-in">High-risk operations require prior verification. The agent is told exactly what step is missing, enabling <strong>automatic self-correction</strong> without human intervention.</p>
+      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">In production, a single user task generates 3-20 LLM API calls. Altrace governs every call in the loop — tracking which tools the agent has called across the session to enforce prerequisites.</p>
     </div>
   </section>
 
@@ -237,6 +238,7 @@
         </div>
       </div>
       <p class="flow-caption fade-in">Unlike tools that wait for the full response, Altrace monitors <strong>each word as it arrives</strong> and cancels the stream the moment sensitive data appears.</p>
+      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">LLM responses stream via Server-Sent Events. Altrace classifies each fragment as it arrives. If sensitive data appears in fragment 47, the stream is cancelled at fragment 47 — before fragments 48+ are delivered.</p>
     </div>
   </section>
 
