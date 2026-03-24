@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=3">
+  <link rel="stylesheet" href="css/main.css?v=6">
 </head>
 <body>
 
@@ -19,43 +19,15 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger">Product</button>
           <div class="nav-dropdown-menu">
-            <div class="dropdown-label">Capabilities</div>
             <a href="product.html">Platform Overview</a>
-            <a href="product.html#controls">Kill Switches</a>
-            <a href="product.html#controls">Budget Enforcement</a>
-            <a href="product.html#controls">Decision Chain</a>
-            <a href="product.html#controls">Content Governance</a>
-            <a href="product.html#controls">MCP Security</a>
-            <a href="product.html#controls">Evidence Grounding</a>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-label">Deployment</div>
-            <a href="product.html#works-with">Providers</a>
-            <a href="product.html#different">Deployment Modes</a>
-            <a href="product.html#works-with">SDKs</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-trigger">Solutions</button>
-          <div class="nav-dropdown-menu">
-            <a href="why-altrace.html">Why Altrace</a>
-            <a href="compliance-public.html">Compliance Frameworks</a>
-            <a href="pricing.html">Pricing</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-trigger">Resources</button>
-          <div class="nav-dropdown-menu">
             <a href="sandbox.html">How It Works</a>
-            <a href="https://altrace.io" target="_blank" rel="noopener">GitHub</a>
+            <a href="why-altrace.html">Why Altrace</a>
           </div>
         </div>
-        <a href="/login.html" class="nav-link">Console</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="compliance-public.html" class="nav-link">Compliance</a>
       </div>
-      <button class="nav-hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
       <div class="nav-right">
         <a href="index.html" class="nav-logo">
           <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
@@ -67,28 +39,20 @@
   </nav>
   <div class="nav-mobile">
     <a href="product.html">Product</a>
-    <a href="why-altrace.html">Why Altrace</a>
-    <a href="compliance-public.html">Compliance</a>
-    <a href="pricing.html">Pricing</a>
     <a href="sandbox.html">How It Works</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="pricing.html">Pricing</a>
     <a href="request-access.html">Request Access</a>
-    <a href="/login.html">Console</a>
   </div>
 
   <!-- HERO -->
-  <section class="hero hero-centered">
-    <div class="hero-bg"></div>
+  <section style="padding: 160px 0 100px; text-align: center;">
     <div class="container">
-      <div class="hero-content">
-        <p class="section-label fade-in">Platform</p>
-        <h1 class="fade-in fade-in-delay-1">The authority plane<br>for AI agents.</h1>
-        <p class="section-subtitle fade-in fade-in-delay-2">
-          Altrace sits between your agents and the outside world. It decides what they're allowed to do — and enforces it, whether they cooperate or not.
-        </p>
-        <div class="hero-ctas fade-in fade-in-delay-3">
-          <a href="request-access.html" class="btn btn-primary btn-large">Request a demo</a>
-          <a href="why-altrace.html" class="btn btn-secondary btn-large">Why Altrace →</a>
-        </div>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 0 auto;" class="fade-in">The authority plane<br>for AI agents.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 480px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace sits between your agents and the outside world. It decides what they're allowed to do — and enforces it, whether they cooperate or not.</p>
+      <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request a demo</a>
+        <a href="why-altrace.html" class="btn btn-secondary btn-large">Why Altrace &rarr;</a>
       </div>
     </div>
   </section>

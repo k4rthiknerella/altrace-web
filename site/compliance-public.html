@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=3">
+  <link rel="stylesheet" href="css/main.css?v=6">
 </head>
 <body>
 
@@ -19,43 +19,15 @@
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger">Product</button>
           <div class="nav-dropdown-menu">
-            <div class="dropdown-label">Capabilities</div>
             <a href="product.html">Platform Overview</a>
-            <a href="product.html#kill-switch">Kill Switches</a>
-            <a href="product.html#budget">Budget Enforcement</a>
-            <a href="product.html#chain">Decision Chain</a>
-            <a href="product.html#content">Content Governance</a>
-            <a href="product.html#mcp">MCP Security</a>
-            <a href="product.html#evidence">Evidence Grounding</a>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-label">Deployment</div>
-            <a href="product.html#providers">Providers</a>
-            <a href="product.html#deployment">Deployment Modes</a>
-            <a href="product.html#sdks">SDKs</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-trigger">Solutions</button>
-          <div class="nav-dropdown-menu">
-            <a href="why-altrace.html">Why Altrace</a>
-            <a href="compliance-public.html">Compliance Frameworks</a>
-            <a href="pricing.html">Pricing</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-trigger">Resources</button>
-          <div class="nav-dropdown-menu">
             <a href="sandbox.html">How It Works</a>
-            <a href="https://altrace.io" target="_blank" rel="noopener">GitHub</a>
+            <a href="why-altrace.html">Why Altrace</a>
           </div>
         </div>
-        <a href="/login.html" class="nav-link">Console</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="compliance-public.html" class="nav-link">Compliance</a>
       </div>
-      <button class="nav-hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
       <div class="nav-right">
         <a href="index.html" class="nav-logo">
           <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
@@ -67,21 +39,22 @@
   </nav>
   <div class="nav-mobile">
     <a href="product.html">Product</a>
-    <a href="why-altrace.html">Why Altrace</a>
-    <a href="compliance-public.html">Compliance</a>
-    <a href="pricing.html">Pricing</a>
     <a href="sandbox.html">How It Works</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="pricing.html">Pricing</a>
     <a href="request-access.html">Request Access</a>
-    <a href="/login.html">Console</a>
   </div>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-content hero-centered">
+  <section style="padding: 160px 0 100px; text-align: center;">
+    <div class="container">
       <p class="section-label fade-in">Compliance</p>
-      <h1 class="fade-in fade-in-delay-1">AI Agent Governance for Regulated Environments</h1>
-      <p class="section-subtitle fade-in fade-in-delay-2">Altrace enforces governance at the infrastructure layer — not the application layer. Every decision is recorded with causal provenance and tamper-evident integrity. Your compliance team gets enforcement evidence, not log files.</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">AI Agent Governance for Regulated Environments</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace enforces governance at the infrastructure layer — not the application layer. Every decision is recorded with causal provenance and tamper-evident integrity. Your compliance team gets enforcement evidence, not log files.</p>
+      <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
+        <a href="request-access.html" class="btn btn-primary btn-large">Request Access</a>
+        <a href="pricing.html" class="btn btn-secondary btn-large">See pricing &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -214,6 +187,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=3"></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>
