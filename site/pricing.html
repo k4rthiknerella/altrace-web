@@ -50,9 +50,9 @@
     <div class="container">
       <p class="section-label fade-in">Pricing</p>
       <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Governance that scales with you</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Start with the Docker sandbox for free. Move to Kubernetes enforcement when you're ready for production. Your data and governance decisions never leave your infrastructure.</p>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Start with a free evaluation. Move to production-grade enforcement when you are ready. Your data and governance decisions never leave your infrastructure.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
-        <a href="sandbox.html" class="btn btn-primary btn-large">Try the Sandbox</a>
+        <a href="sandbox.html" class="btn btn-primary btn-large">See How It Works</a>
         <a href="mailto:hello@altrace.io" class="btn btn-secondary btn-large">Contact Sales &rarr;</a>
       </div>
     </div>
@@ -61,43 +61,25 @@
   <!-- PRICING TIERS -->
   <section>
     <div class="container">
-      <div class="pricing-grid stagger-reveal">
-        <!-- Community (Free) -->
-        <div class="pricing-tier">
-          <div class="pricing-tier-name">Community</div>
-          <div class="pricing-tier-price">Free</div>
-          <div class="pricing-tier-desc">Docker advisory mode. Visibility into your AI agent traffic with basic governance controls.</div>
-          <ul class="pricing-tier-features">
-            <li>Docker Compose deployment</li>
-            <li>1 team, 5 agents</li>
-            <li>Budget tracking (advisory)</li>
-            <li>Kill switch (advisory)</li>
-            <li>Basic audit trail</li>
-            <li>Community support</li>
-            <li>31-stage decision chain</li>
-            <li>Anthropic + OpenAI support</li>
-          </ul>
-          <a href="sandbox.html" class="btn btn-secondary btn-large btn-full">Try the Sandbox</a>
-        </div>
-
+      <div class="pricing-grid stagger-reveal" style="max-width: 800px; margin: 0 auto; grid-template-columns: repeat(2, 1fr);">
         <!-- Team -->
         <div class="pricing-tier featured">
           <div class="pricing-tier-name">Team</div>
           <div class="pricing-tier-price">Contact Us</div>
-          <div class="pricing-tier-desc">Kubernetes governance-grade enforcement. Network-level controls that agents cannot bypass.</div>
+          <div class="pricing-tier-desc">Production-grade enforcement. Infrastructure-level controls that agents cannot bypass.</div>
           <ul class="pricing-tier-features">
-            <li>Kubernetes sidecar deployment</li>
+            <li>Deploys alongside your existing infrastructure</li>
             <li>Unlimited teams and agents</li>
-            <li>Kernel-level network enforcement</li>
-            <li>Kill switch with SQLite persistence</li>
-            <li>Budget enforcement with pre-reservation</li>
-            <li>SSE stream scanning</li>
-            <li>MCP tool governance</li>
-            <li>Evidence grounding</li>
+            <li>Infrastructure-level network enforcement</li>
+            <li>Persistent kill switches (survive restarts)</li>
+            <li>Hard spending limits per team and agent</li>
+            <li>Real-time response monitoring</li>
+            <li>Tool authorization and governance</li>
+            <li>Prerequisite verification for high-risk actions</li>
             <li>Tamper-evident audit trail</li>
             <li>Governance console</li>
-            <li>All 4 LLM providers</li>
-            <li>OPA + Cedar policy engines</li>
+            <li>Anthropic, OpenAI, Azure OpenAI, Gemini</li>
+            <li>Custom policy rules</li>
             <li>Email support</li>
           </ul>
           <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large btn-full">Request Access</a>
@@ -110,14 +92,14 @@
           <div class="pricing-tier-desc">Everything in Team, plus dedicated support, compliance assistance, and custom integrations.</div>
           <ul class="pricing-tier-features">
             <li>Everything in Team</li>
-            <li>Deployment assistance + architecture review</li>
+            <li>Deployment assistance and architecture review</li>
             <li>Priority support with SLA</li>
             <li>Custom policy development</li>
-            <li>Compliance assessment + framework mapping</li>
-            <li>SSO + RBAC integration</li>
-            <li>Multi-cluster management (Hub)</li>
-            <li>VirtualKey credential authority</li>
-            <li>SIEM export integration</li>
+            <li>Compliance assessment and framework mapping</li>
+            <li>Single sign-on and role-based access</li>
+            <li>Multi-cluster management</li>
+            <li>Centralized credential management</li>
+            <li>SIEM integration for your existing security stack</li>
             <li>Dedicated onboarding</li>
             <li>Custom integrations</li>
           </ul>
@@ -139,150 +121,117 @@
           <thead>
             <tr>
               <th>Feature</th>
-              <th>Community</th>
               <th>Team</th>
               <th>Enterprise</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="category-row"><td colspan="4">Enforcement</td></tr>
+            <tr class="category-row"><td colspan="3">Enforcement</td></tr>
             <tr>
               <td>Deployment mode</td>
-              <td>Docker (advisory)</td>
-              <td>Kubernetes (governance-grade)</td>
-              <td>Kubernetes + Gateway</td>
+              <td>Production (governance-grade)</td>
+              <td>Production + Gateway</td>
             </tr>
             <tr>
-              <td>iptables network enforcement</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Cilium enforcement backend</td>
-              <td class="dash">--</td>
+              <td>Infrastructure-level network enforcement</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
-              <td>Kill switch (global/team/agent)</td>
-              <td>Advisory</td>
+              <td>Kill switch (global / team / agent)</td>
               <td class="check">Enforced</td>
               <td class="check">Enforced</td>
             </tr>
             <tr>
-              <td>Budget enforcement</td>
-              <td>Advisory</td>
-              <td class="check">Pre-reservation</td>
-              <td class="check">Pre-reservation</td>
-            </tr>
-
-            <tr class="category-row"><td colspan="4">Governance</td></tr>
-            <tr>
-              <td>Decision chain stages</td>
-              <td>31</td>
-              <td>31</td>
-              <td>31</td>
-            </tr>
-            <tr>
-              <td>SSE stream scanning</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>MCP tool governance</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Evidence grounding</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Graduated enforcement</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>OPA + Cedar policy engines</td>
-              <td class="dash">--</td>
+              <td>Hard spending limits</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
 
-            <tr class="category-row"><td colspan="4">Providers</td></tr>
+            <tr class="category-row"><td colspan="3">Governance</td></tr>
             <tr>
-              <td>Anthropic + OpenAI</td>
-              <td class="check">Yes</td>
+              <td>Governance checks per request</td>
+              <td>31</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td>Real-time response monitoring</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
-              <td>Azure OpenAI + Gemini</td>
-              <td class="dash">--</td>
+              <td>Tool authorization</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Prerequisite verification</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Graduated enforcement (escalation)</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Multi-layer prompt injection detection</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Custom policy rules</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
 
-            <tr class="category-row"><td colspan="4">Operations</td></tr>
+            <tr class="category-row"><td colspan="3">Providers</td></tr>
+            <tr>
+              <td>Anthropic + OpenAI + Azure OpenAI + Gemini</td>
+              <td class="check">Yes</td>
+              <td class="check">Yes</td>
+            </tr>
+
+            <tr class="category-row"><td colspan="3">Operations</td></tr>
             <tr>
               <td>Governance console</td>
-              <td class="dash">--</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
-              <td>VirtualKey credential authority</td>
-              <td class="dash">--</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Hub (multi-cluster)</td>
-              <td class="dash">--</td>
+              <td>Centralized credential management</td>
               <td class="dash">--</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
-              <td>SIEM export</td>
-              <td class="dash">--</td>
+              <td>Multi-cluster management</td>
               <td class="dash">--</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
-              <td>SSO + RBAC</td>
+              <td>SIEM integration</td>
               <td class="dash">--</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Single sign-on and role-based access</td>
               <td class="dash">--</td>
               <td class="check">Yes</td>
             </tr>
 
-            <tr class="category-row"><td colspan="4">Support</td></tr>
-            <tr>
-              <td>Community</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
+            <tr class="category-row"><td colspan="3">Support</td></tr>
             <tr>
               <td>Email support</td>
-              <td class="dash">--</td>
               <td class="check">Yes</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
               <td>Priority support + SLA</td>
               <td class="dash">--</td>
-              <td class="dash">--</td>
               <td class="check">Yes</td>
             </tr>
             <tr>
               <td>Deployment assistance</td>
-              <td class="dash">--</td>
               <td class="dash">--</td>
               <td class="check">Yes</td>
             </tr>
@@ -302,19 +251,19 @@
       <div class="stagger-reveal" style="max-width: 720px; margin: 0 auto;">
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>How is Altrace deployed?</h4>
-          <p>Altrace runs in your infrastructure. In Kubernetes, it deploys as a sidecar proxy via Helm chart with an init container for network enforcement. In Docker, it runs as a standalone container. Your data and governance decisions never leave your environment.</p>
+          <p>Altrace runs entirely within your infrastructure. It deploys alongside your existing workloads with no code changes required. Your data and governance decisions never leave your environment.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What is the difference between advisory and governance-grade?</h4>
-          <p>Advisory mode (Docker) provides budget tracking, kill switches, and audit trails, but applications can bypass the proxy by not routing through it. Governance-grade (Kubernetes with iptables or Cilium) uses kernel-level network rules to force all LLM traffic through Altrace — agents have no route around it.</p>
+          <p>Advisory mode provides budget tracking, kill switches, and audit trails — but applications can choose to bypass the proxy. Governance-grade mode uses infrastructure-level network controls to force all AI traffic through Altrace. Agents have no route around it.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>Does Altrace see my prompts or responses?</h4>
-          <p>Altrace uses content-blind architecture. Classification uses RE2 regex patterns that produce boolean labels only (e.g., "contains PII: true/false"). The matched content is never extracted, stored, or transmitted. Your data stays in transit between your agents and the LLM provider.</p>
+          <p>Altrace uses a privacy-preserving architecture. Content classification produces simple yes/no labels — for example, "contains PII: yes" or "contains PII: no." The matched content is never extracted, stored, or transmitted to any third party. Your data stays in transit between your agents and the AI provider.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What about the governance console?</h4>
-          <p>Included with Team and Enterprise tiers. The console is a web application that connects to your Altrace hub. It ships with the Helm chart and provides fleet management, audit trail, compliance reporting, and policy management.</p>
+          <p>Included with Team and Enterprise tiers. The console is a management dashboard for your Altrace deployment. It provides fleet visibility, audit trail review, compliance reporting, and policy management — all from a single interface.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>Do you offer a hosted version?</h4>
@@ -322,7 +271,7 @@
         </div>
         <div class="card">
           <h4>Can I try it before committing?</h4>
-          <p>Yes. The Community tier is free and runs in Docker Compose. You can have a working governance proxy scanning real LLM traffic in under 2 minutes. No credit card, no sales call.</p>
+          <p>Yes. The free evaluation lets you run a working governance layer scanning real AI traffic in under five minutes. No credit card, no sales call required.</p>
         </div>
       </div>
     </div>
@@ -332,9 +281,9 @@
   <section class="cta-section">
     <div class="container">
       <h2 class="fade-in">Ready to get started?</h2>
-      <p class="fade-in fade-in-delay-1">Try the free Docker sandbox or contact us for Kubernetes deployment.</p>
+      <p class="fade-in fade-in-delay-1">Start with a free evaluation, or contact us for production deployment.</p>
       <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
-        <a href="sandbox.html" class="btn btn-primary btn-large">Try the Sandbox</a>
+        <a href="sandbox.html" class="btn btn-primary btn-large">See How It Works</a>
         <a href="mailto:hello@altrace.io" class="btn btn-secondary btn-large">Contact Sales</a>
       </div>
     </div>
@@ -353,11 +302,9 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">Platform Overview</a>
-          <a href="product.html">Kill Switches</a>
-          <a href="product.html">Budget Enforcement</a>
-          <a href="product.html">Decision Chain</a>
-          <a href="product.html">MCP Security</a>
+          <a href="product.html">Platform</a>
+          <a href="sandbox.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
           <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">

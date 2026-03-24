@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How It Works — Altrace</title>
-  <meta name="description" content="See how Altrace governs AI agent traffic. Request flows for budget enforcement, kill switches, prompt injection detection, and MCP tool governance.">
+  <meta name="description" content="See how Altrace governs AI agent traffic. Request flows for spending limits, kill switches, prompt injection detection, and tool authorization.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -50,7 +50,7 @@
     <div class="container">
       <p class="section-label fade-in">How It Works</p>
       <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Every request. Governed.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace sits transparently between your AI agents and LLM providers. Here's what happens when a request passes through.</p>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace sits between your AI agents and the models they call. Here is what happens when a request passes through.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
         <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request Access</a>
         <a href="product.html" class="btn btn-secondary btn-large">Platform overview &rarr;</a>
@@ -110,7 +110,7 @@
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
           <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
-          <div class="flow-step-detail">HTTP 402 returned<br>LLM never called<br>Zero cost incurred</div>
+          <div class="flow-step-detail">Request rejected<br>Model never called<br>Zero cost incurred</div>
         </div>
       </div>
       <p class="flow-caption fade-in">The request is blocked <strong>before</strong> it reaches the LLM. Your bill stays within the limit you set.</p>
@@ -137,10 +137,10 @@
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
           <div class="flow-step-label" style="color: var(--danger);">All Traffic Stopped</div>
-          <div class="flow-step-detail">HTTP 503 for new requests<br>Active streams cancelled<br>Survives proxy restart</div>
+          <div class="flow-step-detail">All new requests blocked<br>Active streams cancelled<br>Persists through restarts</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Every agent on the "finance" team is stopped. New requests get <strong>HTTP 503</strong>. Active streaming connections are terminated. The kill switch persists through restarts.</p>
+      <p class="flow-caption fade-in">Every agent on the "finance" team is stopped. New requests are blocked. Active streaming connections are terminated. The kill switch stays active through restarts — no gaps.</p>
     </div>
   </section>
 
@@ -159,7 +159,7 @@
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Ingress scan detects injection<br>Multiple detection layers confirm<br>Session risk level elevated</div>
+          <div class="flow-step-detail">Multi-layer detection confirms injection<br>Session risk level elevated<br>Policy enforcement triggered</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
@@ -186,7 +186,7 @@
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Evidence grounding check fails<br>Required prerequisite missing<br>Tells the agent what to do</div>
+          <div class="flow-step-detail">Prerequisite check fails<br>Required verification step missing<br>Tells the agent what to do first</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--warning);">
@@ -194,7 +194,7 @@
           <div class="flow-step-detail">Agent receives remediation hint:<br>"Call lookup_order first"<br>Agent self-corrects and retries</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Destructive operations require evidence of prior research. The agent is told exactly what prerequisite is missing, enabling <strong>automatic self-correction</strong>.</p>
+      <p class="flow-caption fade-in">High-risk operations require prior verification. The agent is told exactly what step is missing, enabling <strong>automatic self-correction</strong> without human intervention.</p>
     </div>
   </section>
 
@@ -208,20 +208,20 @@
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-provider">
           <div class="flow-step-label">LLM Provider</div>
-          <div class="flow-step-detail">Streaming response<br>Token by token via SSE</div>
+          <div class="flow-step-detail">Streaming response<br>Delivered word by word</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Scans each event in real time<br>SSN pattern detected at event 47<br>Policy violation triggered</div>
+          <div class="flow-step-detail">Scans each fragment in real time<br>Social Security number detected<br>Policy violation triggered</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
           <div class="flow-step-label" style="color: var(--danger);">Stream Cancelled</div>
-          <div class="flow-step-detail">SSE error event injected<br>Connection closed<br>Violation logged</div>
+          <div class="flow-step-detail">Stream terminated<br>Connection closed<br>Violation logged in audit trail</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Unlike competitors that buffer the entire response (losing real-time streaming), Altrace scans <strong>each token as it arrives</strong> and cancels mid-stream when violations are found.</p>
+      <p class="flow-caption fade-in">Unlike tools that wait for the full response, Altrace monitors <strong>each word as it arrives</strong> and cancels the stream the moment sensitive data appears.</p>
     </div>
   </section>
 
@@ -229,7 +229,7 @@
   <section style="border-top: 1px solid var(--border); text-align: center;">
     <div class="container">
       <h2 class="fade-in">See it in action</h2>
-      <p class="section-subtitle fade-in fade-in-delay-1" style="margin: var(--sp-3) auto var(--sp-5); max-width: 520px;">Request a walkthrough with our team. We'll show you these flows running on real LLM traffic in your environment.</p>
+      <p class="section-subtitle fade-in fade-in-delay-1" style="margin: var(--sp-3) auto var(--sp-5); max-width: 520px;">Request a walkthrough with our team. We will show you these scenarios running on real AI traffic in your environment.</p>
       <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large fade-in fade-in-delay-2">Request Access</a>
     </div>
   </section>
@@ -247,11 +247,9 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">Platform Overview</a>
-          <a href="product.html">Kill Switches</a>
-          <a href="product.html">Budget Enforcement</a>
-          <a href="product.html">Decision Chain</a>
-          <a href="product.html">MCP Security</a>
+          <a href="product.html">Platform</a>
+          <a href="sandbox.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
           <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Platform — Altrace</title>
-  <meta name="description" content="Altrace is the authority plane for AI agents. Stop runaway spend, enforce boundaries, and prove compliance — without touching your agent code.">
+  <meta name="description" content="Altrace is the governance layer for AI agents. Stop runaway spend, enforce boundaries, and prove compliance — without changing your agent code.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,8 +48,8 @@
   <!-- HERO -->
   <section style="padding: 160px 0 100px; text-align: center;">
     <div class="container">
-      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 0 auto;" class="fade-in">The authority plane<br>for AI agents.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 480px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace sits between your agents and the outside world. It decides what they're allowed to do — and enforces it, whether they cooperate or not.</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 0 auto;" class="fade-in">The governance layer<br>for AI agents.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 480px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace sits between your agents and the models they call. It controls what they can access, how much they can spend, and what they are allowed to do — whether they cooperate or not.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
         <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request a demo</a>
         <a href="why-altrace.html" class="btn btn-secondary btn-large">Why Altrace &rarr;</a>
@@ -68,32 +68,32 @@
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">01</p>
           <h4>Kill switches</h4>
-          <p>Stop any agent instantly. By team, agent, or globally.</p>
+          <p>Stop any agent instantly — by team, by agent, or globally. One click to shut down all AI activity.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">02</p>
           <h4>Spend limits</h4>
-          <p>Hard budget ceilings. Checked before the LLM is called.</p>
+          <p>Hard budget ceilings per team and per agent. Every request is checked before it reaches the model.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">03</p>
           <h4>Content governance</h4>
-          <p>Detect PII and policy violations in requests and responses.</p>
+          <p>Detect sensitive data and policy violations in both requests and responses, automatically.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">04</p>
-          <h4>MCP security</h4>
-          <p>Authorize tool calls. Block unregistered servers.</p>
+          <h4>Tool authorization</h4>
+          <p>Control which tools each agent can use. Block unregistered or unauthorized tools before they execute.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">05</p>
           <h4>Evidence grounding</h4>
-          <p>Agents must verify before they act.</p>
+          <p>Require agents to look up data before taking action. No refund without an order lookup first.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">06</p>
           <h4>Anomaly detection</h4>
-          <p>Catch unknown agents. Escalate drift automatically.</p>
+          <p>Discover unknown agents on your network. Automatically escalate when behavior deviates from baseline.</p>
         </div>
       </div>
     </div>
@@ -104,21 +104,21 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">How it's different</p>
-        <h2 class="section-title">Governance that doesn't ask permission.</h2>
-        <p class="section-subtitle">Most tools govern through the SDK — which means agents can ignore them. Altrace operates at a layer agents cannot reach.</p>
+        <h2 class="section-title">Governance that agents cannot circumvent.</h2>
+        <p class="section-subtitle">Most tools rely on the application to enforce rules — which means a misconfigured or compromised agent can ignore them. Altrace enforces at the infrastructure layer, below the application.</p>
       </div>
       <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
         <div class="card card-accent-top">
-          <h4>Network-level enforcement</h4>
-          <p>Traffic is intercepted at the network layer. No SDK required. Governance is not optional.</p>
+          <h4>Infrastructure-level enforcement</h4>
+          <p>All AI traffic passes through Altrace before it reaches any model. No code changes required. Governance is mandatory, not optional.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Your data never leaves</h4>
           <p>Runs inside your infrastructure. No content is extracted, stored, or transmitted.</p>
         </div>
         <div class="card card-accent-top">
-          <h4>Tamper-evident audit</h4>
-          <p>Every decision is chained cryptographically. Prove exactly what happened.</p>
+          <h4>Tamper-evident audit trail</h4>
+          <p>Every governance decision is recorded in an immutable chain. Prove exactly what happened, when, and why — to any auditor.</p>
         </div>
       </div>
     </div>
@@ -141,8 +141,8 @@
           <div class="logo-item">LangChain</div>
           <div class="logo-item">CrewAI</div>
           <div class="logo-item">AutoGen</div>
-          <div class="logo-item">OPA / Cedar</div>
-          <div class="logo-item">Helm</div>
+          <div class="logo-item">Custom Policies</div>
+          <div class="logo-item">Any Cloud</div>
         </div>
       </div>
     </div>
@@ -158,15 +158,15 @@
       <div class="grid-3 fade-in fade-in-delay-2">
         <div style="text-align: center; padding: var(--sp-4);">
           <h4 style="margin-bottom: 8px;">Altrace Agent</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">Transparent governance proxy. Deploys as a Kubernetes sidecar or standalone Docker container. The enforcement engine.</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">The governance engine. Deploys alongside your existing infrastructure with no code changes. Enforces every policy in real time.</p>
         </div>
         <div style="text-align: center; padding: var(--sp-4);">
           <h4 style="margin-bottom: 8px;">SDKs</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">Python and TypeScript. Drop-in replacements for Anthropic and OpenAI clients. Evidence headers, cost attribution, framework adapters.</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">Python and TypeScript. Drop-in replacements for your existing AI client libraries. Add cost attribution and evidence tracking with minimal integration effort.</p>
         </div>
         <div style="text-align: center; padding: var(--sp-4);">
           <h4 style="margin-bottom: 8px;">MCP Scanner</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">Standalone security scanner for MCP servers. Tool poisoning detection, supply chain verification, configuration audit.</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">Audit the tools your agents connect to. Detects poisoned tool descriptions, misconfigured permissions, and unauthorized access patterns.</p>
         </div>
       </div>
     </div>
@@ -196,11 +196,9 @@
         </div>
         <div class="footer-links">
           <h4>Product</h4>
-          <a href="product.html">Platform Overview</a>
-          <a href="product.html#controls">Kill Switches</a>
-          <a href="product.html#controls">Budget Enforcement</a>
-          <a href="product.html#controls">Decision Chain</a>
-          <a href="product.html#controls">MCP Security</a>
+          <a href="product.html">Platform</a>
+          <a href="sandbox.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
           <a href="pricing.html">Pricing</a>
         </div>
         <div class="footer-links">
