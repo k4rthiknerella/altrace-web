@@ -68,38 +68,32 @@
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">01</p>
           <h4>Kill switches</h4>
-          <p>Stop any agent — instantly — by team, agent, or globally. Mid-conversation.</p>
-          <a href="request-access.html" class="capability-link">See it in action →</a>
+          <p>Stop any agent instantly. By team, agent, or globally.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">02</p>
           <h4>Spend limits</h4>
-          <p>Hard budget ceilings per team or agent. No overruns, no surprises on the bill.</p>
-          <a href="request-access.html" class="capability-link">Request a demo →</a>
+          <p>Hard budget ceilings. Checked before the LLM is called.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">03</p>
           <h4>Content governance</h4>
-          <p>Detect PII, sensitive data, and policy violations in requests and responses.</p>
-          <a href="request-access.html" class="capability-link">Request a demo →</a>
+          <p>Detect PII and policy violations in requests and responses.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">04</p>
           <h4>MCP security</h4>
-          <p>Authorize every tool call. Block unregistered servers. Detect poisoned instructions.</p>
-          <a href="request-access.html" class="capability-link">Request a demo →</a>
+          <p>Authorize tool calls. Block unregistered servers.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">05</p>
           <h4>Evidence grounding</h4>
-          <p>Require agents to verify before they act. No order lookup? No refund issued.</p>
-          <a href="request-access.html" class="capability-link">Request a demo →</a>
+          <p>Agents must verify before they act.</p>
         </div>
         <div class="capability-card">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">06</p>
-          <h4>Behavioral anomaly detection</h4>
-          <p>Catch unknown agents and escalate drift before it becomes an incident.</p>
-          <a href="request-access.html" class="capability-link">Request a demo →</a>
+          <h4>Anomaly detection</h4>
+          <p>Catch unknown agents. Escalate drift automatically.</p>
         </div>
       </div>
     </div>
@@ -116,18 +110,15 @@
       <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
         <div class="card card-accent-top">
           <h4>Network-level enforcement</h4>
-          <p>In Kubernetes, traffic is intercepted at the network layer. No SDK required. No agent cooperation needed. Governance is not optional.</p>
-          <a href="request-access.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">Learn how →</a>
+          <p>Traffic is intercepted at the network layer. No SDK required. Governance is not optional.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Your data never leaves</h4>
-          <p>Altrace runs inside your infrastructure. No content is extracted, stored, or transmitted. Classification happens locally and disappears.</p>
-          <a href="why-altrace.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">Learn more →</a>
+          <p>Runs inside your infrastructure. No content is extracted, stored, or transmitted.</p>
         </div>
         <div class="card card-accent-top">
-          <h4>Tamper-evident audit trail</h4>
-          <p>Every governance decision is chained together cryptographically. You can prove — to an auditor — exactly what happened and when.</p>
-          <a href="compliance-public.html" class="capability-link" style="margin-top: var(--sp-3); display: inline-block;">See compliance coverage →</a>
+          <h4>Tamper-evident audit</h4>
+          <p>Every decision is chained cryptographically. Prove exactly what happened.</p>
         </div>
       </div>
     </div>
@@ -157,14 +148,37 @@
     </div>
   </section>
 
+  <!-- PRODUCTS -->
+  <section style="padding: 80px 0; border-top: 1px solid var(--border);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: var(--sp-6);">
+        <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 16px;" class="fade-in">Products</p>
+        <h2 style="font-weight: 400;" class="fade-in fade-in-delay-1">The Altrace ecosystem.</h2>
+      </div>
+      <div class="grid-3 fade-in fade-in-delay-2">
+        <div style="text-align: center; padding: var(--sp-4);">
+          <h4 style="margin-bottom: 8px;">Altrace Agent</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">Transparent governance proxy. Deploys as a Kubernetes sidecar or standalone Docker container. The enforcement engine.</p>
+        </div>
+        <div style="text-align: center; padding: var(--sp-4);">
+          <h4 style="margin-bottom: 8px;">SDKs</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">Python and TypeScript. Drop-in replacements for Anthropic and OpenAI clients. Evidence headers, cost attribution, framework adapters.</p>
+        </div>
+        <div style="text-align: center; padding: var(--sp-4);">
+          <h4 style="margin-bottom: 8px;">MCP Scanner</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">Standalone security scanner for MCP servers. Tool poisoning detection, supply chain verification, configuration audit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- BOTTOM CTA -->
   <section class="cta-section">
     <div class="container">
       <h2 class="fade-in">See it on your infrastructure.</h2>
-      <p class="fade-in fade-in-delay-1">We'll walk through a live deployment on your environment — or on ours. No slides.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
-        <a href="request-access.html" class="btn btn-primary btn-large">Request a demo</a>
-        <a href="sandbox.html" class="btn btn-secondary btn-large">Try the sandbox →</a>
+      <p class="fade-in fade-in-delay-1" style="max-width: 440px; margin: 0 auto;">We'll walk through a live deployment. No slides.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">hello@altrace.io</a>
       </div>
     </div>
   </section>
