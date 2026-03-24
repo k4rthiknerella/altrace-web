@@ -3,169 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Compliance — Altrace Console</title>
+  <title>Compliance — Altrace</title>
+  <meta name="description" content="Prove AI agent compliance automatically. Altrace provides auditable evidence for EU AI Act, SOC 2, NIST AI RMF, HIPAA, and ISO 42001 requirements.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=6">
-  <link rel="stylesheet" href="css/console.css?v=3">
 </head>
-<body class="console-page">
-  <aside id="console-sidebar" class="console-sidebar"></aside>
+<body>
 
-  <div class="console-main">
-    <div class="console-topbar">
-      <button class="mobile-menu-btn" onclick="toggleSidebar()">&#9776;</button>
-      <h2 class="topbar-title">AIUC-1 Compliance</h2>
-      <span class="topbar-status" id="sse-status">Connecting...</span>
-    </div>
-
-    <div class="console-content">
-      <!-- Print-only header -->
-      <div class="print-only print-header">
-        <h1>AIUC-1 Compliance Report</h1>
-        <p id="print-org"></p>
-        <p id="print-date"></p>
-      </div>
-
-      <!-- Summary panel -->
-      <div class="panel compliance-summary" style="margin-bottom: var(--sp-4);">
-        <div>
-          <div class="panel-title">Overall Compliance</div>
-          <div class="compliance-score" id="compliance-score">
-            <span class="skeleton skeleton-value"></span>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger">Product</button>
+          <div class="nav-dropdown-menu">
+            <a href="product.html">Platform Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="why-altrace.html">Why Altrace</a>
           </div>
-          <div class="compliance-score-sub" id="compliance-sub">controls enforced</div>
         </div>
-        <div>
-          <button class="btn btn-primary btn-nav no-print" id="export-btn" onclick="exportReport()">Export Report</button>
-        </div>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="compliance.html" class="nav-link">Compliance</a>
       </div>
-
-      <!-- Last checked -->
-      <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--sp-3); font-family: var(--font-mono);" id="last-checked"></div>
-
-      <!-- Domain groups -->
-      <div id="controls-container">
-        <div class="panel" style="padding: var(--sp-5); text-align: center;">
-          <div class="skeleton skeleton-text" style="width: 60%; margin: 0 auto var(--sp-2);"></div>
-          <div class="skeleton skeleton-text" style="width: 40%; margin: 0 auto;"></div>
-        </div>
-      </div>
-
-      <!-- Print-only footer -->
-      <div class="print-only print-footer">
-        <p id="print-footer-text"></p>
+      <button class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <div class="nav-right">
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+          Altrace
+        </a>
+        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-nav">Request Access</a>
       </div>
     </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="product.html">Product</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="why-altrace.html">Why Altrace</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="mailto:hello@altrace.io">Request Access</a>
   </div>
 
-  <div class="toast-container" id="toast-container"></div>
+  <!-- HERO -->
+  <section style="padding: 160px 0 100px; text-align: center;">
+    <div class="container">
+      <p class="section-label fade-in">Compliance</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Pass your next AI audit.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace produces the evidence your compliance team needs — automatically. Every governance decision is recorded in a tamper-evident audit trail. Point your auditor at the dashboard, not a pile of log files.</p>
+      <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
+        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request Access</a>
+        <a href="pricing.html" class="btn btn-secondary btn-large">See pricing &rarr;</a>
+      </div>
+    </div>
+  </section>
 
-  <script src="js/auth.js"></script>
-  <script src="js/console.js"></script>
-  <script>
-    const session = initConsole('compliance');
+  <!-- FRAMEWORK CARDS -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Frameworks</p>
+        <h2 class="section-title">Compliance evidence for the frameworks that matter</h2>
+      </div>
+      <div class="grid-3 stagger-reveal">
+        <div class="card card-accent-top">
+          <h4>EU AI Act</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">Deadline: August 2, 2026</p>
+          <p>The EU AI Act requires demonstrable human oversight, risk management, and transparency for AI systems. Altrace enforces these requirements automatically and produces the evidence auditors need to verify compliance.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>SOC 2 (Evidence-Ready)</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">Trust Service Criteria</p>
+          <p>SOC 2 auditors ask: "Can you prove your AI agents are governed?" Altrace records every governance decision — allow, block, warn, kill — in a tamper-evident audit trail with full context. Continuous evidence, not periodic snapshots.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>AIUC-1</h4>
+          <p style="font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: var(--sp-2);">33 of 51 controls covered</p>
+          <p>AIUC-1 is the emerging standard for governing autonomous AI agents. Altrace covers 24 controls fully and 9 partially — the broadest coverage available. Compliance status is reported automatically, not assembled manually.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    const DOMAINS = {
-      'A': 'A. Data & Privacy',
-      'B': 'B. Security',
-      'C': 'C. Safety',
-      'D': 'D. Reliability',
-      'E': 'E. Accountability'
-    };
+  <!-- ADDITIONAL FRAMEWORKS -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="grid-2 stagger-reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <h4>NIST AI RMF</h4>
+          <p>Covers 23 of 26 subcategories across all four functions. Provides runtime enforcement evidence that maps directly to your risk management framework.</p>
+        </div>
+        <div class="card">
+          <h4>MITRE ATLAS</h4>
+          <p>Addresses 12 of 16 applicable adversarial AI techniques. Protects against reconnaissance, unauthorized access, data exfiltration, and impact attacks on your AI systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    let controlsData = [];
+  <!-- HOW ALTRACE ENFORCES COMPLIANCE -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Enforcement</p>
+        <h2 class="section-title">How Altrace proves compliance</h2>
+        <p class="section-subtitle">Governance is enforced at the infrastructure layer, below the application. Your agents cannot bypass controls — and every action is recorded for audit.</p>
+      </div>
+      <div class="grid-3 stagger-reveal">
+        <div class="card">
+          <h4>Infrastructure-Layer Enforcement</h4>
+          <p>Controls are enforced below the application layer. Agents have no path to bypass governance, regardless of how they are coded or configured.</p>
+        </div>
+        <div class="card">
+          <h4>Tamper-Evident Audit Trail</h4>
+          <p>Every governance decision recorded in an immutable chain. Auditors get structured records with clear reason codes — not raw log files to parse.</p>
+        </div>
+        <div class="card">
+          <h4>Instant Kill Switch</h4>
+          <p>One action blocks all AI requests for a team or agent. The kill switch stays active through restarts — proving human oversight capability to any auditor.</p>
+        </div>
+        <div class="card">
+          <h4>Delegation Controls</h4>
+          <p>When agents delegate to other agents, authority can only shrink — never grow. Budget, model access, and tool permissions are restricted at each level of delegation.</p>
+        </div>
+        <div class="card">
+          <h4>Budget Governance</h4>
+          <p>Per-team and per-agent spending limits with graduated enforcement. Soft limits generate warnings. Hard limits block requests before they incur cost.</p>
+        </div>
+        <div class="card">
+          <h4>Privacy-Preserving Design</h4>
+          <p>Content classification produces yes/no labels only. Your data is never extracted, stored, or transmitted to any third party. Ideal for regulated industries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    async function loadCompliance() {
-      try {
-        const resp = await authFetch('/api/v1/verify/aiuc1');
+  <!-- ADDITIONAL FRAMEWORKS -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Also Mapped</p>
+        <h2 class="section-title">Additional framework coverage</h2>
+      </div>
+      <div class="grid-2 stagger-reveal" style="max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <h4>OWASP LLM Top 10</h4>
+          <p>Protects against the most common AI security risks: prompt injection, system prompt leakage, tool poisoning, and supply chain attacks.</p>
+        </div>
+        <div class="card">
+          <h4>NIST AI RMF</h4>
+          <p>Maps to all four NIST functions — Govern, Map, Measure, Manage — with runtime evidence that satisfies each requirement.</p>
+        </div>
+        <div class="card">
+          <h4>MITRE ATLAS</h4>
+          <p>Detects and mitigates adversarial techniques targeting your AI agents in production, from reconnaissance to data exfiltration.</p>
+        </div>
+        <div class="card">
+          <h4>ISO 42001</h4>
+          <p>Supports AI management system requirements through structured governance, automated risk assessment, and continuous audit evidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        if (resp.status === 404) {
-          renderNotAvailable();
-          return;
-        }
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="fade-in">Ready to prove compliance?</h2>
+      <p class="fade-in fade-in-delay-1">Request access and we will walk through how Altrace maps to your specific regulatory requirements.</p>
+      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
+        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request Access</a>
+      </div>
+    </div>
+  </section>
 
-        const data = await resp.json();
-        controlsData = Array.isArray(data) ? data : (data.controls || []);
-        renderControls();
-      } catch (err) {
-        if (err.message !== 'Session expired') {
-          showToast('Failed to load compliance data: ' + err.message, 'error');
-          renderNotAvailable();
-        }
-      }
-    }
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            Altrace
+          </a>
+          <p>The authority layer for autonomous AI agents.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="product.html">Platform</a>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="pricing.html">Pricing</a>
+        </div>
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <a href="how-it-works.html">How It Works</a>
+          <a href="why-altrace.html">Why Altrace</a>
+          <a href="compliance.html">Compliance</a>
+          <a href="mailto:hello@altrace.io">Contact</a>
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Patent Pending &middot; &copy; 2026 Altrace AI</p>
+        <div class="footer-bottom-links">
+          <a href="mailto:hello@altrace.io">hello@altrace.io</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-    function renderNotAvailable() {
-      document.getElementById('compliance-score').textContent = '--';
-      document.getElementById('compliance-sub').textContent = 'Endpoint not available';
-      document.getElementById('controls-container').innerHTML =
-        '<div class="panel empty-state">AIUC-1 verify endpoint not available. Ensure the agent is running v0.1.0+ with AIUC-1 verification enabled.</div>';
-    }
-
-    function renderControls() {
-      const total = controlsData.length;
-      const enforced = controlsData.filter(c => c.status === 'enforced').length;
-      const configured = controlsData.filter(c => c.status === 'configured').length;
-
-      document.getElementById('compliance-score').textContent = enforced + '/' + total;
-      document.getElementById('compliance-sub').textContent =
-        'controls enforced' + (configured > 0 ? ', ' + configured + ' configured' : '');
-
-      document.getElementById('last-checked').textContent =
-        'Last checked: ' + new Date().toLocaleString();
-
-      // Print header/footer
-      const orgEl = document.getElementById('print-org');
-      if (orgEl) orgEl.textContent = (session && session.org) || '';
-      const dateEl = document.getElementById('print-date');
-      if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
-      const footerEl = document.getElementById('print-footer-text');
-      if (footerEl) footerEl.textContent = 'Generated by Altrace Console on ' + new Date().toISOString();
-
-      // Group by domain letter
-      const grouped = {};
-      controlsData.forEach(c => {
-        const key = (c.control_id || '').charAt(0).toUpperCase();
-        if (!grouped[key]) grouped[key] = [];
-        grouped[key].push(c);
-      });
-
-      const container = document.getElementById('controls-container');
-      container.innerHTML = Object.keys(DOMAINS).map(key => {
-        const controls = grouped[key] || [];
-        if (controls.length === 0) return '';
-
-        return '<div class="domain-group">' +
-          '<div class="domain-group-header">' + DOMAINS[key] + '</div>' +
-          controls.map(c => {
-            const statusClass = (c.status || '').replace(/_/g, '-');
-            const statusText = (!c.mandatory && c.status !== 'enforced') ? 'OPTIONAL' : (c.status || '').replace(/_/g, ' ').toUpperCase();
-
-            return '<div class="control-row">' +
-              '<span class="status-dot ' + statusClass + '"></span>' +
-              '<span class="control-id">' + escapeHtml(c.control_id) + '</span>' +
-              '<span class="control-name">' + escapeHtml(c.name) + '</span>' +
-              '<span class="control-evidence">' + escapeHtml(c.evidence || c.mechanism || '') + '</span>' +
-              '<span class="control-status-label ' + statusClass + '">' + statusText + '</span>' +
-            '</div>';
-          }).join('') +
-        '</div>';
-      }).join('');
-    }
-
-    function exportReport() {
-      window.print();
-    }
-
-    loadCompliance();
-    startAutoRefresh(loadCompliance, 60000);
-    connectSSE();
-  </script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>
