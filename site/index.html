@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Altrace — The Authority Layer for AI Agents</title>
-  <meta name="description" content="Altrace governs AI agent access to LLMs. Hard spending limits, instant kill switches, and tamper-evident audit trails — enforced at the infrastructure layer.">
+  <meta name="description" content="Altrace is a deterministic AI agent governance runtime. Nine enforcement domains — behavioral contracts, evidence grounding, credential indirection, graduated response, content governance, streaming scanning, tamper-evident forensics, agent identity, and infrastructure-level enforcement. No ML. Sub-microsecond decisions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,11 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
-      <div class="nav-links">
+            <a href="index.html" class="nav-logo">
+        <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+        Altrace
+      </a>
+<div class="nav-links">
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger">Product</button>
           <div class="nav-dropdown-menu">
@@ -32,12 +36,7 @@
         <span></span>
         <span></span>
       </button>
-      <div class="nav-right">
-        <a href="index.html" class="nav-logo">
-          <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
-          Altrace
-        </a>
-        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-nav">Request Access</a>
+      <div class="nav-right">        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-nav">Request Access</a>
       </div>
     </div>
   </nav>
@@ -50,10 +49,10 @@
   </div>
 
   <!-- HERO -->
-  <section style="padding: 180px 0 120px; text-align: center;">
+  <section class="hero-home" style="text-align: center;">
     <div class="container">
-      <h1 style="font-size: clamp(2.75rem, 6vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; max-width: 800px; margin: 0 auto;" class="fade-in">Govern your<br>AI agents.</h1>
-      <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin: 32px auto 48px; max-width: 440px; line-height: 1.6;" class="fade-in fade-in-delay-1">Control what they access. Limit what they spend.<br>Stop them instantly.</p>
+      <h1 style="font-size: clamp(2.75rem, 6vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; max-width: 800px; margin: 0 auto;" class="fade-in">Your agents don't follow rules.<br>Altrace enforces them.</h1>
+      <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin: 32px auto 48px; max-width: 600px; line-height: 1.6;" class="fade-in fade-in-delay-1">A deterministic governance runtime that enforces behavioral contracts on AI agents at the infrastructure level. Nine enforcement domains. 31 decision stages. Sub-microsecond latency. No ML in the loop.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
         <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request Access</a>
         <a href="how-it-works.html" class="btn btn-secondary btn-large">How It Works</a>
@@ -64,38 +63,84 @@
   <!-- THIN DIVIDER -->
   <div style="max-width: 80px; height: 1px; background: var(--accent-copper); margin: 0 auto;"></div>
 
-  <!-- PROVIDERS — quiet, muted text only -->
+  <!-- PROVIDERS -->
   <section style="padding: 48px 0 64px;">
     <div class="container" style="text-align: center;">
-      <p style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);" class="fade-in">
+      <p style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 16px;" class="fade-in">
+        Works with every provider. Enforces on every request.
+      </p>
+      <p style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);" class="fade-in fade-in-delay-1">
         Anthropic &nbsp;&middot;&nbsp; OpenAI &nbsp;&middot;&nbsp; Azure OpenAI &nbsp;&middot;&nbsp; Google Gemini &nbsp;&middot;&nbsp; MCP
       </p>
     </div>
   </section>
 
-  <!-- THREE CAPABILITIES — clean text, no cards -->
+  <!-- NINE ENFORCEMENT DOMAINS -->
   <section style="padding: 80px 0 96px;">
     <div class="container">
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px; max-width: 960px; margin: 0 auto;">
+      <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 48px; text-align: center;" class="fade-in">Nine enforcement domains</p>
+      <div class="grid-3" style="gap: 64px; max-width: 960px; margin: 0 auto;">
 
         <div class="fade-in">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">01</p>
-          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Kill Switches</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Stop any agent, any team, or all traffic instantly. Stays active through restarts — no gaps in coverage.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Behavioral Contracts</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Every agent declares what it's allowed to do — tools, models, destinations, actions. A 31-stage decision chain enforces those declarations before every request reaches the LLM.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-1">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">02</p>
-          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Budget Limits</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Hard spending limits per team, checked before every request reaches the model. Your bill stays within the ceiling you set.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Evidence Grounding</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Destructive actions blocked without prerequisite verification. An agent can't issue a refund without looking up the order. Can't sign off tapeout without running DRC. Enforced at the proxy.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
         <div class="fade-in fade-in-delay-2">
           <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">03</p>
-          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Injection Detection</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Detects prompt injection attacks before they reach the model — and catches them in responses too.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Credential Indirection</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Agents never hold real API keys. Virtual keys with AES-256-GCM encryption. Instant per-agent revocation. Per-key budget limits and model scoping.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">04</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Graduated Response</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Not binary allow/deny. Five escalation levels from monitoring to quarantine. Asymmetric de-escalation prevents oscillation. Behavioral fingerprinting detects unknown agents.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in fade-in-delay-1">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">05</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Content Governance</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Six detection layers fused with Dempster-Shafer evidence theory. 275+ RE2 patterns. No ML dependency. Response-side scanning catches injection that succeeded, not just attempts.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in fade-in-delay-2">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">06</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Infrastructure Enforcement</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Kernel-level iptables/nftables/cilium rules capture all traffic. Applications cannot bypass the proxy. Four enforcement backends for any Kubernetes distribution.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">07</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Streaming Scanning</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">Per-SSE-event classification with 8KB sliding window. Mid-stream cancellation injects provider-native errors. PII in event 47 of a stream? Cancelled at event 47.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in fade-in-delay-1">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">08</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Tamper-Evident Forensics</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">SHA-256 hash chain where every decision is cryptographically linked to the previous one. Insertion, deletion, and reordering are all detectable. Not logging — proof.</p>
+          <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
+        </div>
+
+        <div class="fade-in fade-in-delay-2">
+          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 20px;">09</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 500; margin-bottom: 12px;">Agent Identity</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">SCIM 2.0 provisioning. SAML and OIDC SSO. SPIFFE JWT-SVID for zero-trust service identity. Four-role RBAC. Agents get real identity infrastructure.</p>
           <a href="product.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);">Learn more &rarr;</a>
         </div>
 
@@ -112,12 +157,36 @@
     </div>
   </section>
 
+  <!-- SOCIAL PROOF -->
+  <section style="padding: 64px 0; text-align: center;">
+    <div class="container">
+      <p style="font-family: var(--font-body); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: 32px;">The market agrees</p>
+      <div class="grid-3" style="max-width: 800px; margin: 0 auto; gap: 48px;">
+        <div>
+          <p style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 400; color: var(--text-primary);">88%</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">of organizations with AI agents have experienced a security incident</p>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px;">Gravitee 2026</p>
+        </div>
+        <div>
+          <p style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 400; color: var(--text-primary);">14%</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">have full security governance over their AI agents</p>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px;">Gravitee 2026</p>
+        </div>
+        <div>
+          <p style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 400; color: var(--text-primary);">73%</p>
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">of CISOs cite AI agent risk as a critical concern</p>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px;">CSA 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- COMPLIANCE — quiet row -->
   <section style="padding: 64px 0;">
     <div class="container" style="text-align: center;">
       <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 20px;" class="fade-in">Compliance</p>
       <p style="font-size: 0.875rem; color: var(--text-muted); letter-spacing: 0.04em;" class="fade-in fade-in-delay-1">
-        EU AI Act &nbsp;&middot;&nbsp; SOC 2 &nbsp;&middot;&nbsp; NIST AI RMF &nbsp;&middot;&nbsp; ISO 42001 &nbsp;&middot;&nbsp; HIPAA &nbsp;&middot;&nbsp; OWASP LLM Top 10
+        EU AI Act &nbsp;&middot;&nbsp; SOC 2 (Evidence-Ready) &nbsp;&middot;&nbsp; NIST AI RMF &nbsp;&middot;&nbsp; ISO 42001 &nbsp;&middot;&nbsp; HIPAA &nbsp;&middot;&nbsp; OWASP LLM Top 10
       </p>
       <a href="compliance.html" style="display: inline-block; margin-top: 16px; font-size: 0.8125rem; font-weight: 600; color: var(--accent);" class="fade-in fade-in-delay-2">View all frameworks &rarr;</a>
     </div>
