@@ -129,6 +129,11 @@
         </div>
       </div>
       <p class="flow-caption fade-in">The request is blocked <strong>before</strong> it reaches the LLM. Your bill stays within the limit you set.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-budget.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </section>
 
@@ -156,6 +161,11 @@
         </div>
       </div>
       <p class="flow-caption fade-in">Every agent on the "finance" team is stopped. New requests are blocked. Active streaming connections are terminated. The kill switch stays active through restarts — no gaps.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-killswitch.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </section>
 
@@ -184,6 +194,11 @@
       </div>
       <p class="flow-caption fade-in">The injection is caught before it reaches the LLM. The agent's session is automatically placed under tighter constraints. No manual intervention required.</p>
       <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions: inbound requests before the model, outbound responses after the model, and per event during SSE streams. If an injection bypasses the input filter and the LLM starts leaking its system prompt in the output, response-side detection catches it.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-content.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </section>
 
