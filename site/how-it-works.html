@@ -96,7 +96,7 @@
           <div class="flow-step-detail">Agent receives response<br>Both directions scanned<br>Zero friction</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Governance adds <strong>milliseconds</strong>. The model takes seconds. The overhead is invisible.</p>
+      <p class="flow-caption fade-in">Your agents run at full speed. Altrace adds <strong>milliseconds</strong> — the model takes seconds. You never notice.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-normal.mp4" type="video/mp4">
@@ -128,7 +128,7 @@
           <div class="flow-step-detail">Request rejected<br>Model never called<br>Zero cost incurred</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">The request is blocked <strong>before</strong> it reaches the LLM. Your bill stays within the limit you set.</p>
+      <p class="flow-caption fade-in">Blocked <strong>before</strong> the request reaches the LLM. Your bill stays exactly where you set it.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-budget.mp4" type="video/mp4">
@@ -160,7 +160,7 @@
           <div class="flow-step-detail">All new requests blocked<br>Active streams cancelled<br>Persists through restarts</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Every agent on the "finance" team is stopped. New requests are blocked. Active streaming connections are terminated. The kill switch stays active through restarts — no gaps.</p>
+      <p class="flow-caption fade-in">One API call. Every agent on the team stops instantly. Survives restarts. No gaps.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-killswitch.mp4" type="video/mp4">
@@ -192,8 +192,7 @@
           <div class="flow-step-detail">Request never reaches the model<br>Sensitive data stays in your infrastructure<br>Decision recorded in audit trail</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">The agent sent a customer's SSN, email, and card number in the prompt. Altrace detected all three <strong>before</strong> the request left your network. The model never saw the data.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions: inbound requests before the model, outbound responses after the model, and per event during SSE streams. Bidirectional scanning catches data leakage in both directions.</p>
+      <p class="flow-caption fade-in">SSN, email, card number in the prompt. Altrace caught all three <strong>before</strong> the request left your network. The model never saw it.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-content.mp4" type="video/mp4">
@@ -225,8 +224,7 @@
           <div class="flow-step-detail">Agent receives remediation hint:<br>"Call lookup_order first"<br>Agent self-corrects and retries</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">High-risk operations require prior verification. The agent is told exactly what step is missing, enabling <strong>automatic self-correction</strong> without human intervention.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">In production, a single user task generates 3-20 LLM API calls. Altrace governs every call in the loop — tracking which tools the agent has called across the session to enforce prerequisites.</p>
+      <p class="flow-caption fade-in">The agent skipped a required step. Altrace blocked it and told it exactly what to do first. <strong>Automatic self-correction</strong> — no human needed.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-evidence.mp4" type="video/mp4">
@@ -258,8 +256,7 @@
           <div class="flow-step-detail">Stream terminated<br>Connection closed<br>Violation logged in audit trail</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Unlike tools that wait for the full response, Altrace monitors <strong>each word as it arrives</strong> and cancels the stream the moment sensitive data appears.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">LLM responses stream via Server-Sent Events. Altrace classifies each fragment as it arrives. If sensitive data appears in fragment 47, the stream is cancelled at fragment 47 — before fragments 48+ are delivered.</p>
+      <p class="flow-caption fade-in">Altrace watches <strong>every word as it streams back</strong>. The moment sensitive data appears, the stream is killed. Not after — during.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-streaming.mp4" type="video/mp4">
@@ -291,8 +288,7 @@
           <div class="flow-step-detail">Injection never reaches the model<br>Session risk level elevated<br>Decision recorded in audit trail</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Altrace scans every user message for injection patterns <strong>before</strong> it reaches the LLM. Direct injection, jailbreak attempts, delimiter attacks, and exfiltration payloads are all caught by 96+ compiled RE2 patterns across 12 attack categories.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Detection is deterministic and runs in microseconds — no ML model, no external API call, no added latency. Patterns cover OWASP LLM01 (Prompt Injection) including homoglyph evasion, base64 encoding, HTML entity smuggling, and multi-turn brute-force attacks.</p>
+      <p class="flow-caption fade-in">Jailbreaks, prompt injections, hidden instructions — caught and blocked <strong>before</strong> they reach the model. The attacker gets nothing.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-injection.mp4" type="video/mp4">
