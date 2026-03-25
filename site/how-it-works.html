@@ -227,6 +227,11 @@
       </div>
       <p class="flow-caption fade-in">High-risk operations require prior verification. The agent is told exactly what step is missing, enabling <strong>automatic self-correction</strong> without human intervention.</p>
       <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">In production, a single user task generates 3-20 LLM API calls. Altrace governs every call in the loop — tracking which tools the agent has called across the session to enforce prerequisites.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-evidence.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </section>
 
@@ -255,6 +260,44 @@
       </div>
       <p class="flow-caption fade-in">Unlike tools that wait for the full response, Altrace monitors <strong>each word as it arrives</strong> and cancels the stream the moment sensitive data appears.</p>
       <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">LLM responses stream via Server-Sent Events. Altrace classifies each fragment as it arrives. If sensitive data appears in fragment 47, the stream is cancelled at fragment 47 — before fragments 48+ are delivered.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-streaming.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOW 7: PROMPT INJECTION BLOCKED -->
+  <section style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Scenario 7</p>
+        <h2 class="section-title">A prompt injection attempt is intercepted</h2>
+      </div>
+      <div class="flow-diagram fade-in">
+        <div class="flow-step flow-step-agent">
+          <div class="flow-step-label">Your Agent</div>
+          <div class="flow-step-detail">Sends user input containing<br>hidden injection instructions:<br><code style="font-size:0.7rem;">"Ignore all previous instructions..."</code></div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Altrace</div>
+          <div class="flow-step-detail">Ingress scan: injection pattern detected<br>Multiple detection layers triggered<br>Request blocked pre-flight</div>
+        </div>
+        <div class="flow-arrow flow-arrow-blocked">&times;</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
+          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
+          <div class="flow-step-detail">Injection never reaches the model<br>Session risk level elevated<br>Decision recorded in audit trail</div>
+        </div>
+      </div>
+      <p class="flow-caption fade-in">Altrace scans every user message for injection patterns <strong>before</strong> it reaches the LLM. Direct injection, jailbreak attempts, delimiter attacks, and exfiltration payloads are all caught by 96+ compiled RE2 patterns across 12 attack categories.</p>
+      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Detection is deterministic and runs in microseconds — no ML model, no external API call, no added latency. Patterns cover OWASP LLM01 (Prompt Injection) including homoglyph evasion, base64 encoding, HTML entity smuggling, and multi-turn brute-force attacks.</p>
+      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
+        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
+          <source src="/assets/videos/scenario-injection.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </section>
 
