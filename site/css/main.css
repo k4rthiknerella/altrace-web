@@ -120,6 +120,10 @@ section {
   padding: 180px 0 120px;
 }
 
+.hero-headline-nowrap {
+  white-space: nowrap;
+}
+
 .section-label {
   font-size: 0.75rem;
   font-weight: 600;
@@ -2684,6 +2688,10 @@ section {
 @media (max-width: 768px) {
   section {
     padding: var(--sp-7) 0;
+  }
+
+  .hero-headline-nowrap {
+    white-space: normal;
   }
 
   .hero {
