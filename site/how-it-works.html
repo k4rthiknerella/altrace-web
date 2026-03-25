@@ -169,31 +169,31 @@
     </div>
   </section>
 
-  <!-- FLOW 4: PROMPT INJECTION DETECTED -->
+  <!-- FLOW 4: SENSITIVE DATA BLOCKED -->
   <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">Scenario 4</p>
-        <h2 class="section-title">A prompt injection is detected</h2>
+        <h2 class="section-title">Sensitive data blocked before the model</h2>
       </div>
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-agent">
           <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Processes user input<br>containing hidden injection</div>
+          <div class="flow-step-detail">Sends customer record<br>containing SSN, email, card number</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
           <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Multi-layer detection confirms injection<br>Session risk level elevated<br>Policy enforcement triggered</div>
+          <div class="flow-step-detail">Inbound scan: sensitive patterns detected<br>Multiple independent detection layers<br>Request blocked pre-flight</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">Blocked + Tightened</div>
-          <div class="flow-step-detail">Request blocked<br>Session constraints tightened<br>Future requests face stricter limits</div>
+          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
+          <div class="flow-step-detail">Request never reaches the model<br>Sensitive data stays in your infrastructure<br>Decision recorded in audit trail</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">The injection is caught before it reaches the LLM. The agent's session is automatically placed under tighter constraints. No manual intervention required.</p>
-      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions: inbound requests before the model, outbound responses after the model, and per event during SSE streams. If an injection bypasses the input filter and the LLM starts leaking its system prompt in the output, response-side detection catches it.</p>
+      <p class="flow-caption fade-in">The agent sent a customer's SSN, email, and card number in the prompt. Altrace detected all three <strong>before</strong> the request left your network. The model never saw the data.</p>
+      <p class="flow-caption fade-in" style="margin-top: 12px; font-style: italic;">Altrace scans in three positions: inbound requests before the model, outbound responses after the model, and per event during SSE streams. Bidirectional scanning catches data leakage in both directions.</p>
       <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
         <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
           <source src="/assets/videos/scenario-content.mp4" type="video/mp4">
