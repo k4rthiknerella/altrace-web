@@ -126,7 +126,7 @@
         }
 
         html += `
-          <tr class="clickable" onclick="toggleDetail('${escapeHtml(sc.id)}')">
+          <tr class="clickable" onclick="toggleDetail('${escapeJSAttr(sc.id)}')">
             <td class="mono">${escapeHtml(sc.id)}</td>
             <td class="mono">${escapeHtml(sc.cluster_id || '--')}</td>
             <td class="mono">${escapeHtml(sc.namespace || '--')}</td>

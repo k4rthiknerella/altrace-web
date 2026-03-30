@@ -123,8 +123,8 @@
         if (isPending) {
           decisionHtml = `
             <div style="display: flex; gap: 6px;">
-              <button class="btn-approve role-write-only" onclick="event.stopPropagation(); approveRequest('${escapeHtml(a.id)}')">Approve</button>
-              <button class="btn-cancel role-write-only" onclick="event.stopPropagation(); denyRequest('${escapeHtml(a.id)}')">Deny</button>
+              <button class="btn-approve role-write-only" onclick="event.stopPropagation(); approveRequest('${escapeJSAttr(a.id)}')">Approve</button>
+              <button class="btn-cancel role-write-only" onclick="event.stopPropagation(); denyRequest('${escapeJSAttr(a.id)}')">Deny</button>
             </div>
           `;
         } else {

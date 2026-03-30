@@ -147,7 +147,7 @@
           <td>${relativeTime(e.activated_at)}</td>
           <td>
             <button class="btn-cancel role-write-only" style="padding: 4px 12px; font-size: 0.75rem;"
-              onclick="deactivateKill('${escapeHtml(e.scope)}', '${escapeHtml(e.target)}')">
+              onclick="deactivateKill('${escapeJSAttr(e.scope)}', '${escapeJSAttr(e.target)}')">
               Deactivate
             </button>
           </td>

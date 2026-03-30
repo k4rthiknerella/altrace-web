@@ -1,13 +1,70 @@
 /* Altrace Console — Auth Module
    Session management and authenticated fetch wrapper.
-   Token stored in sessionStorage (cleared on tab close). */
+   Token stored in memory-only closure (CWE-522 defense).
+   CSRF double-submit token on all mutation requests (CWE-352 defense).
+   Session metadata (non-sensitive) stored in sessionStorage. */
 
 const AUTH_KEY = 'altrace_session';
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;  // 8 hours
 const SESSION_IDLE_MS = 30 * 60 * 1000;      // 30 minutes idle timeout
 
+// ── TokenVault: in-memory credential store (CWE-522) ─────
+// Token is NEVER written to sessionStorage, localStorage, or any
+// persistent storage. XSS via storage APIs cannot exfiltrate it.
+// Tradeoff: page refresh requires re-login (acceptable for governance console).
+
+const TokenVault = (() => {
+  let _token = null;
+  let _csrfToken = null;
+  let _tokenSetAt = 0;
+
+  return Object.freeze({
+    set(token) {
+      _token = token;
+      _tokenSetAt = Date.now();
+      // CWE-352: Generate CSRF double-submit token.
+      // 32 bytes of crypto-random hex. Sent as X-CSRF-Token header
+      // on every mutation request. Cross-origin sites cannot read or
+      // set this header without CORS permission.
+      const bytes = new Uint8Array(32);
+      crypto.getRandomValues(bytes);
+      _csrfToken = Array.from(bytes, function(b) {
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+    },
+
+    get() {
+      if (!_token) return null;
+      // CWE-613: Enforce absolute token expiry within the vault itself.
+      // Even if sessionStorage metadata is tampered with, the vault
+      // independently enforces the 8-hour maximum session lifetime.
+      if (Date.now() - _tokenSetAt > SESSION_TTL_MS) {
+        _token = null;
+        _csrfToken = null;
+        _tokenSetAt = 0;
+        return null;
+      }
+      return _token;
+    },
+
+    getCsrf() {
+      return _csrfToken;
+    },
+
+    clear() {
+      _token = null;
+      _csrfToken = null;
+      _tokenSetAt = 0;
+    }
+  });
+})();
+
 function getSession() {
   try {
+    // Token must exist in vault (memory-only)
+    const token = TokenVault.get();
+    if (!token) return null;
+
     const raw = sessionStorage.getItem(AUTH_KEY);
     if (!raw) return null;
     const session = JSON.parse(raw);
@@ -24,16 +81,28 @@ function getSession() {
       return null;
     }
 
-    return session;
+    // Merge vault token with non-sensitive metadata
+    return {
+      org: session.org,
+      role: session.role,
+      created_at: session.created_at,
+      last_active: session.last_active,
+      token: token
+    };
   } catch { return null; }
 }
 
 function setSession(org, token, role) {
   const now = Date.now();
+  // Store token in memory-only vault (CWE-522: never persisted)
+  TokenVault.set(token);
+  // Store ONLY non-sensitive metadata in sessionStorage
   sessionStorage.setItem(AUTH_KEY, JSON.stringify({
-    org, token, role: role || 'operator',
+    org: org,
+    role: role || 'operator',
     created_at: now,
     last_active: now
+    // NOTE: token is NOT stored here (CWE-522)
   }));
 }
 
@@ -48,6 +117,7 @@ function touchSession() {
 }
 
 function clearSession() {
+  TokenVault.clear();
   sessionStorage.removeItem(AUTH_KEY);
   sessionStorage.removeItem('altrace_demo');
   if (window.location.pathname !== '/login' && window.location.pathname !== '/login.html') {
@@ -81,6 +151,26 @@ function canWrite() {
   const r = getRole();
   return r === 'admin' || r === 'operator';
 }
+
+// ── Visibility-based session protection (CWE-613) ───────
+// If the tab is hidden for longer than the idle timeout, clear the
+// session to prevent walk-away attacks on shared workstations.
+// The visibilitychange event fires when the user switches tabs,
+// minimizes, or locks the screen.
+
+let _hiddenSince = 0;
+
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    _hiddenSince = Date.now();
+  } else {
+    if (_hiddenSince > 0 && Date.now() - _hiddenSince > SESSION_IDLE_MS) {
+      // Tab was hidden longer than idle timeout — force re-auth
+      clearSession();
+    }
+    _hiddenSince = 0;
+  }
+});
 
 // ── Demo mode mock data ──────────────────────────────────
 
@@ -245,6 +335,7 @@ async function authFetch(path, opts = {}) {
   const headers = {
     'Authorization': 'Bearer ' + session.token,
     'Content-Type': 'application/json',
+    'X-CSRF-Token': TokenVault.getCsrf() || '',
     ...(opts.headers || {})
   };
 

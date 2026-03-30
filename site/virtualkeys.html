@@ -195,7 +195,7 @@
           : '<span class="badge badge-killed">REVOKED</span>';
 
         const revokeBtn = isActive
-          ? '<button class="btn-cancel role-write-only" onclick="event.stopPropagation(); revokeKey(\'' + escapeHtml(v.id || v.virtual_key_id) + '\')">Revoke</button>'
+          ? '<button class="btn-cancel role-write-only" onclick="event.stopPropagation(); revokeKey(\'' + escapeJSAttr(v.id || v.virtual_key_id) + '\')">Revoke</button>'
           : '';
 
         return '<tr>' +

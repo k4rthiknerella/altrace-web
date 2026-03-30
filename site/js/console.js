@@ -386,11 +386,38 @@ function formatTime(isoString) {
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
+// CWE-79: Escape all HTML special characters for safe insertion into
+// element content or attribute values. Uses explicit string replacement
+// (no DOM dependency, no parser quirks). Order matters: & first to avoid
+// double-encoding the ampersands introduced by later replacements.
 function escapeHtml(str) {
-  if (!str) return '';
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// CWE-79: Escape a value for safe embedding inside a JavaScript string
+// literal that itself lives inside an HTML attribute (e.g. onclick="fn('...')").
+// HTML entity escaping alone is insufficient here because the HTML parser
+// decodes entities BEFORE the JS engine evaluates the attribute value.
+// This function produces a JS-safe string (backslash-escapes), then wraps
+// the result in HTML-entity encoding so neither layer can be broken.
+function escapeJSAttr(str) {
+  var s = String(str == null ? '' : str);
+  // First: escape for JavaScript string context (backslash-based)
+  s = s.replace(/\\/g, '\\\\')
+       .replace(/'/g, "\\'")
+       .replace(/"/g, '\\"')
+       .replace(/\n/g, '\\n')
+       .replace(/\r/g, '\\r')
+       .replace(/\u2028/g, '\\u2028')
+       .replace(/\u2029/g, '\\u2029');
+  // Then: escape the result for HTML attribute context so it cannot
+  // break out of the surrounding attribute quotes.
+  return escapeHtml(s);
 }
 
 function setLoading(elementId, isLoading) {
