@@ -12,7 +12,7 @@ flowchart LR
         direction TB
         IPT[iptables REDIRECT<br/>Kernel-Level Enforcement]
         PROXY[Transparent Proxy<br/>HTTP/HTTPS]
-        CHAIN[31-Stage Decision Chain]
+        CHAIN[33-Stage Decision Chain]
         DETECT[6-Layer Detection Engine]
         ENF[Enforcement Actions]
     end
@@ -37,7 +37,7 @@ flowchart LR
     style ENF fill:#f39c12,color:#fff
 ```
 
-## 2. Decision Chain (31 Stages)
+## 2. Decision Chain (33 Stages)
 
 ```mermaid
 flowchart TD
@@ -105,7 +105,7 @@ flowchart TD
 ```mermaid
 flowchart TB
     subgraph Input["INPUT SIDE (Request)"]
-        L1[Layer 1: RE2 Patterns<br/>275+ patterns across 3 surfaces<br/>Content + Injection + MCP Poisoning]
+        L1[Layer 1: RE2 Patterns<br/>299+ patterns across 3 surfaces<br/>Content + Injection + MCP Poisoning]
         L2[Layer 2: Statistical Signals<br/>Shannon Entropy + Char Distribution<br/>+ Base64 Decode-Attempt]
         L3[Layer 3: Session History<br/>Per-Session Injection Tracking<br/>Catches PAIR/TAP/BoN]
     end
