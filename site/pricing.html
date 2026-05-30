@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing — Altrace</title>
-  <meta name="description" content="Altrace pricing for AI agent governance. Community, Team, and Enterprise tiers for every stage of your AI deployment.">
+  <meta name="description" content="Altrace pricing for runtime AI agent governance. Pilot, Enterprise, and Strategic tiers — enforced in your own infrastructure.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pricing — Altrace">
-  <meta property="og:description" content="Altrace pricing for AI agent governance. Community, Team, and Enterprise tiers for every stage of your AI deployment.">
+  <meta property="og:description" content="Runtime AI agent governance. Pilot, Enterprise, and Strategic tiers — enforced in your own infrastructure.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -63,205 +63,84 @@
   </div>
 
   <!-- HERO -->
-  <section style="padding: 160px 0 100px; text-align: center;">
+  <section style="padding: 160px 0 80px; text-align: center;">
     <div class="container">
       <p class="section-label fade-in">Pricing</p>
-      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Governance that scales with you</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Start with a free evaluation. Move to production-grade enforcement when you are ready. Your data and governance decisions never leave your infrastructure.</p>
-      <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
-        <a href="how-it-works.html" class="btn btn-primary btn-large">See How It Works</a>
-        <a href="mailto:hello@altrace.io" class="btn btn-secondary btn-large">Contact Sales &rarr;</a>
-      </div>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Governance that scales with you.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Start with a Pilot. Move to production-grade enforcement when you're ready. Your data and governance decisions never leave your infrastructure.</p>
     </div>
   </section>
 
   <!-- PRICING TIERS -->
-  <section>
+  <section style="padding-top: 0;">
     <div class="container">
-      <div class="pricing-grid stagger-reveal" style="max-width: 800px; margin: 0 auto; grid-template-columns: repeat(2, 1fr);">
-        <!-- Team -->
-        <div class="pricing-tier featured">
-          <div class="pricing-tier-name">Team</div>
-          <div class="pricing-tier-price">Contact Us</div>
-          <div class="pricing-tier-desc">Production-grade enforcement. Infrastructure-level controls that agents cannot bypass.</div>
+      <div class="pricing-grid stagger-reveal" style="max-width: 1080px; margin: 0 auto;">
+
+        <!-- Pilot -->
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Pilot</div>
+          <div class="pricing-tier-price">Let's talk</div>
+          <div class="pricing-tier-desc">For initial deployments and evaluation.</div>
           <ul class="pricing-tier-features">
-            <li>Deploys alongside your existing infrastructure</li>
-            <li>Unlimited teams and agents</li>
-            <li>Infrastructure-level network enforcement</li>
-            <li>Persistent kill switches (survive restarts)</li>
-            <li>Hard spending limits per team and agent</li>
-            <li>Real-time response monitoring</li>
-            <li>Tool authorization and governance</li>
-            <li>Prerequisite verification for high-risk actions</li>
+            <li>Agent discovery &amp; per-agent visibility</li>
+            <li>Runtime monitoring &amp; cost attribution</li>
+            <li>Core governance policies</li>
+            <li>Kill switches (global / team / agent)</li>
+            <li>Advisory and governance-grade deployment</li>
             <li>Tamper-evident audit trail</li>
-            <li>Governance console</li>
             <li>Anthropic, OpenAI, Azure OpenAI, Gemini</li>
-            <li>Custom policy rules</li>
             <li>Email support</li>
+          </ul>
+          <a href="request-access.html" class="btn btn-secondary btn-large btn-full">Book a Demo</a>
+        </div>
+
+        <!-- Enterprise (featured) -->
+        <div class="pricing-tier featured">
+          <div class="pricing-tier-name">Enterprise</div>
+          <div class="pricing-tier-price">Custom</div>
+          <div class="pricing-tier-desc">For production environments.</div>
+          <ul class="pricing-tier-features">
+            <li>Everything in Pilot</li>
+            <li>Unlimited agents</li>
+            <li>Infrastructure-level enforcement (agents can't bypass)</li>
+            <li>Hard budget limits</li>
+            <li>MCP governance (registry, reputation, scanner)</li>
+            <li>Advanced policy controls</li>
+            <li>Compliance reporting &amp; evidence</li>
+            <li>Mutual TLS + team-scoped operator RBAC</li>
+            <li>IP allowlisting + instant token revocation</li>
+            <li>Durable audit delivery to your SIEM</li>
+            <li>OpenAPI 3.1 control-API contract</li>
           </ul>
           <a href="request-access.html" class="btn btn-primary btn-large btn-full">Book a Demo</a>
         </div>
 
-        <!-- Enterprise -->
+        <!-- Strategic -->
         <div class="pricing-tier">
-          <div class="pricing-tier-name">Enterprise</div>
-          <div class="pricing-tier-price">Custom</div>
-          <div class="pricing-tier-desc">Everything in Team, plus dedicated support, compliance assistance, and custom integrations.</div>
+          <div class="pricing-tier-name">Strategic</div>
+          <div class="pricing-tier-price">Contact Sales</div>
+          <div class="pricing-tier-desc">For large organizations.</div>
           <ul class="pricing-tier-features">
-            <li>Everything in Team</li>
-            <li>Deployment assistance and architecture review</li>
-            <li>Priority support with SLA</li>
-            <li>Custom policy development</li>
-            <li>Compliance assessment and framework mapping</li>
-            <li>Single sign-on and role-based access</li>
-            <li>Multi-cluster management</li>
-            <li>Centralized credential management</li>
-            <li>SIEM integration for your existing security stack</li>
-            <li>Dedicated onboarding</li>
+            <li>Everything in Enterprise</li>
+            <li>Dedicated support with SLA</li>
             <li>Custom integrations</li>
+            <li>Advanced governance workflows</li>
+            <li>White-glove onboarding</li>
+            <li>Multi-cluster management (hub)</li>
+            <li>Architecture &amp; deployment review</li>
           </ul>
           <a href="mailto:hello@altrace.io" class="btn btn-secondary btn-large btn-full">Contact Sales</a>
         </div>
+
       </div>
-    </div>
-  </section>
-
-  <!-- FEATURE COMPARISON TABLE -->
-  <section class="feature-compare" style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">Compare</p>
-        <h2 class="section-title">Detailed feature comparison</h2>
-      </div>
-      <div class="fade-in" style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Team</th>
-              <th>Enterprise</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="category-row"><td colspan="3">Enforcement</td></tr>
-            <tr>
-              <td>Deployment mode</td>
-              <td>Production (governance-grade)</td>
-              <td>Production + Gateway</td>
-            </tr>
-            <tr>
-              <td>Infrastructure-level network enforcement</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Kill switch (global / team / agent)</td>
-              <td class="check">Enforced</td>
-              <td class="check">Enforced</td>
-            </tr>
-            <tr>
-              <td>Hard spending limits</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-
-            <tr class="category-row"><td colspan="3">Governance</td></tr>
-            <tr>
-              <td>Multi-stage governance pipeline</td>
-              <td class="check">Full</td>
-              <td class="check">Full</td>
-            </tr>
-            <tr>
-              <td>Real-time response monitoring</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Tool authorization</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Prerequisite verification</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Graduated enforcement (escalation)</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Multi-layer prompt injection detection</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Custom policy rules</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-
-            <tr class="category-row"><td colspan="3">Providers</td></tr>
-            <tr>
-              <td>Anthropic + OpenAI + Azure OpenAI + Gemini</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-
-            <tr class="category-row"><td colspan="3">Operations</td></tr>
-            <tr>
-              <td>Governance console</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Centralized credential management</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Multi-cluster management</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>SIEM integration</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Single sign-on and role-based access</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-
-            <tr class="category-row"><td colspan="3">Support</td></tr>
-            <tr>
-              <td>Email support</td>
-              <td class="check">Yes</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Priority support + SLA</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-            <tr>
-              <td>Deployment assistance</td>
-              <td class="dash">--</td>
-              <td class="check">Yes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">Pricing is tailored to your deployment. No public list price — book a demo and we'll scope it with you.</p>
     </div>
   </section>
 
   <!-- DATA PRIVACY CALLOUT -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
-      <div style="max-width: 640px; margin: 0 auto 48px; padding: 32px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);">
+      <div style="max-width: 640px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);">
         <h4 style="font-size: 1rem; margin-bottom: 12px;">Does Altrace see my data?</h4>
         <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace classifies content using boolean pattern matching — it returns yes/no, never extracts or stores text. HTTPS traffic uses CONNECT passthrough (we see hostnames only). Content classification is ephemeral. Your data never leaves your infrastructure.</p>
       </div>
@@ -281,8 +160,8 @@
           <p>Altrace runs entirely within your infrastructure. It deploys alongside your existing workloads with no code changes required. Your data and governance decisions never leave your environment.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
-          <h4>What is the difference between advisory and governance-grade?</h4>
-          <p>Advisory mode provides budget tracking, kill switches, and audit trails — but applications can choose to bypass the proxy. Governance-grade mode uses infrastructure-level network controls to force all AI traffic through Altrace. Agents have no route around it.</p>
+          <h4>What's the difference between advisory and governance-grade?</h4>
+          <p>Advisory mode provides budget tracking, kill switches, and audit trails — but applications can choose to bypass the proxy. Governance-grade mode (Kubernetes) uses kernel-level network controls to force all AI traffic through Altrace. Agents have no route around it.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>Does Altrace see my prompts or responses?</h4>
@@ -290,7 +169,7 @@
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What about the governance console?</h4>
-          <p>Included with Team and Enterprise tiers. The console is a management dashboard for your Altrace deployment. It provides fleet visibility, audit trail review, compliance reporting, and policy management — all from a single interface.</p>
+          <p>Included with every tier. The console is a management dashboard for your Altrace deployment — fleet visibility, audit trail review, compliance reporting, and policy management from a single interface.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>Do you offer a hosted version?</h4>
@@ -298,20 +177,20 @@
         </div>
         <div class="card">
           <h4>Can I try it before committing?</h4>
-          <p>Yes. The free evaluation lets you run a working governance layer scanning real AI traffic in under five minutes. No credit card, no sales call required.</p>
+          <p>Yes. Altrace runs in your own infrastructure, so a Pilot deployment lets your team evaluate it on real traffic before committing. Book a demo and we'll help you stand it up.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section style="padding: 96px 0; text-align: center;">
     <div class="container">
-      <h2 class="fade-in">Ready to get started?</h2>
-      <p class="fade-in fade-in-delay-1">Start with a free evaluation, or contact us for production deployment.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5); display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap;">
-        <a href="how-it-works.html" class="btn btn-primary btn-large">See How It Works</a>
-        <a href="mailto:hello@altrace.io" class="btn btn-secondary btn-large">Contact Sales</a>
+      <h2 style="font-weight: 400;" class="fade-in">Ready to get started?</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); margin: 16px auto 32px; max-width: 460px; line-height: 1.6;" class="fade-in fade-in-delay-1">Book a demo on your own traffic — or explore the live console right now, no form required.</p>
+      <div class="fade-in fade-in-delay-2" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+        <a href="demo.html" class="btn btn-secondary btn-large">See it live &rarr;</a>
       </div>
     </div>
   </section>
