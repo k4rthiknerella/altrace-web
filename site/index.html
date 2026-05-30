@@ -222,39 +222,43 @@
     </div>
   </section>
 
-  <!-- BUILT FOR SECURITY TEAMS -->
+  <!-- CREDENTIAL INDIRECTION -->
   <section style="background: var(--surface-warm); padding: 96px 0;">
     <div class="container">
-      <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 16px; text-align: center;" class="fade-in">Built for security teams</p>
-      <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 400; max-width: 720px; margin: 0 auto 12px; line-height: 1.2; text-align: center;" class="fade-in">The controls your security org already asks for.</h2>
-      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; text-align: center; line-height: 1.65;" class="fade-in fade-in-delay-1">The section your security questionnaire is really about, enforced on the control plane.</p>
+      <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 16px; text-align: center;" class="fade-in">Credential indirection</p>
+      <h2 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 400; max-width: 720px; margin: 0 auto 12px; line-height: 1.2; text-align: center;" class="fade-in">Your agents never hold your real API keys.</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto; text-align: center; line-height: 1.65;" class="fade-in fade-in-delay-1">Altrace issues each agent a scoped, revocable key of its own. The real provider key stays encrypted inside Altrace and is injected at the network boundary, so a compromised agent can never leak a key it never had.</p>
 
       <div class="grid-3" style="gap: 24px; max-width: 1000px; margin: 56px auto 0;">
         <div class="card fade-in">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Mutual TLS</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Client certs verified against your CA; cert identity captured in the audit trail. Fail-closed in production.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Virtual keys</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Each agent gets a proxy-issued token, not your Anthropic, OpenAI, or Bedrock key. The real key is encrypted at rest and never reaches the agent process.</p>
         </div>
         <div class="card fade-in fade-in-delay-1">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Team-scoped RBAC</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Operator roles (admin / operator / viewer / agent). A team-scoped token can&rsquo;t reach another team&rsquo;s kill switches, budgets, or credentials.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Scoped per key</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Lock a key to specific models, tools, endpoints, and a spending cap. A contractor&rsquo;s agent cannot upgrade itself to a frontier model or call a tool it was never granted.</p>
         </div>
         <div class="card fade-in fade-in-delay-2">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Token revocation &amp; lockout</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Revoke a compromised operator token instantly, with a tamper-evident record. Per-IP / per-token brute-force lockout.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Revoke in one call</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Revoke a key and the next request is refused, while the agent&rsquo;s kill switch fires in the same action. Two independent stops, no grace period.</p>
         </div>
         <div class="card fade-in">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">IP / CIDR allowlisting</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Restrict the control API to known networks, with explicit forwarded-header trust control. Defense in depth.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Rotates with your vault</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Rotate the underlying provider key in HashiCorp Vault or a Kubernetes secret and Altrace picks it up automatically, with no agent restarts.</p>
         </div>
         <div class="card fade-in fade-in-delay-1">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Durable SIEM delivery</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Every state-mutating control action is fsync-persisted before acknowledgment, then reliably forwarded to your SIEM.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Expiring keys</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Issue a key that expires in an hour for a one-off task. Expiry is enforced at the proxy, not on the honor system.</p>
         </div>
         <div class="card fade-in fade-in-delay-2">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">OpenAPI 3.1 contract</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">A typed, reviewable control-API specification, 23 endpoints your team can audit and integrate against.</p>
+          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Enforce-only mode</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Lock the deployment so only Altrace-issued keys are accepted. Any request carrying a real provider key is rejected at the proxy.</p>
         </div>
       </div>
+      <p style="text-align: center; margin-top: 36px;" class="fade-in">
+        <a href="product.html#credentials" style="font-size: 0.8125rem; font-weight: 600; color: var(--accent);">How credential indirection works &rarr;</a>
+      </p>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; margin-top: 24px; max-width: 660px; margin-left: auto; margin-right: auto;" class="fade-in">The controls your security questionnaire asks about, mutual TLS, team-scoped RBAC, token revocation, IP allowlisting, and durable SIEM delivery, live on the <a href="product.html#security" style="color: var(--accent); font-weight: 600;">platform page</a>.</p>
     </div>
   </section>
 

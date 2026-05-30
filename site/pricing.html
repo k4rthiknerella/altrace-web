@@ -86,6 +86,7 @@
             <li>Runtime monitoring &amp; cost attribution</li>
             <li>Core governance policies</li>
             <li>Kill switches (global / team / agent)</li>
+            <li>Virtual keys (agents never hold real provider keys)</li>
             <li>Advisory and governance-grade deployment</li>
             <li>Tamper-evident audit trail</li>
             <li>Anthropic, OpenAI, Azure OpenAI, Gemini</li>
@@ -104,6 +105,8 @@
             <li>Unlimited agents</li>
             <li>Infrastructure-level enforcement (agents can't bypass)</li>
             <li>Hard budget limits</li>
+            <li>Credential indirection (virtual keys, per-key model/tool scope, budgets)</li>
+            <li>Provider key rotation (Vault / Kubernetes secrets)</li>
             <li>MCP governance (registry, reputation, scanner)</li>
             <li>Advanced policy controls</li>
             <li>Compliance reporting &amp; evidence</li>
@@ -142,7 +145,7 @@
     <div class="container">
       <div style="max-width: 640px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);">
         <h4 style="font-size: 1rem; margin-bottom: 12px;">Does Altrace see my data?</h4>
-        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace classifies content using boolean pattern matching, it returns yes/no, never extracts or stores text. HTTPS traffic uses CONNECT passthrough (we see hostnames only). Content classification is ephemeral. Your data never leaves your infrastructure.</p>
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace classifies content with boolean pattern matching and returns yes or no labels, for example &ldquo;contains PII: yes,&rdquo; it never extracts or stores the matched text. HTTPS traffic uses CONNECT passthrough, so Altrace sees hostnames only. Classification is ephemeral, and your data never leaves your infrastructure.</p>
       </div>
     </div>
   </section>
@@ -162,10 +165,6 @@
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What's the difference between advisory and governance-grade?</h4>
           <p>Advisory mode provides budget tracking, kill switches, and audit trails, but applications can choose to bypass the proxy. Governance-grade mode (Kubernetes) uses kernel-level network controls to force all AI traffic through Altrace. Agents have no route around it.</p>
-        </div>
-        <div class="card" style="margin-bottom: var(--sp-3);">
-          <h4>Does Altrace see my prompts or responses?</h4>
-          <p>Altrace uses a privacy-preserving architecture. Content classification produces simple yes/no labels, for example, "contains PII: yes" or "contains PII: no." The matched content is never extracted, stored, or transmitted to any third party. Your data stays in transit between your agents and the AI provider.</p>
         </div>
         <div class="card" style="margin-bottom: var(--sp-3);">
           <h4>What about the governance console?</h4>

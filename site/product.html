@@ -209,11 +209,31 @@
     </div>
   </section>
 
-  <!-- 04 MONITOR -->
+  <!-- 04 CREDENTIAL INDIRECTION -->
+  <section class="section" id="credentials" style="background: var(--surface-warm);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">04 &middot; Credential indirection</p>
+        <h2 class="section-title">One lane for traffic. A separate lane for secrets.</h2>
+        <p class="section-subtitle">Agents authenticate to Altrace with a scoped virtual key. Altrace holds the real provider credential and injects it only at the moment a governed request leaves for the model, so the agent never holds a key it could leak, reuse, or overspend.</p>
+      </div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card card-accent-top"><h4>Virtual keys</h4><p>Each agent presents a proxy-issued token, never your real provider key. The real key is encrypted at rest and injected at the network boundary.</p></div>
+        <div class="card card-accent-top"><h4>Model and tool scope</h4><p>Restrict a key to specific models, tools, and endpoints. An agent issued a small-model key cannot upgrade itself to a frontier model or call a tool it was not granted.</p></div>
+        <div class="card card-accent-top"><h4>Per-key budgets</h4><p>Give each key its own daily, weekly, or monthly spending cap, enforced before the request reaches the model and independent of team budgets.</p></div>
+        <div class="card card-accent-top"><h4>Revoke and expire</h4><p>Revoke a key and the next request is refused while the agent kill switch fires in the same call. Issue short-lived keys that expire on their own.</p></div>
+        <div class="card card-accent-top"><h4>Rotation</h4><p>Rotate the underlying provider key in HashiCorp Vault or a Kubernetes secret and Altrace swaps it in automatically, with no agent restarts.</p></div>
+        <div class="card card-accent-top"><h4>Enforce-only mode</h4><p>Lock a deployment so only Altrace-issued keys are accepted. Any request carrying a real provider key is rejected at the proxy.</p></div>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-4); text-align: center;" class="fade-in">Credential indirection runs in your infrastructure. The real key is never sent to any third party.</p>
+    </div>
+  </section>
+
+  <!-- 05 MONITOR -->
   <section class="section" id="monitor" style="background: var(--surface-warm);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">04 &middot; Monitor</p>
+        <p class="section-label">05 &middot; Monitor</p>
         <h2 class="section-title">Watch every decision.</h2>
         <p class="section-subtitle">A real console, not a log file. See spend, content labels, and actions per agent, and prove exactly what happened to any auditor.</p>
       </div>
@@ -227,11 +247,11 @@
     </div>
   </section>
 
-  <!-- 05 DETECT DRIFT -->
+  <!-- 06 DETECT DRIFT -->
   <section class="section" id="drift" style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">05 &middot; Detect drift</p>
+        <p class="section-label">06 &middot; Detect drift</p>
         <h2 class="section-title">Catch behavioral drift before it escalates.</h2>
         <p class="section-subtitle">Altrace builds a behavioral baseline across multiple signals for each agent. When behavior deviates, enforcement escalates, and every escalation is a declared rule, not an opaque model.</p>
       </div>
@@ -248,11 +268,11 @@
     </div>
   </section>
 
-  <!-- 06 BUILT FOR SECURITY TEAMS -->
+  <!-- 07 BUILT FOR SECURITY TEAMS -->
   <section class="section" id="security" style="background: var(--surface-warm);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">06 &middot; Built for security teams</p>
+        <p class="section-label">07 &middot; Built for security teams</p>
         <h2 class="section-title">The controls your security org already asks for.</h2>
         <p class="section-subtitle">The section your security questionnaire is really about, enforced on the control plane.</p>
       </div>
@@ -267,11 +287,11 @@
     </div>
   </section>
 
-  <!-- 07 ARCHITECTURE -->
+  <!-- 08 ARCHITECTURE -->
   <section class="section" id="architecture" style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">07 &middot; Architecture</p>
+        <p class="section-label">08 &middot; Architecture</p>
         <h2 class="section-title">Two lanes, one transparent proxy.</h2>
         <p class="section-subtitle">Altrace sits between your agents and the providers they call. Traffic flows through an <strong>enforcement lane</strong>; credentials flow through a separate <strong>credential indirection</strong> lane, so agents never hold real keys.</p>
       </div>
