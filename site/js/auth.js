@@ -348,3 +348,15 @@ async function authFetch(path, opts = {}) {
 
   return resp;
 }
+
+// ── Demo continuity (CWE-522 tradeoff) ───────────────────
+// The token vault is memory-only and is wiped on every full-page
+// navigation. In demo mode, the persisted `altrace_demo` flag lets us
+// deterministically restore the SAME read-only viewer session on each
+// console page — so the demo survives navigation (demo.html -> dashboard,
+// guided-tour links, refresh) without ever persisting a token. This only
+// ever restores the read-only viewer; authFetch serves mock data in demo
+// mode and never reaches a real hub. No effect outside demo mode.
+if (isDemo() && !TokenVault.get()) {
+  setSession('Demo Organization', 'demo-token', 'viewer');
+}
