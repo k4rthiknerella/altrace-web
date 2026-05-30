@@ -1,0 +1,11 @@
+{
+  "name": "altrace-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Altrace marketing site — zero-build static. The blog generator is local-only and is NOT wired into the Vercel deploy.",
+  "scripts": {
+    "build:blog": "node tools/build-blog.mjs",
+    "test:blog": "node --test tools/build-blog.test.mjs"
+  }
+}
