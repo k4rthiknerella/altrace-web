@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Platform — Altrace</title>
-  <meta name="description" content="Altrace is the governance layer for AI agents. Stop runaway spend, enforce boundaries, and prove compliance — without changing your agent code.">
+  <title>Platform — Runtime Governance for AI Agents | Altrace</title>
+  <meta name="description" content="The runtime governance platform for AI agents. Discover every agent, define what each is allowed to do, and enforce it below the application — where agents can't bypass it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Platform — Altrace">
-  <meta property="og:description" content="Altrace is the governance layer for AI agents. Stop runaway spend, enforce boundaries, and prove compliance — without changing your agent code.">
+  <meta property="og:title" content="Platform — Runtime Governance for AI Agents | Altrace">
+  <meta property="og:description" content="Discover every agent, define what each is allowed to do, and enforce it below the application — where agents can't bypass it.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -65,152 +65,259 @@
   <!-- HERO -->
   <section style="padding: 120px 0 80px; text-align: center;">
     <div class="container">
-      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 0 auto;" class="fade-in">The governance layer<br>for AI agents.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 480px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace sits between your agents and the models they call. A multistage governance engine controls what they can access, how much they can spend, and what they are allowed to do — whether they cooperate or not.</p>
-      <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
-        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">Request a demo</a>
-        <a href="why-altrace.html" class="btn btn-secondary btn-large">Why Altrace &rarr;</a>
+      <h1 style="font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 760px; margin: 0 auto;" class="fade-in">The runtime governance platform for AI agents.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 600px; line-height: 1.6;" class="fade-in fade-in-delay-1">Secure, monitor, and govern agent behavior across models, tools, MCP servers, and enterprise systems — enforced below the application, where agents can't bypass it.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in fade-in-delay-2">
+        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+        <a href="demo.html" class="btn btn-secondary btn-large">See it live &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- WHAT ALTRACE CONTROLS -->
-  <section class="section" id="controls">
+  <!-- 01 DISCOVER -->
+  <section class="section" id="discover" style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">What Altrace controls</p>
-        <h2 class="section-title">Every decision, evaluated before it reaches the model.</h2>
+        <p class="section-label">01 &middot; Discover</p>
+        <h2 class="section-title">See every agent — including the ones you didn't authorize.</h2>
+        <p class="section-subtitle">Altrace surfaces an agent the moment it sends its first request — registered or not — with per-agent model and host visibility, plus an MCP scanner that audits the tools your agents connect to. Passive detection; nothing to instrument.</p>
       </div>
       <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card">
+          <h4>Shadow-agent detection</h4>
+          <p>Unregistered agents are flagged the moment they appear on your network — not days later.</p>
+        </div>
+        <div class="card">
+          <h4>Per-agent visibility</h4>
+          <p>Which model, which host, which tools — attributable to a team and an agent, on every request.</p>
+        </div>
+        <div class="card">
+          <h4>MCP Scanner</h4>
+          <p>Audit the tool servers your agents connect to for poisoned descriptions and unsafe permissions.</p>
+        </div>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-4); text-align: center;" class="fade-in">Passive detection and per-agent visibility — not a full CMDB. Altrace is content-blind: it classifies, it does not store your data.</p>
+    </div>
+  </section>
+
+  <!-- 02 DEFINE -->
+  <section class="section" id="define" style="background: var(--surface-warm);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">02 &middot; Define</p>
+        <h2 class="section-title">Declare what each agent is allowed to do.</h2>
+        <p class="section-subtitle">Behavioral contracts move governance beyond prompt-based controls. Specify what each agent may touch — and what it must prove before it acts.</p>
+      </div>
+      <div class="grid-2 fade-in fade-in-delay-1" style="margin-top: var(--sp-6); max-width: 880px; margin-left: auto; margin-right: auto;">
+        <div class="card card-accent-top">
+          <h4>Tools, models &amp; destinations</h4>
+          <p>An allowlist per agent: which tools it can call, which models it can reach, which destinations it can talk to. Everything else is denied.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>Actions &amp; action levels</h4>
+          <p>Govern read / write / delete / execute separately. A team can be allowed to read but never delete.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>Evidence prerequisites</h4>
+          <p>Require an agent to gather evidence before a destructive action — no refund without an order lookup first.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>Human approval gates</h4>
+          <p>Hold a request pending an operator's approve / deny for the actions that warrant a human in the loop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ENFORCE — CENTERPIECE -->
+  <section class="section" id="enforce" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label" style="color: var(--accent-copper);">03 &middot; Enforce &mdash; the centerpiece</p>
+        <h2 class="section-title">Enforced below the application, where agents can't bypass it.</h2>
+        <p class="section-subtitle">Every request passes through an ordered, deterministic decision chain before it reaches a model. Each decision is a declared, reproducible rule — not an opaque model you have to trust.</p>
+      </div>
+
+      <!-- Category-band pipeline -->
+      <div class="fade-in fade-in-delay-1" style="margin: var(--sp-6) auto; max-width: 940px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+        <span style="background: var(--accent-copper); color: #fff; padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Ingress Filtering</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--accent); color: #fff; padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">MCP Governance</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--accent-copper); color: #fff; padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Content Governance</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--accent); color: #fff; padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Policy Engines</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="border: 1.5px solid var(--accent-copper); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Allow / Block</span>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; margin-bottom: var(--sp-6);" class="fade-in">A 38-stage chain, shown here as category bands. The individual stages and their ordering are proprietary.</p>
+
+      <div class="grid-3 fade-in" style="margin-top: var(--sp-5);">
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">01</p>
           <h4>Kill switches</h4>
-          <p>Stop any agent instantly — by team, by agent, or globally. One click to shut down all AI activity.</p>
+          <p>Stop any agent instantly — by agent, by team, or globally. New requests blocked synchronously; active streams cancelled. Persists across restarts.</p>
         </div>
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">02</p>
-          <h4>Spend limits</h4>
-          <p>Hard budget ceilings per team and per agent. Every request is checked before it reaches the model.</p>
+          <h4>Hard budget limits</h4>
+          <p>Every request is cost-checked before it reaches the model. Over budget? It's blocked — the model is never called, and nothing is spent.</p>
         </div>
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">03</p>
-          <h4>Content governance</h4>
-          <p>Bidirectional scanning — detect sensitive data and policy violations in both inbound requests and outbound responses, automatically.</p>
+          <h4>Bidirectional content governance</h4>
+          <p>Inbound requests and outbound responses are both scanned — including response-side detection of injection that actually succeeded.</p>
         </div>
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">04</p>
-          <h4>Tool authorization</h4>
-          <p>Control which tools each agent can use. Block unregistered or unauthorized tools before they execute.</p>
+          <h4>Streaming cancellation</h4>
+          <p>Each streaming fragment is evaluated as it arrives. Sensitive data midstream cancels the stream at the point of violation.</p>
         </div>
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">05</p>
           <h4>Evidence grounding</h4>
-          <p>Require agents to look up data before taking action. No refund without an order lookup first.</p>
+          <p>Destructive actions are blocked unless the agent has completed the prerequisite lookups the contract requires.</p>
         </div>
         <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">06</p>
-          <h4>Anomaly detection</h4>
-          <p>Discover unknown agents on your network. Automatically escalate when behavior deviates from baseline.</p>
+          <h4>Deterministic by design</h4>
+          <p>Every block is a declared rule you can read and reproduce — a deterministic enforcement core, with optional ML augmentation for detection signal.</p>
         </div>
-        <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">07</p>
-          <h4>Graduated response</h4>
-          <p>Five escalation levels — from monitoring to full quarantine. Behavioral fingerprinting detects drift. De-escalation is deliberately slower than escalation.</p>
+      </div>
+
+      <!-- Enforcement vs monitoring (migrated from why-altrace) -->
+      <div class="fade-in" style="max-width: 900px; margin: var(--sp-7) auto 0;">
+        <div class="enforce-table">
+          <div class="enforce-row enforce-row-header">
+            <div class="enforce-cell header theirs">Monitoring Tools</div>
+            <div class="enforce-cell header ours">Altrace</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Tell you what happened after the fact</div>
+            <div class="enforce-cell ours-cell">Stop it before it happens</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Log that an agent exceeded its budget</div>
+            <div class="enforce-cell ours-cell">Block the request that would exceed it</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Surface anomalies for human review</div>
+            <div class="enforce-cell ours-cell">Enforce policy without a human in the loop</div>
+          </div>
+          <div class="enforce-row">
+            <div class="enforce-cell">Observe the agent</div>
+            <div class="enforce-cell ours-cell">Govern it</div>
+          </div>
         </div>
-        <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">08</p>
-          <h4>Streaming governance</h4>
-          <p>Real-time stream scanning with cross fragment reassembly. Sensitive data detected midstream triggers immediate cancellation.</p>
-        </div>
-        <div class="capability-card">
-          <p style="font-family: var(--font-heading); font-size: 2rem; font-weight: 400; color: var(--accent-copper); line-height: 1; margin-bottom: 12px;">09</p>
-          <h4>Agent identity</h4>
-          <p>Enterprise identity provisioning, single sign-on, zero-trust service identity, and role-based access control.</p>
-        </div>
+        <p class="enforce-closer fade-in">Monitoring tells you what went wrong. <strong>Altrace prevents it.</strong></p>
+      </div>
+
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;" class="fade-in">Unbypassable enforcement requires Kubernetes with the init container (kernel-level network rules). Docker is advisory; Fargate uses the gateway model.</p>
+    </div>
+  </section>
+
+  <!-- 04 MONITOR -->
+  <section class="section" id="monitor" style="background: var(--surface-warm);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">04 &middot; Monitor</p>
+        <h2 class="section-title">Watch every decision.</h2>
+        <p class="section-subtitle">A real console — not a log file. See spend, content labels, and actions per agent, and prove exactly what happened to any auditor.</p>
+      </div>
+      <div class="grid-2 fade-in fade-in-delay-1" style="margin-top: var(--sp-6); max-width: 880px; margin-left: auto; margin-right: auto;">
+        <div class="card"><h4>Live dashboard</h4><p>Spend, traffic, and enforcement actions across every team and agent, in real time.</p></div>
+        <div class="card"><h4>Tamper-evident audit trail</h4><p>Every decision cryptographically linked to the last. Insertion, deletion, and reordering are all detectable. Proof, not logging.</p></div>
+        <div class="card"><h4>Cost attribution</h4><p>Every dollar attributed to a team, an agent, and a cost center — no more mystery AI bills.</p></div>
+        <div class="card"><h4>Fleet view</h4><p>Every agent on one screen, with risk level and recent enforcement at a glance.</p></div>
+      </div>
+      <p style="text-align: center; margin-top: var(--sp-5);" class="fade-in"><a href="demo.html" class="btn btn-secondary">Explore the live console &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- 05 DETECT DRIFT -->
+  <section class="section" id="drift" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">05 &middot; Detect drift</p>
+        <h2 class="section-title">Catch behavioral drift before it escalates.</h2>
+        <p class="section-subtitle">Altrace builds a behavioral baseline across multiple signals for each agent. When behavior deviates, enforcement escalates — and every escalation is a declared rule, not an opaque model.</p>
+      </div>
+      <div class="fade-in fade-in-delay-1" style="margin: var(--sp-6) auto 0; max-width: 940px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+        <span style="background: var(--accent); color: #fff; padding: 12px 22px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Monitor</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--warning, #B8860B); color: #fff; padding: 12px 22px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Throttle</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--accent-copper); color: #fff; padding: 12px 22px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Block</span>
+        <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
+        <span style="background: var(--danger, #B23B3B); color: #fff; padding: 12px 22px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Quarantine</span>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; margin-top: var(--sp-4);" class="fade-in">Escalation is fast; de-escalation is deliberately slower. Behavioral baselines are statistical deviation signals — not semantic understanding.</p>
+    </div>
+  </section>
+
+  <!-- 06 BUILT FOR SECURITY TEAMS -->
+  <section class="section" id="security" style="background: var(--surface-warm);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">06 &middot; Built for security teams</p>
+        <h2 class="section-title">The controls your security org already asks for.</h2>
+        <p class="section-subtitle">The section your security questionnaire is really about — enforced on the control plane.</p>
+      </div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card"><h4>Mutual TLS</h4><p>Client certs verified against your CA; cert identity captured in the audit trail. Fail-closed in production.</p></div>
+        <div class="card"><h4>Team-scoped RBAC</h4><p>A team-scoped token can't reach another team's kill switches, budgets, or credentials.</p></div>
+        <div class="card"><h4>Token revocation &amp; lockout</h4><p>Revoke a compromised operator token instantly, with a tamper-evident record. Per-IP / per-token lockout.</p></div>
+        <div class="card"><h4>IP / CIDR allowlisting</h4><p>Restrict the control API to known networks, with explicit forwarded-header trust control.</p></div>
+        <div class="card"><h4>Durable SIEM delivery</h4><p>Every state-mutating control action is fsync-persisted before acknowledgment, then reliably forwarded to your SIEM.</p></div>
+        <div class="card"><h4>OpenAPI 3.1 contract</h4><p>A typed, reviewable control-API spec — 23 endpoints your team can audit and integrate against.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT'S DIFFERENT -->
-  <section class="section" id="different" style="background: var(--surface-warm);">
+  <!-- 07 ARCHITECTURE -->
+  <section class="section" id="architecture" style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">How it's different</p>
-        <h2 class="section-title">Governance that agents cannot circumvent.</h2>
-        <p class="section-subtitle">Most tools rely on the application to enforce rules — which means a misconfigured or compromised agent can ignore them. Altrace enforces at the infrastructure layer, below the application.</p>
+        <p class="section-label">07 &middot; Architecture</p>
+        <h2 class="section-title">Two lanes, one transparent proxy.</h2>
+        <p class="section-subtitle">Altrace sits between your agents and the providers they call. Traffic flows through an <strong>enforcement lane</strong>; credentials flow through a separate <strong>credential indirection</strong> lane, so agents never hold real keys.</p>
       </div>
-      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+
+      <div class="fade-in fade-in-delay-1" style="margin: var(--sp-6) auto 0; max-width: 760px; display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 140px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px;"><strong>Your Agents</strong><p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px;">No code changes</p></div>
+        <div style="flex: 1.4; min-width: 180px; text-align: center; background: var(--accent); color: #fff; border-radius: var(--radius-card); padding: 20px;"><strong>Altrace</strong><p style="font-size: 0.8125rem; opacity: 0.9; margin-top: 6px;">Infrastructure Enforcement · Behavioral Contracts · Credential Indirection · Streaming Scanning</p></div>
+        <div style="flex: 1; min-width: 140px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px;"><strong>LLM Providers</strong><p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px;">Anthropic · OpenAI · Gemini</p></div>
+      </div>
+
+      <!-- deployment modes -->
+      <div class="grid-3 fade-in" style="margin-top: var(--sp-7);">
         <div class="card card-accent-top">
-          <h4>Infrastructure-level enforcement</h4>
-          <p>All AI traffic passes through Altrace before it reaches any model. No code changes required. Governance is mandatory, not optional.</p>
+          <h4>Kubernetes <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700;">GOVERNANCE-GRADE</span></h4>
+          <p>Kernel iptables REDIRECT + DROP via an init container. Agents cannot bypass the proxy. This is the only mode with unbypassable enforcement.</p>
         </div>
         <div class="card card-accent-top">
-          <h4>Your data never leaves</h4>
-          <p>Runs inside your infrastructure. No content is extracted, stored, or transmitted.</p>
+          <h4>Docker <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">ADVISORY</span></h4>
+          <p>Application-level budget and kill-switch enforcement for development, testing, and visibility. Bypassable if the proxy is ignored.</p>
         </div>
         <div class="card card-accent-top">
-          <h4>Tamper-evident audit trail</h4>
-          <p>Every governance decision is recorded in an immutable chain. Prove exactly what happened, when, and why — to any auditor.</p>
+          <h4>Fargate <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">GATEWAY</span></h4>
+          <p>AWS Network Firewall routes egress to an Altrace gateway. Governance for workloads where kernel enforcement isn't available.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- WORKS WITH -->
-  <section class="integration-section" id="works-with">
-    <div class="container">
-      <div class="fade-in">
-        <p class="section-label">Works with</p>
-        <h2>Your stack. Your cloud. Your agents.</h2>
-        <div class="logo-grid" style="margin-top: var(--sp-5);">
-          <div class="logo-item">Anthropic</div>
-          <div class="logo-item">OpenAI</div>
-          <div class="logo-item">Azure OpenAI</div>
-          <div class="logo-item">Google Gemini</div>
-          <div class="logo-item">Kubernetes</div>
-          <div class="logo-item">Docker</div>
-          <div class="logo-item">MCP Servers</div>
-          <div class="logo-item">LangChain</div>
-          <div class="logo-item">CrewAI</div>
-          <div class="logo-item">AutoGen</div>
-          <div class="logo-item">Custom Policies</div>
-          <div class="logo-item">Any Cloud</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section style="padding: 80px 0; border-top: 1px solid var(--border);">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: var(--sp-6);">
-        <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 16px;" class="fade-in">Products</p>
-        <h2 style="font-weight: 400;" class="fade-in fade-in-delay-1">The Altrace ecosystem.</h2>
-      </div>
-      <div class="grid-3 fade-in fade-in-delay-2">
-        <div style="text-align: center; padding: var(--sp-4);">
-          <h4 style="margin-bottom: 8px;">Altrace Agent</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">The governance engine. Deploys alongside your existing infrastructure with no code changes. Enforces every policy in real time.</p>
-        </div>
-        <div style="text-align: center; padding: var(--sp-4);">
-          <h4 style="margin-bottom: 8px;">SDKs</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">Python and TypeScript. Drop-in replacements for your existing AI client libraries. Add cost attribution and evidence tracking with minimal integration effort.</p>
-        </div>
-        <div style="text-align: center; padding: var(--sp-4);">
-          <h4 style="margin-bottom: 8px;">MCP Scanner</h4>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">Audit the tools your agents connect to. Detects poisoned tool descriptions, misconfigured permissions, and unauthorized access patterns.</p>
-        </div>
-      </div>
+  <section class="section" id="works-with" style="background: var(--surface-warm);">
+    <div class="container" style="text-align: center;">
+      <p class="section-label fade-in">Works with</p>
+      <h2 class="fade-in" style="font-weight: 400;">Your stack. Your cloud. Your agents.</h2>
+      <p style="font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin: var(--sp-3) auto 0; line-height: 1.8;" class="fade-in fade-in-delay-1">As a transparent proxy, Altrace governs traffic without changing your agent code — so it works with the providers and frameworks you already run: Anthropic &middot; OpenAI &middot; Azure&nbsp;OpenAI &middot; Google&nbsp;Gemini &middot; MCP &middot; LangGraph &middot; LangChain &middot; CrewAI &middot; AutoGen &middot; Kubernetes &middot; Docker &middot; any cloud.</p>
     </div>
   </section>
 
   <!-- BOTTOM CTA -->
-  <section class="cta-section">
+  <section style="padding: 96px 0; text-align: center;">
     <div class="container">
-      
-      <p class="fade-in fade-in-delay-1" style="max-width: 440px; margin: 0 auto;">Get in touch to schedule a walkthrough.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
-        <a href="mailto:hello@altrace.io" class="btn btn-primary btn-large">hello@altrace.io</a>
+      <h2 style="font-weight: 400;" class="fade-in">See it govern your agents.</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); margin: 16px auto 32px; max-width: 460px; line-height: 1.6;" class="fade-in fade-in-delay-1">Book a walkthrough on your own traffic — or explore the live console right now, no form required.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in fade-in-delay-2">
+        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+        <a href="demo.html" class="btn btn-secondary btn-large">See it live &rarr;</a>
       </div>
     </div>
   </section>
@@ -250,25 +357,7 @@
     </div>
   </footer>
 
-  <script>
-    // Fade-in on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Nav dropdown
-    document.querySelectorAll('.nav-dropdown').forEach(dd => {
-      dd.addEventListener('mouseenter', () => dd.classList.add('open'));
-      dd.addEventListener('mouseleave', () => dd.classList.remove('open'));
-    });
-
-    // Mobile nav
-    document.querySelector('.nav-hamburger')?.addEventListener('click', () => {
-      document.querySelector('.nav-mobile')?.classList.toggle('open');
-    });
-  </script>
-
+  <script src="js/main.js?v=6"></script>
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>

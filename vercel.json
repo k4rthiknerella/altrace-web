@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/why-altrace", "destination": "/product", "permanent": true },
+    { "source": "/why-altrace.html", "destination": "/product", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
