@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Documentation — Altrace Console</title>
+  <title>Documentation, Altrace Console</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -238,9 +238,9 @@ warn contains msg if {
 
         <h2>Decision Rules</h2>
         <ul>
-          <li><code>deny</code> — blocks the request with a reason message</li>
-          <li><code>warn</code> — allows the request but records a warning</li>
-          <li>No matching rule — request is allowed by default</li>
+          <li><code>deny</code>, blocks the request with a reason message</li>
+          <li><code>warn</code>, allows the request but records a warning</li>
+          <li>No matching rule, request is allowed by default</li>
         </ul>
 
         <h2>Shadow Evaluation</h2>
@@ -381,10 +381,10 @@ kubectl annotate policy production \\
         <h2>AIUC-1 Compliance Dashboard</h2>
         <p>Navigate to the <strong>Compliance</strong> page in the console sidebar. The dashboard shows:</p>
         <ul>
-          <li><strong>Overall score</strong> — number of enforced controls out of total applicable controls</li>
-          <li><strong>Domain breakdown</strong> — controls grouped by AIUC-1 domain (A through E)</li>
-          <li><strong>Status per control</strong> — Enforced, Configured, Not Configured, or Optional</li>
-          <li><strong>Evidence</strong> — the specific Altrace capability satisfying each control</li>
+          <li><strong>Overall score</strong>, number of enforced controls out of total applicable controls</li>
+          <li><strong>Domain breakdown</strong>, controls grouped by AIUC-1 domain (A through E)</li>
+          <li><strong>Status per control</strong>, Enforced, Configured, Not Configured, or Optional</li>
+          <li><strong>Evidence</strong>, the specific Altrace capability satisfying each control</li>
         </ul>
 
         <h2>Exporting a PDF Report</h2>
@@ -437,7 +437,7 @@ Authorization: Bearer &lt;hub-api-key&gt;</code></pre>
 
     const session = initConsole('console-docs');
     if (session) {
-      // Gate documentation behind real auth — demo users see a signup prompt
+      // Gate documentation behind real auth, demo users see a signup prompt
       if (isDemo()) {
         document.getElementById('docs-nav').style.display = 'none';
         document.getElementById('docs-content').innerHTML = `

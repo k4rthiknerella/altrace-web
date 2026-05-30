@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo — Altrace</title>
-  <meta name="description" content="Explore the Altrace governance console with pre-loaded demo data. See fleet management, kill switches, budget controls, and AIUC-1 compliance in action.">
+  <title>Live Console, Altrace</title>
+  <meta name="description" content="Explore the Altrace governance console, read-only, pre-loaded with sample teams, an active kill switch, budgets, and 24 hours of audit data. No signup.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Demo — Altrace">
-  <meta property="og:description" content="Explore the Altrace governance console with pre-loaded demo data. See fleet management, kill switches, budget controls, and AIUC-1 compliance in action.">
+  <meta property="og:title" content="Live Console, Altrace">
+  <meta property="og:description" content="Explore the Altrace governance console, read-only, pre-loaded with real governance data. No signup.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -62,88 +62,50 @@
     <a href="request-access.html">Book a Demo</a>
   </div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-content hero-centered">
-      <p class="section-label fade-in">Demo Environment</p>
-      <h1 class="fade-in fade-in-delay-1">See governance in action</h1>
-      <p class="section-subtitle fade-in fade-in-delay-2">A pre-loaded demo environment with sample teams, governance policies, and 24 hours of decision data. Explore how Altrace enforces behavioral contracts across the full decision pipeline.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
-        <a href="/dashboard.html" class="btn btn-primary btn-large">Launch Demo Console</a>
+  <!-- HERO, fast on-ramp, no re-pitch -->
+  <section style="padding: 150px 0 64px; text-align: center;">
+    <div class="container">
+      <p class="section-label fade-in">Live Console</p>
+      <h1 style="font-size: clamp(2.25rem, 5vw, 3.75rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 640px; margin: 12px auto 0;" class="fade-in fade-in-delay-1">Explore the live console.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 20px auto 36px; max-width: 540px; line-height: 1.6;" class="fade-in fade-in-delay-2">A read-only console, pre-loaded with three teams, an active kill switch, and 24 hours of real decision data. No signup. Just click in.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in fade-in-delay-2">
+        <a href="/dashboard.html" class="btn btn-primary btn-large">Launch Demo Console &rarr;</a>
+        <a href="request-access.html" class="btn btn-secondary btn-large">Book a Demo</a>
       </div>
     </div>
   </section>
 
-  <!-- PRE-LOADED DATA -->
-  <section>
+  <!-- JUMP STRAIGHT TO -->
+  <section style="padding: 16px 0 96px;">
     <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">Pre-loaded Data</p>
-        <h2 class="section-title">What you'll find</h2>
-      </div>
-      <div class="grid-3 stagger-reveal">
-        <div class="card">
-          <h4>3 Teams</h4>
-          <p>Engineering, ML-Ops, and Support teams with different budget allocations, model allowlists, and agent configurations.</p>
-        </div>
-        <div class="card">
-          <h4>Active Kill Switch</h4>
-          <p>One team has an active kill switch, demonstrating real-time enforcement and fleet-wide impact on agent operations.</p>
-        </div>
-        <div class="card">
-          <h4>24h of Audit Data</h4>
-          <p>Allow, block, and warn decisions with full causal provenance — tool calls, content classification, budget checks, and model restrictions.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GUIDED TOUR -->
-  <section style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">Guided Tour</p>
-        <h2 class="section-title">Try these</h2>
-        <p class="section-subtitle">Click any link to jump into the console with pre-loaded demo data.</p>
-      </div>
-      <div class="grid-2 stagger-reveal" style="max-width: 800px; margin: 0 auto;">
-        <a href="/cost.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>1. View Team Budgets</h4>
-          <p>See how spending is distributed across teams and models, with utilization bars and budget alerts.</p>
+      <p style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-copper); margin-bottom: 32px; text-align: center;" class="fade-in">Jump straight to</p>
+      <div class="grid-3 stagger-reveal" style="max-width: 940px; margin: 0 auto;">
+        <a href="/dashboard.html" class="card" style="text-decoration: none; cursor: pointer;">
+          <h4>Dashboard</h4>
+          <p>Fleet status, spend, and enforcement actions across every team, the operator's home screen.</p>
         </a>
         <a href="/fleet.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>2. See the Kill Switch</h4>
-          <p>One team is kill-switched. Observe the fleet status and try activating or deactivating controls.</p>
+          <h4>Kill Switch</h4>
+          <p>One team is kill-switched. See fleet status and how a stop propagates instantly.</p>
+        </a>
+        <a href="/cost.html" class="card" style="text-decoration: none; cursor: pointer;">
+          <h4>Team Budgets</h4>
+          <p>Spend distributed across teams and models, with utilization bars and budget alerts.</p>
         </a>
         <a href="/audit.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>3. Review Audit Trail</h4>
-          <p>Every governance decision is recorded with hash-chain integrity. Browse the event timeline.</p>
+          <h4>Audit Trail</h4>
+          <p>Every decision recorded with hash-chain integrity. Browse the event timeline.</p>
         </a>
         <a href="/compliance.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>4. Check AIUC-1 Compliance</h4>
-          <p>See which of the 39 AIUC-1 controls are enforced, configured, or pending — and export the report.</p>
-        </a>
-        <a href="/policies.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>5. Manage Policies</h4>
-          <p>View the active governance policy, version history, shadow evaluation results, and sidecar rollout status.</p>
+          <h4>AIUC-1 Compliance</h4>
+          <p>Which AIUC-1 controls are enforced, configured, or pending, and export the report.</p>
         </a>
         <a href="/virtualkeys.html" class="card" style="text-decoration: none; cursor: pointer;">
-          <h4>6. VirtualKey Management</h4>
-          <p>Issue, revoke, and monitor VirtualKeys with per-key budget caps and usage tracking.</p>
+          <h4>VirtualKeys</h4>
+          <p>Issue, revoke, and monitor virtual keys with per-key budget caps and usage tracking.</p>
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <h2 class="fade-in">Ready to deploy?</h2>
-      <p class="fade-in fade-in-delay-1">Follow the quickstart guide to run Altrace in your own Kubernetes cluster in 15 minutes.</p>
-      <div class="fade-in fade-in-delay-2" style="margin-top: var(--sp-5);">
-        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
-      </div>
+      <p style="text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">Read-only viewer &middot; sample data &middot; nothing to install. Prefer a guided walkthrough? <a href="request-access.html" style="color: var(--accent); font-weight: 600;">Book a Demo &rarr;</a></p>
     </div>
   </section>
 

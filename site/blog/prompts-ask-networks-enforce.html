@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompts Ask. Networks Enforce. — Altrace Blog</title>
+  <title>Prompts Ask. Networks Enforce., Altrace Blog</title>
   <meta name="description" content="Prompt-based guardrails are requests an agent can ignore. Real governance lives below the application, in the network path every request has to cross.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Prompts Ask. Networks Enforce. — Altrace">
+  <meta property="og:title" content="Prompts Ask. Networks Enforce., Altrace">
   <meta property="og:description" content="Prompt-based guardrails are requests an agent can ignore. Real governance lives below the application, in the network path every request has to cross.">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
@@ -57,18 +57,18 @@
       <div class="blog-body">
 <p>Most &quot;AI guardrails&quot; are written in the same place the model reads its instructions: the prompt. That is a category error.</p>
 <h2>A prompt is a request, not a control</h2>
-<p>When you put a rule in a system prompt — <em>never call the delete tool</em>, <em>never spend more than $500</em>, <em>never send data to an external host</em> — you are asking the model to behave. A cooperative model usually will. But governance is not for the cooperative case. It is for the jailbroken agent, the confused agent, the prompt-injected agent, the agent that finds a path you did not anticipate. A rule the agent can read is a rule the agent can rationalize around.</p>
+<p>When you put a rule in a system prompt, <em>never call the delete tool</em>, <em>never spend more than $500</em>, <em>never send data to an external host</em>, you are asking the model to behave. A cooperative model usually will. But governance is not for the cooperative case. It is for the jailbroken agent, the confused agent, the prompt-injected agent, the agent that finds a path you did not anticipate. A rule the agent can read is a rule the agent can rationalize around.</p>
 <h2>Enforcement has to live where the agent cannot reach it</h2>
-<p>The fix is structural: move the control <em>below</em> the application, into the network path every request has to cross. At that layer the decision is not a suggestion — it is a gate. The request to overspend is refused before it reaches the provider. The connection to an unauthorized host is never established. The kill switch does not ask the agent to stop; it stops the traffic.</p>
+<p>The fix is structural: move the control <em>below</em> the application, into the network path every request has to cross. At that layer the decision is not a suggestion, it is a gate. The request to overspend is refused before it reaches the provider. The connection to an unauthorized host is never established. The kill switch does not ask the agent to stop; it stops the traffic.</p>
 <p>This is the difference between <strong>asking</strong> and <strong>enforcing</strong>, and it is the whole reason Altrace runs as a transparent proxy rather than a library you import. A library sits inside the application&#39;s trust boundary. A proxy below it does not.</p>
 <blockquote><p>Monitoring tells you what an agent did. Altrace decides what it is allowed to do.</p></blockquote>
 <h2>What this looks like in practice</h2>
-<ul><li><strong>Budgets</strong> are checked before the upstream call. Over the limit, the model is never invoked and nothing is spent.</li><li><strong>Kill switches</strong> block new requests synchronously and cancel active streams — and survive restarts.</li><li><strong>Content governance</strong> scans both directions; a policy violation cancels the stream at the point it appears.</li><li><strong>Tool and action controls</strong> deny what the contract did not allow, regardless of what the prompt says.</li></ul>
-<p>On Kubernetes, kernel-level network rules make this unbypassable — agents have no route around the proxy. (Docker is advisory; Fargate uses a gateway.) The idea is the same every time: do not ask the agent nicely. Put the control somewhere the agent cannot edit.</p>
+<ul><li><strong>Budgets</strong> are checked before the upstream call. Over the limit, the model is never invoked and nothing is spent.</li><li><strong>Kill switches</strong> block new requests synchronously and cancel active streams, and survive restarts.</li><li><strong>Content governance</strong> scans both directions; a policy violation cancels the stream at the point it appears.</li><li><strong>Tool and action controls</strong> deny what the contract did not allow, regardless of what the prompt says.</li></ul>
+<p>On Kubernetes, kernel-level network rules make this unbypassable, agents have no route around the proxy. (Docker is advisory; Fargate uses a gateway.) The idea is the same every time: do not ask the agent nicely. Put the control somewhere the agent cannot edit.</p>
 <p>Prompts ask. Networks enforce.</p>
       </div>
       <hr>
-      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">See it live &rarr;</a></p>
+      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">Explore the console &rarr;</a></p>
     </div>
   </article>
   <footer class="footer">

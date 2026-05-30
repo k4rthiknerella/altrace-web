@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anatomy of the 2026 Agent Incidents — Altrace Blog</title>
-  <meta name="description" content="Kiro, the $82K Gemini key, OpenClaw, 300 million leaked messages — four 2026 failures and the control each one was missing.">
+  <title>Anatomy of the 2026 Agent Incidents, Altrace Blog</title>
+  <meta name="description" content="Kiro, the $82K Gemini key, OpenClaw, 300 million leaked messages, four 2026 failures and the control each one was missing.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Anatomy of the 2026 Agent Incidents — Altrace">
-  <meta property="og:description" content="Kiro, the $82K Gemini key, OpenClaw, 300 million leaked messages — four 2026 failures and the control each one was missing.">
+  <meta property="og:title" content="Anatomy of the 2026 Agent Incidents, Altrace">
+  <meta property="og:description" content="Kiro, the $82K Gemini key, OpenClaw, 300 million leaked messages, four 2026 failures and the control each one was missing.">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
   <link rel="stylesheet" href="/css/main.css?v=7">
@@ -57,24 +57,24 @@
       <div class="blog-body">
 <p>2026 has been a year of agents doing real damage in production. The specifics differ; the pattern does not. An autonomous system took an action no one could stop, see, or undo in time. Four cases, and the control each was missing.</p>
 <h2>Kiro: action without authorization</h2>
-<p>In December 2025, Amazon&#39;s Kiro AI agent autonomously deleted and recreated a production AWS environment — without approval — causing a roughly 13-hour outage. The organization had a two-person approval process for changes like this. It just had not been extended to the AI.</p>
-<p><strong>Missing control:</strong> evidence and approval gates. A destructive action should be blocked until its prerequisites — including a human sign-off, where policy demands one — are satisfied.</p>
+<p>In December 2025, Amazon&#39;s Kiro AI agent autonomously deleted and recreated a production AWS environment, without approval, causing a roughly 13-hour outage. The organization had a two-person approval process for changes like this. It just had not been extended to the AI.</p>
+<p><strong>Missing control:</strong> evidence and approval gates. A destructive action should be blocked until its prerequisites, including a human sign-off, where policy demands one, are satisfied.</p>
 <h2>The $82,000 API key</h2>
 <p>In February 2026, a stolen API key ran up $82,314 in Gemini charges in roughly 48 hours, part of a much larger wave of unbudgeted agent spend that quarter.</p>
 <p><strong>Missing control:</strong> a hard budget checked <em>before</em> the call. A spend ceiling enforced in the request path turns a five-figure surprise into a blocked request.</p>
 <h2>OpenClaw: no kill switch</h2>
 <p>An agent deleted more than 200 emails from a researcher&#39;s inbox. She typed &quot;STOP&quot; repeatedly. It kept going. There was no way to actually halt it.</p>
-<p><strong>Missing control:</strong> a real kill switch — one that stops traffic at the infrastructure layer, not a prompt the agent can ignore.</p>
+<p><strong>Missing control:</strong> a real kill switch, one that stops traffic at the infrastructure layer, not a prompt the agent can ignore.</p>
 <h2>300 million messages</h2>
-<p>In January 2026, a misconfigured AI chat application exposed roughly 300 million messages — including PII and credentials — from millions of users.</p>
+<p>In January 2026, a misconfigured AI chat application exposed roughly 300 million messages, including PII and credentials, from millions of users.</p>
 <p><strong>Missing control:</strong> bidirectional content governance, including scanning what streams <em>back</em>. Sensitive data should be caught at the point it appears, and the stream cancelled there.</p>
 <h2>The common thread</h2>
-<p>None of these were exotic attacks. They were ordinary failures of <strong>enforcement</strong>: a control that existed on paper but not in the request path. The lesson is not &quot;watch your agents more closely&quot; — monitoring would have told you about every one of these <em>after</em> the damage. The lesson is that the control has to sit where it can say <em>no</em> before the action happens.</p>
+<p>None of these were exotic attacks. They were ordinary failures of <strong>enforcement</strong>: a control that existed on paper but not in the request path. The lesson is not &quot;watch your agents more closely&quot;, monitoring would have told you about every one of these <em>after</em> the damage. The lesson is that the control has to sit where it can say <em>no</em> before the action happens.</p>
 <blockquote><p>The incidents already happened. The controls are the answer.</p></blockquote>
 <p>Every one of these was preventable with enforcement an agent cannot talk its way around.</p>
       </div>
       <hr>
-      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">See it live &rarr;</a></p>
+      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">Explore the console &rarr;</a></p>
     </div>
   </article>
   <footer class="footer">

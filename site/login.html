@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Console Login — Altrace</title>
+  <title>Console Login, Altrace</title>
   <meta name="description" content="Sign in to the Altrace governance console.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,7 +78,7 @@
             </select>
           </div>
 
-          <div id="login-error" style="display:none; padding: 12px; margin-bottom: 16px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 6px; color: var(--danger); font-size: 0.875rem;"></div>
+          <div id="login-error" style="display:none; padding: 12px; margin-bottom: 16px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px; color: var(--danger); font-size: 0.875rem;"></div>
 
           <button type="submit" class="btn btn-primary btn-large btn-full">Sign In</button>
         </form>
@@ -171,7 +171,7 @@
           }
           // After 3 failures: 5s cooldown with countdown
           if (_loginAttempts >= 3) {
-            errorEl.textContent = 'Invalid API key. Too many attempts — slowing down.';
+            errorEl.textContent = 'Invalid API key. Too many attempts, slowing down.';
             errorEl.style.display = 'block';
             _setLoginCooldown(btn, errorEl, 5);
             return;

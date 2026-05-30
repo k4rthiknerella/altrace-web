@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deterministic Governance vs. ML Guardrails — Altrace Blog</title>
-  <meta name="description" content="For enforcement, a decision you can read and reproduce beats a model you have to trust. Here is why — and where ML still earns its place.">
+  <title>Deterministic Governance vs. ML Guardrails, Altrace Blog</title>
+  <meta name="description" content="For enforcement, a decision you can read and reproduce beats a model you have to trust. Here is why, and where ML still earns its place.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Deterministic Governance vs. ML Guardrails — Altrace">
-  <meta property="og:description" content="For enforcement, a decision you can read and reproduce beats a model you have to trust. Here is why — and where ML still earns its place.">
+  <meta property="og:title" content="Deterministic Governance vs. ML Guardrails, Altrace">
+  <meta property="og:description" content="For enforcement, a decision you can read and reproduce beats a model you have to trust. Here is why, and where ML still earns its place.">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
   <link rel="stylesheet" href="/css/main.css?v=7">
@@ -55,22 +55,22 @@
       <h1>Deterministic Governance vs. ML Guardrails</h1>
       <div class="blog-tags"><span class="blog-tag">Deterministic</span><span class="blog-tag">Governance</span></div>
       <div class="blog-body">
-<p>There are two philosophies for keeping an AI agent inside the lines. One uses a model to judge each request. The other uses declared rules. For <em>enforcement</em>, the second wins — and it is worth being precise about why.</p>
+<p>There are two philosophies for keeping an AI agent inside the lines. One uses a model to judge each request. The other uses declared rules. For <em>enforcement</em>, the second wins, and it is worth being precise about why.</p>
 <h2>The problem with a model that judges a model</h2>
-<p>An ML guardrail is itself a probabilistic system. It has false positives, false negatives, and a decision boundary you cannot fully enumerate. When it blocks a request, the answer to <em>&quot;why?&quot;</em> is a score. When it lets one through, the answer to <em>&quot;why?&quot;</em> is also a score. For a security control a CISO has to stand behind in an audit, &quot;the classifier was 0.62 confident&quot; is not a satisfying answer — and &quot;we are not sure why it allowed that&quot; is a finding.</p>
+<p>An ML guardrail is itself a probabilistic system. It has false positives, false negatives, and a decision boundary you cannot fully enumerate. When it blocks a request, the answer to <em>&quot;why?&quot;</em> is a score. When it lets one through, the answer to <em>&quot;why?&quot;</em> is also a score. For a security control a CISO has to stand behind in an audit, &quot;the classifier was 0.62 confident&quot; is not a satisfying answer, and &quot;we are not sure why it allowed that&quot; is a finding.</p>
 <h2>Determinism is auditability</h2>
 <p>A deterministic control is different: every block is a declared rule, evaluated the same way every time, reproducible after the fact. <em>This team&#39;s budget was exhausted. This tool was not on the allowlist. This action required evidence that was not gathered.</em> You can read the rule, test it, and prove it fired. That reproducibility is what makes governance <strong>defensible</strong>, not just functional.</p>
 <p>So Altrace&#39;s enforcement core is deterministic by design. The decision that blocks a request is always a rule you can point to.</p>
 <h2>&quot;So you do not use ML at all?&quot;</h2>
-<p>We do — and the distinction matters. ML belongs in <strong>detection</strong>, as a signal: is this text likely a prompt injection? Does this behavior deviate from the baseline? Those are fuzzy questions where a learned model genuinely helps. But the signal feeds a deterministic <strong>decision</strong>. The model can raise its hand; it does not get to be the judge.</p>
+<p>We do, and the distinction matters. ML belongs in <strong>detection</strong>, as a signal: is this text likely a prompt injection? Does this behavior deviate from the baseline? Those are fuzzy questions where a learned model genuinely helps. But the signal feeds a deterministic <strong>decision</strong>. The model can raise its hand; it does not get to be the judge.</p>
 <blockquote><p>Deterministic enforcement, optional ML augmentation. The block is always a rule. The hint can be a model.</p></blockquote>
 <h2>Why this is the right split</h2>
-<ul><li><strong>Detection</strong> wants recall against an open-ended adversary — a good place for learned signals.</li><li><strong>Enforcement</strong> wants reproducibility and zero ambiguity — a bad place for a black box.</li></ul>
+<ul><li><strong>Detection</strong> wants recall against an open-ended adversary, a good place for learned signals.</li><li><strong>Enforcement</strong> wants reproducibility and zero ambiguity, a bad place for a black box.</li></ul>
 <p>Conflating the two gives you a guardrail that is hard to audit and easy to drift. Separating them gives you the best of both: learned signals where ambiguity is unavoidable, declared rules where accountability is non-negotiable.</p>
 <p>When the question is <em>&quot;can you prove what your AI is and is not allowed to do?&quot;</em>, a determinate answer beats a confident one.</p>
       </div>
       <hr>
-      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">See it live &rarr;</a></p>
+      <p class="blog-cta"><a href="/request-access" class="btn btn-primary">Book a Demo</a> <a href="/demo" class="btn btn-secondary">Explore the console &rarr;</a></p>
     </div>
   </article>
   <footer class="footer">
