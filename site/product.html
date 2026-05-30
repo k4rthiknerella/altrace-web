@@ -163,7 +163,7 @@
         </div>
         <div class="capability-card">
           <h4>Bidirectional content governance</h4>
-          <p>Inbound requests and outbound responses are both scanned, including response-side detection of injection that actually succeeded.</p>
+          <p>Inbound requests and outbound responses are both governed, including response-side detection of injection that actually succeeded.</p>
         </div>
         <div class="capability-card">
           <h4>Streaming cancellation</h4>
@@ -203,10 +203,9 @@
             <div class="enforce-cell ours-cell">Govern it</div>
           </div>
         </div>
-        <p class="enforce-closer fade-in">Monitoring tells you what went wrong. <strong>Altrace prevents it.</strong></p>
       </div>
 
-      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;" class="fade-in">Unbypassable enforcement requires Kubernetes with the init container (kernel-level network rules). Docker is advisory; Fargate uses the gateway model.</p>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;" class="fade-in">Unbypassable enforcement requires Kubernetes with the init container (kernel-level network rules). Docker is advisory; Fargate uses the gateway model. Response and streaming governance are policy-configurable; request-side classification is on by default.</p>
     </div>
   </section>
 
@@ -263,7 +262,7 @@
         <div class="card"><h4>Token revocation &amp; lockout</h4><p>Revoke a compromised operator token instantly, with a tamper-evident record. Per-IP / per-token lockout.</p></div>
         <div class="card"><h4>IP / CIDR allowlisting</h4><p>Restrict the control API to known networks, with explicit forwarded-header trust control.</p></div>
         <div class="card"><h4>Durable SIEM delivery</h4><p>Every state-mutating control action is fsync-persisted before acknowledgment, then reliably forwarded to your SIEM.</p></div>
-        <div class="card"><h4>OpenAPI 3.1 contract</h4><p>A typed, reviewable control-API spec, 23 endpoints your team can audit and integrate against.</p></div>
+        <div class="card"><h4>Auditable control API</h4><p>A typed, scriptable control API your security team can audit and integrate against. Kill switches, budgets, credentials, approvals, and audit, every action authenticated and recorded.</p></div>
       </div>
     </div>
   </section>
