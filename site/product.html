@@ -92,8 +92,8 @@
           <p>Which model, which host, which tools, attributable to a team and an agent, on every request.</p>
         </div>
         <div class="card">
-          <h4>MCP Scanner</h4>
-          <p>Audit the tool servers your agents connect to for poisoned descriptions and unsafe permissions.</p>
+          <h4>MCP scanner</h4>
+          <p>Audit the MCP tool servers your agents connect to before you trust them, for hardcoded credentials, command injection, unsafe permissions, and supply-chain risk. What the scanner finds becomes what the proxy enforces.</p>
         </div>
       </div>
       <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-4); text-align: center;" class="fade-in">Passive detection and per-agent visibility, not a full CMDB. Altrace is content-blind: it classifies, it does not store your data.</p>
@@ -111,7 +111,7 @@
       <div class="grid-2 fade-in fade-in-delay-1" style="margin-top: var(--sp-6); max-width: 880px; margin-left: auto; margin-right: auto;">
         <div class="card card-accent-top">
           <h4>Tools, models &amp; destinations</h4>
-          <p>An allowlist per agent: which tools it can call, which models it can reach, which destinations it can talk to. Everything else is denied.</p>
+          <p>An allowlist per agent: which tools it can call, which models it can reach, which destinations it can talk to. Regulated or proprietary data is blocked from leaving to a destination you did not approve, and everything else is denied.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Actions &amp; action levels</h4>
@@ -171,7 +171,19 @@
         </div>
         <div class="capability-card">
           <h4>Evidence grounding</h4>
-          <p>Destructive actions are blocked unless the agent has completed the prerequisite lookups the contract requires.</p>
+          <p>Destructive actions are blocked unless the agent has completed the prerequisite lookups the contract requires. When blocked, the agent receives a machine-readable hint in its provider&rsquo;s own error format and can self-correct without a human.</p>
+        </div>
+        <div class="capability-card">
+          <h4>MCP tool governance</h4>
+          <p>Every MCP tool call passes layered enforcement: an authorization registry, a behavioral reputation check, a schema-integrity fingerprint, a supply-chain attestation, and a description-injection scan. Each is a declared rule, and each fails closed.</p>
+        </div>
+        <div class="capability-card">
+          <h4>Cross-provider data isolation</h4>
+          <p>Session data-flow labels keep data that one provider processed from crossing into another vendor, and block regulated data from leaving to a destination you did not approve.</p>
+        </div>
+        <div class="capability-card">
+          <h4>Run loop detection</h4>
+          <p>Agents that repeat the same request pattern within a run are warned, then blocked, then the run is terminated, automatically.</p>
         </div>
         <div class="capability-card">
           <h4>Deterministic by design</h4>
@@ -253,7 +265,7 @@
       <div class="section-header fade-in">
         <p class="section-label">06 &middot; Detect drift</p>
         <h2 class="section-title">Catch behavioral drift before it escalates.</h2>
-        <p class="section-subtitle">Altrace builds a behavioral baseline across multiple signals for each agent. When behavior deviates, enforcement escalates, and every escalation is a declared rule, not an opaque model.</p>
+        <p class="section-subtitle">Altrace builds a behavioral baseline across multiple signals for each agent, and statistical detectors watch the whole fleet for coordinated attacks, synthetic-agent farms, and drift no single request reveals. When behavior deviates, enforcement escalates, and every escalation is a declared rule, not an opaque model.</p>
       </div>
       <div class="fade-in fade-in-delay-1" style="margin: var(--sp-6) auto 0; max-width: 940px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
         <span style="background: var(--accent); color: #fff; padding: 12px 22px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Monitor</span>
@@ -306,7 +318,7 @@
       <div class="grid-3 fade-in" style="margin-top: var(--sp-7);">
         <div class="card card-accent-top">
           <h4>Kubernetes <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700;">GOVERNANCE-GRADE</span></h4>
-          <p>Kernel iptables REDIRECT + DROP via an init container. Agents cannot bypass the proxy. This is the only mode with unbypassable enforcement.</p>
+          <p>Kernel-level network rules, via iptables, nftables, or Cilium, force all AI traffic through Altrace. Agents cannot bypass the proxy. This is the only mode with unbypassable enforcement.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Docker <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">ADVISORY</span></h4>
@@ -317,6 +329,7 @@
           <p>AWS Network Firewall routes egress to an Altrace gateway. Governance for workloads where kernel enforcement isn't available.</p>
         </div>
       </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 660px; margin-left: auto; margin-right: auto;" class="fade-in">Label a namespace and Altrace injects enforcement automatically, through a CNI plugin or an admission webhook. No per-app config.</p>
     </div>
   </section>
 
@@ -325,7 +338,24 @@
     <div class="container" style="text-align: center;">
       <p class="section-label fade-in">Works with</p>
       <h2 class="fade-in" style="font-weight: 400;">Your stack. Your cloud. Your agents.</h2>
-      <p style="font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin: var(--sp-3) auto 0; line-height: 1.8;" class="fade-in fade-in-delay-1">As a transparent proxy, Altrace governs traffic on both the request and the response without changing your agent code, so it works with every model you call or host: Anthropic &middot; OpenAI &middot; Azure&nbsp;OpenAI &middot; Google&nbsp;Gemini &middot; AWS&nbsp;Bedrock &middot; self-hosted&nbsp;models&nbsp;(vLLM,&nbsp;Ollama,&nbsp;TGI) &middot; MCP &middot; LangGraph &middot; LangChain &middot; CrewAI &middot; AutoGen &middot; Kubernetes &middot; Docker &middot; any cloud.</p>
+      <p style="font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin: var(--sp-3) auto 0; line-height: 1.8;" class="fade-in fade-in-delay-1">As a transparent proxy, Altrace governs traffic on both the request and the response without changing your agent code, so it works with every model you call or host: Anthropic &middot; OpenAI &middot; Azure&nbsp;OpenAI &middot; Google&nbsp;Gemini &middot; AWS&nbsp;Bedrock &middot; self-hosted&nbsp;models&nbsp;(vLLM,&nbsp;Ollama,&nbsp;TGI) &middot; MCP &middot; LangGraph &middot; LangChain &middot; CrewAI &middot; AutoGen &middot; Kubernetes &middot; Docker &middot; any cloud. Your self-hosted endpoints and your own fine-tuned Bedrock models run through the same decision chain as the major providers.</p>
+    </div>
+  </section>
+
+  <!-- BUILD WITH ALTRACE -->
+  <section class="section" id="developers" style="background: var(--surface-warm);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Build with Altrace</p>
+        <h2 class="section-title">No code changes to start. An SDK when you want more.</h2>
+        <p class="section-subtitle">Altrace governs your agents as a transparent proxy, with no code changes. When you want richer control, the Python and TypeScript SDKs add the evidence and attribution the proxy can act on.</p>
+      </div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card"><h4>Evidence in two lines</h4><p>Mark a tool with @altrace.tool in Python, or wrap it with withEvidence() in TypeScript, and the proxy can require proof of what an agent did before allowing a destructive action.</p></div>
+        <div class="card"><h4>Attribution that matches your code</h4><p>Attach team, agent, and per-function attribution to every call, so budgets, kill switches, and the audit trail line up with the code that made the request.</p></div>
+        <div class="card"><h4>Framework-native</h4><p>Drop-in adapters for LangChain, AutoGen, and CrewAI record tool calls as evidence automatically, with no wrapper classes to write.</p></div>
+      </div>
+      <p style="text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">The Python SDK is on PyPI. Install it with <span style="font-family: 'IBM Plex Mono', monospace; background: var(--surface); padding: 2px 8px; border-radius: 4px;">pip install altrace-ai</span>. The proxy still does the enforcing; the SDK just lets it see more.</p>
     </div>
   </section>
 
