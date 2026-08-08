@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Layer, Runtime Governance for AI Agents | Altrace</title>
-  <meta name="description" content="The runtime governance layer for AI agents. Discover every agent, define what each is allowed to do, and enforce it below the application, where agents can't bypass it.">
+  <meta name="description" content="The runtime governance layer for AI agents. Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces below the application where nothing can bypass it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Layer, Runtime Governance for AI Agents | Altrace">
-  <meta property="og:description" content="Discover every agent, define what each is allowed to do, and enforce it below the application, where agents can't bypass it.">
+  <meta property="og:description" content="Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces below the application where nothing can bypass it.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -61,15 +61,41 @@
   <section style="padding: 120px 0 80px; text-align: center;">
     <div class="container">
       <h1 style="font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 760px; margin: 0 auto;" class="fade-in">The runtime governance layer for AI agents.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 600px; line-height: 1.6;" class="fade-in fade-in-delay-1">Stop unauthorized agent actions at the infrastructure boundary. Altrace enforces hard runtime governance below the application layer across any model or MCP server.</p>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 620px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace runs inside your agent's own pod, not on the outside of it. That's what lets it see every local action, including the sub-agents your agents spawn on their own, without redirecting a single packet.</p>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in fade-in-delay-2">
         <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
       </div>
     </div>
   </section>
 
+  <!-- THE IN-POD DIFFERENCE -->
+  <section class="section" id="in-pod" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label" style="color: var(--accent-copper);">The difference</p>
+        <h2 class="section-title">A gateway can only govern what it sees. We run where your agent runs.</h2>
+        <p class="section-subtitle">A gateway sits outside your workload and watches traffic that's routed to it. Anything that never leaves the pod, an agent calling a local tool, a script writing to disk, one agent spinning up another to finish a task, never crosses the gateway's line of sight. Altrace's enforcement layer is injected into the same pod as the agent, so there's no line to step outside of.</p>
+      </div>
+      <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
+        <div class="card card-accent-top">
+          <h4>No traffic to redirect</h4>
+          <p>Nothing is rerouted through an external hop. Altrace observes and enforces from inside the pod boundary itself, so latency and blast radius stay local to the workload.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>Sub-agents included by default</h4>
+          <p>When an agent spawns another agent, the new process inherits the same pod, and therefore the same enforcement. Nothing you have to register, discover, or configure by hand.</p>
+        </div>
+        <div class="card card-accent-top">
+          <h4>Same view, no matter the framework</h4>
+          <p>LangGraph, CrewAI, AutoGen, or a custom agent loop, in-pod enforcement doesn't depend on the framework calling out to anything. It sees the process, not the framework's conventions.</p>
+        </div>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-4); text-align: center;" class="fade-in">This is why shadow-agent detection below works on agents nobody registered, and why a gateway-based tool structurally can't offer the same guarantee.</p>
+    </div>
+  </section>
+
   <!-- 01 DISCOVER -->
-  <section class="section" id="discover" style="border-top: 1px solid var(--border);">
+  <section class="section" id="discover" style="background: var(--surface-warm);">
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">01 &middot; Discover</p>
@@ -79,7 +105,7 @@
       <div class="grid-3 fade-in fade-in-delay-1" style="margin-top: var(--sp-6);">
         <div class="card">
           <h4>Shadow-agent detection</h4>
-          <p>Unregistered agents are flagged the moment they appear on your network, not days later.</p>
+          <p>Unregistered agents are flagged the moment they appear, not days later, including sub-agents spawned at runtime.</p>
         </div>
         <div class="card">
           <h4>Per-agent visibility</h4>
@@ -95,7 +121,7 @@
   </section>
 
   <!-- 02 DEFINE -->
-  <section class="section" id="define" style="background: var(--surface-warm);">
+  <section class="section" id="define">
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">02 &middot; Define</p>
@@ -144,7 +170,7 @@
         <span style="color: var(--accent-copper); font-weight: 700;">&rarr;</span>
         <span style="border: 1.5px solid var(--accent-copper); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius-card); font-weight: 600; font-size: 0.875rem;">Allow / Block</span>
       </div>
-      <p style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; margin-bottom: var(--sp-6);" class="fade-in">A 38-stage chain, shown here as category bands. The individual stages and their ordering are proprietary.</p>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; margin-bottom: var(--sp-6);" class="fade-in">Shown here as category bands. The individual stages and their ordering are proprietary.</p>
 
       <div class="grid-3 fade-in" style="margin-top: var(--sp-5);">
         <div class="capability-card">
@@ -185,7 +211,7 @@
         </div>
       </div>
 
-      <!-- Enforcement vs monitoring (migrated from why-altrace) -->
+      <!-- Enforcement vs monitoring -->
       <div class="fade-in" style="max-width: 900px; margin: var(--sp-7) auto 0;">
         <div class="enforce-table">
           <div class="enforce-row enforce-row-header">
@@ -211,7 +237,7 @@
         </div>
       </div>
 
-      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;" class="fade-in">Unbypassable enforcement requires Kubernetes with the init container (kernel-level network rules). Docker is advisory; Fargate uses the gateway model. Response and streaming governance are policy-configurable; request-side classification is on by default.</p>
+      <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;" class="fade-in">Unbypassable enforcement requires Kubernetes with the init container (kernel-level network rules). Docker is advisory; Fargate uses the gateway model, see the trade-off below. Response and streaming governance are policy-configurable; request-side classification is on by default.</p>
     </div>
   </section>
 
@@ -236,7 +262,7 @@
   </section>
 
   <!-- 05 MONITOR -->
-  <section class="section" id="monitor" style="background: var(--surface-warm);">
+  <section class="section" id="monitor">
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">05 &middot; Monitor</p>
@@ -297,29 +323,29 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">08 &middot; Architecture</p>
-        <h2 class="section-title">Two lanes, one transparent proxy.</h2>
-        <p class="section-subtitle">Altrace sits between your agents and the providers they call. Traffic flows through an <strong>enforcement lane</strong>; credentials flow through a separate <strong>credential indirection</strong> lane, so agents never hold real keys.</p>
+        <h2 class="section-title">Two lanes, one transparent proxy, injected into your agent's pod.</h2>
+        <p class="section-subtitle">Altrace runs alongside your agent inside its own pod. Traffic flows through an <strong>enforcement lane</strong>; credentials flow through a separate <strong>credential indirection</strong> lane, so agents never hold real keys and nothing has to leave the pod to be governed.</p>
       </div>
 
       <div class="fade-in fade-in-delay-1" style="margin: var(--sp-6) auto 0; max-width: 760px; display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 140px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px;"><strong>Your Agents</strong><p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px;">No code changes</p></div>
-        <div style="flex: 1.4; min-width: 180px; text-align: center; background: var(--accent); color: #fff; border-radius: var(--radius-card); padding: 20px;"><strong>Altrace</strong><p style="font-size: 0.8125rem; color: rgba(255, 255, 255, 0.92); margin-top: 6px; line-height: 1.5;">Infrastructure Enforcement · Behavioral Contracts · Credential Indirection · Streaming Scanning</p></div>
+        <div style="flex: 1.4; min-width: 180px; text-align: center; background: var(--accent); color: #fff; border-radius: var(--radius-card); padding: 20px;"><strong>Altrace</strong><p style="font-size: 0.8125rem; color: rgba(255, 255, 255, 0.92); margin-top: 6px; line-height: 1.5;">In-Pod Enforcement · Behavioral Contracts · Credential Indirection · Streaming Scanning</p></div>
         <div style="flex: 1; min-width: 140px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px;"><strong>Models</strong><p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px;">Providers or self-hosted</p></div>
       </div>
 
       <!-- deployment modes -->
       <div class="grid-3 fade-in" style="margin-top: var(--sp-7);">
         <div class="card card-accent-top">
-          <h4>Kubernetes <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700;">GOVERNANCE-GRADE</span></h4>
-          <p>Kernel-level network rules, via iptables, nftables, or Cilium, force all AI traffic through Altrace. Agents cannot bypass the proxy. This is the only mode with unbypassable enforcement.</p>
+          <h4>Kubernetes <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700;">GOVERNANCE-GRADE, RECOMMENDED</span></h4>
+          <p>Altrace runs as an init container in the same pod as your agent, and kernel-level network rules (iptables, nftables, or Cilium) force all traffic through it. Agents, and anything they spawn, cannot bypass it. This is the only mode with unbypassable enforcement and full sub-agent coverage.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Docker <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">ADVISORY</span></h4>
           <p>Application-level budget and kill-switch enforcement for development, testing, and visibility. Bypassable if the proxy is ignored.</p>
         </div>
         <div class="card card-accent-top">
-          <h4>Fargate <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">GATEWAY</span></h4>
-          <p>AWS Network Firewall routes egress to an Altrace gateway. Governance for workloads where kernel enforcement isn't available.</p>
+          <h4>Fargate <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">GATEWAY, FALLBACK</span></h4>
+          <p>Where pod-level enforcement isn't available, AWS Network Firewall routes egress to an Altrace gateway. It still enforces the traffic it sees, but a sub-agent that never calls out through the gateway falls outside its view, which is exactly the gap in-pod enforcement closes.</p>
         </div>
       </div>
       <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5); text-align: center; max-width: 660px; margin-left: auto; margin-right: auto;" class="fade-in">Label a namespace and Altrace injects enforcement automatically, through a CNI plugin or an admission webhook. No per-app config.</p>
@@ -331,7 +357,7 @@
     <div class="container" style="text-align: center;">
       <p class="section-label fade-in">Works with</p>
       <h2 class="fade-in" style="font-weight: 400;">Your stack. Your cloud. Your agents.</h2>
-      <p style="font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin: var(--sp-3) auto 0; line-height: 1.8;" class="fade-in fade-in-delay-1">As a transparent proxy, Altrace governs traffic on both the request and the response without changing your agent code, so it works with every model you call or host: Anthropic &middot; OpenAI &middot; Azure&nbsp;OpenAI &middot; Google&nbsp;Gemini &middot; AWS&nbsp;Bedrock &middot; self-hosted&nbsp;models&nbsp;(vLLM,&nbsp;Ollama,&nbsp;TGI) &middot; MCP &middot; LangGraph &middot; LangChain &middot; CrewAI &middot; AutoGen &middot; Kubernetes &middot; Docker &middot; any cloud. Your self-hosted endpoints and your own fine-tuned Bedrock models run through the same decision chain as the major providers.</p>
+      <p style="font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin: var(--sp-3) auto 0; line-height: 1.8;" class="fade-in fade-in-delay-1">As a transparent, in-pod proxy, Altrace governs traffic on both the request and the response without changing your agent code, so it works with every model you call or host: Anthropic &middot; OpenAI &middot; Azure&nbsp;OpenAI &middot; Google&nbsp;Gemini &middot; AWS&nbsp;Bedrock &middot; self-hosted&nbsp;models&nbsp;(vLLM,&nbsp;Ollama,&nbsp;TGI) &middot; MCP &middot; LangGraph &middot; LangChain &middot; CrewAI &middot; AutoGen &middot; Kubernetes &middot; Docker &middot; any cloud. Your self-hosted endpoints and your own fine-tuned Bedrock models run through the same decision chain as the major providers.</p>
     </div>
   </section>
 
