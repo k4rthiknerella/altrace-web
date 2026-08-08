@@ -27,7 +27,7 @@
   <nav class="nav">
     <div class="nav-inner">
             <a href="index.html" class="nav-logo">
-        <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+        <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="default"/><polygon points="-68,50 -60,28 85,-32"/></svg>
         Altrace
       </a>
 <div class="nav-links">
@@ -59,11 +59,11 @@
   <!-- HERO -->
   <section style="padding: 160px 0 100px; text-align: center;">
     <div class="container">
-      <p class="section-label fade-in">How It Works</p>
-      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Every request. Governed.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace sits between your AI agents and the models they call. Here is what happens when a request passes through.</p>
+      <p class="section-label fade-in">Architecture</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in fade-in-delay-1">Enforcement below the application layer.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in fade-in-delay-2">Altrace sits inline as an in-pod proxy between your AI agents and their tools or model providers. Here is how deterministic runtime governance executes at machine speed.</p>
       <div style="display: flex; gap: 16px; justify-content: center;" class="fade-in fade-in-delay-2">
-        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+        <a href="request-access.html" class="btn btn-primary btn-large">Book a Technical Demo</a>
         <a href="product.html" class="btn btn-secondary btn-large">Platform overview &rarr;</a>
       </div>
     </div>
@@ -74,68 +74,57 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">The Invisible Layer</p>
-        <h2 class="section-title">Your agents don't know it's there</h2>
+        <h2 class="section-title">Transparent proxy execution</h2>
       </div>
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-agent">
           <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Sends request</div>
+          <div class="flow-step-detail">Sends API or Tool Call</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Scans request &rarr; forwards<br>Scans response &larr; returns<br>Cost recorded, audit logged</div>
+          <div class="flow-step-label">Altrace Sidecar</div>
+          <div class="flow-step-detail">Evaluates local policy<br>Checks budget &amp; scope<br>Emits audit log</div>
         </div>
         <div class="flow-arrow">&harr;</div>
         <div class="flow-step flow-step-provider">
-          <div class="flow-step-label">Claude</div>
-          <div class="flow-step-detail">Processes request<br>Returns response</div>
+          <div class="flow-step-label">Provider / MCP</div>
+          <div class="flow-step-detail">Executes request<br>Returns payload</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--success);">
           <div class="flow-step-label" style="color: var(--success);">Allowed</div>
-          <div class="flow-step-detail">Agent receives response<br>Both directions scanned<br>Zero friction</div>
+          <div class="flow-step-detail">Transparent pass-through<br>Sub-millisecond overhead<br>Zero app code changes</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Your agents run at full speed. Altrace adds <strong>milliseconds</strong>, the model takes seconds. You never notice.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-normal.mp4" type="video/mp4">
-        </video>
-      </div>
+      <p class="flow-caption fade-in">Altrace operates entirely at the infrastructure boundary. Your agents run unmodified while every request passes through deterministic validation.</p>
     </div>
   </section>
 
-  <!-- FLOW 2: BUDGET EXCEEDED -->
+  <!-- FLOW 2: BUDGET CEILING -->
   <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">The $82,000 API Key</p>
-        <h2 class="section-title">An agent exceeds its budget</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">In February 2026, a stolen API key ran up $82,314 in Gemini charges in 48 hours. Fortune 500 companies collectively leaked $400M in unbudgeted AI agent cloud spend that quarter.</p>
+        <p class="section-label">Cost Containment</p>
+        <h2 class="section-title">Enforcing spend boundaries</h2>
       </div>
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-agent">
           <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Calls GPT-4 API<br>$487 spent of $500 budget</div>
+          <div class="flow-step-detail">Initiates large model request<br>Team spend nears monthly limit</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Estimates request cost: $18<br>$487 + $18 = $505<br>Exceeds $500 limit</div>
+          <div class="flow-step-label">Altrace Sidecar</div>
+          <div class="flow-step-detail">Computes token/tool cost estimate<br>Compares against team allocation<br>Ceiling reached</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
-          <div class="flow-step-detail">Request rejected<br>Model never called<br>Zero cost incurred</div>
+          <div class="flow-step-label" style="color: var(--danger);">503 Refusal</div>
+          <div class="flow-step-detail">Request blocked pre-egress<br>Model never invoked<br>Zero unbudgeted spend</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Blocked <strong>before</strong> the request reaches the LLM. Your bill stays exactly where you set it.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-budget.mp4" type="video/mp4">
-        </video>
-      </div>
+      <p class="flow-caption fade-in">Runaway loops and high-concurrency tasks are halted locally before hitting upstream provider billing.</p>
     </div>
   </section>
 
@@ -143,173 +132,89 @@
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">The OpenClaw Incident</p>
-        <h2 class="section-title">You activate a kill switch</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">In 2026, an AI agent deleted 200+ emails from a Meta alignment researcher's inbox. She typed "STOP" repeatedly. The agent kept going. There was no kill switch.</p>
+        <p class="section-label">Human Oversight</p>
+        <h2 class="section-title">Instant team-level kill switch</h2>
       </div>
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-operator">
-          <div class="flow-step-label">You</div>
-          <div class="flow-step-detail">One API call:<br><code style="font-size:0.75rem;">POST /kill/team/finance</code></div>
+          <div class="flow-step-label">Operator</div>
+          <div class="flow-step-detail">Issues kill command:<br><code style="font-size:0.75rem;">POST /v1/teams/{id}/kill</code></div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Kill switch persisted<br>All new requests blocked<br>Active connections severed</div>
+          <div class="flow-step-label">Altrace Sidecar</div>
+          <div class="flow-step-detail">Updates local execution state<br>Persists state across container restarts<br>Severs active streams</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">All Traffic Stopped</div>
-          <div class="flow-step-detail">All new requests blocked<br>Active streams cancelled<br>Persists through restarts</div>
+          <div class="flow-step-label" style="color: var(--danger);">Execution Halted</div>
+          <div class="flow-step-detail">All agent traffic for team dropped<br>Fails closed immediately<br>Auditable event recorded</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">One API call. Every agent on the team stops instantly. Survives restarts. No gaps.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-killswitch.mp4" type="video/mp4">
-        </video>
-      </div>
+      <p class="flow-caption fade-in">Provides an absolute emergency stop that functions independently of application logic or agent cooperation.</p>
     </div>
   </section>
 
-  <!-- FLOW 4: SENSITIVE DATA BLOCKED -->
+  <!-- FLOW 4: TOOL AUTHORIZATION -->
   <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">The Shadow AI Problem</p>
-        <h2 class="section-title">Sensitive data blocked before the model</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">77% of employees paste company data into LLMs. In January 2026, a misconfigured AI chat app exposed 300 million messages, including PII, credentials, and confidential business data, from 25 million users.</p>
+        <p class="section-label">Model Context Protocol (MCP)</p>
+        <h2 class="section-title">Deterministic tool governance</h2>
       </div>
       <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-agent">
           <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Sends customer record<br>containing SSN, email, card number</div>
+          <div class="flow-step-detail">Requests restricted tool action<br>(e.g., <code style="font-size:0.75rem;">export_network_topology</code>)</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
         <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Inbound scan: sensitive patterns detected<br>Multiple independent detection layers<br>Request blocked pre-flight</div>
+          <div class="flow-step-label">Altrace Sidecar</div>
+          <div class="flow-step-detail">Evaluates parameter values &amp; scope<br>Checks role permission matrix<br>Policy violation matched</div>
         </div>
         <div class="flow-arrow flow-arrow-blocked">&times;</div>
         <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
-          <div class="flow-step-detail">Request never reaches the model<br>Sensitive data stays in your infrastructure<br>Decision recorded in audit trail</div>
+          <div class="flow-step-label" style="color: var(--danger);">Hard Block</div>
+          <div class="flow-step-detail">Action dropped at local socket<br>Target infrastructure untouched<br>Structured reason code returned</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">SSN, email, card number in the prompt. Altrace caught all three <strong>before</strong> the request left your network. The model never saw it.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-content.mp4" type="video/mp4">
-        </video>
-      </div>
+      <p class="flow-caption fade-in">Blocks unauthorized tool usage and indirect prompt injection attempts attempting to weaponize internal MCP servers.</p>
     </div>
   </section>
 
-  <!-- FLOW 5: MCP TOOL GOVERNANCE -->
+  <!-- FLOW 5: AUDIT TRAIL -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="section-label">The Kiro Incident</p>
-        <h2 class="section-title">An agent acts without authorization</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">In December 2025, Amazon's Kiro AI agent autonomously deleted and recreated a production AWS environment, without approval, causing a 13-hour outage. The two-person approval process hadn't been extended to AI.</p>
+        <p class="section-label">Evidence Production</p>
+        <h2 class="section-title">Hash-chained decision logs</h2>
       </div>
       <div class="flow-diagram fade-in">
-        <div class="flow-step flow-step-agent">
-          <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Calls <code style="font-size:0.75rem;">issue_refund</code><br>without first calling<br><code style="font-size:0.75rem;">lookup_order</code></div>
+        <div class="flow-step flow-step-altrace">
+          <div class="flow-step-label">Governance Engine</div>
+          <div class="flow-step-detail">Every allow, block, and warn event<br>Logged with immutable sequence</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
-        <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Prerequisite check fails<br>Required verification step missing<br>Tells the agent what to do first</div>
-        </div>
-        <div class="flow-arrow flow-arrow-blocked">&times;</div>
-        <div class="flow-step flow-step-result" style="border-color: var(--warning);">
-          <div class="flow-step-label" style="color: var(--warning);">Self-Repair</div>
-          <div class="flow-step-detail">Agent receives remediation hint:<br>"Call lookup_order first"<br>Agent self-corrects and retries</div>
-        </div>
-      </div>
-      <p class="flow-caption fade-in">The agent skipped a required step. Altrace blocked it and told it exactly what to do first. <strong>Automatic self-correction</strong>, no human needed.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-evidence.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <!-- FLOW 6: STREAMING RESPONSE SCAN -->
-  <section style="background: var(--surface-warm); border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">The 300 Million Messages</p>
-        <h2 class="section-title">PII appears in a streaming response</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">In 2025, researchers found seven vulnerabilities in GPT-4o and GPT-5 that allowed data exfiltration during streaming responses. In January 2026, 300 million streaming chat messages were exposed from a popular AI app.</p>
-      </div>
-      <div class="flow-diagram fade-in">
         <div class="flow-step flow-step-provider">
-          <div class="flow-step-label">LLM Provider</div>
-          <div class="flow-step-detail">Streaming response<br>Delivered word by word</div>
+          <div class="flow-step-label">Integrity Layer</div>
+          <div class="flow-step-detail">Hash-chained records generated<br>OCSF native schema export</div>
         </div>
         <div class="flow-arrow">&rarr;</div>
-        <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Scans each fragment in real time<br>Social Security number detected<br>Policy violation triggered</div>
-        </div>
-        <div class="flow-arrow flow-arrow-blocked">&times;</div>
-        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">Stream Cancelled</div>
-          <div class="flow-step-detail">Stream terminated<br>Connection closed<br>Violation logged in audit trail</div>
+        <div class="flow-step flow-step-result" style="border-color: var(--success);">
+          <div class="flow-step-label" style="color: var(--success);">Audit-Ready</div>
+          <div class="flow-step-detail">Direct SIEM integration<br>Verifiable compliance proof<br>Zero manual log parsing</div>
         </div>
       </div>
-      <p class="flow-caption fade-in">Altrace watches <strong>every word as it streams back</strong>. The moment sensitive data appears, the stream is killed. Not after, during.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-streaming.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <!-- FLOW 7: PROMPT INJECTION BLOCKED -->
-  <section style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <p class="section-label">The MCP Injection Crisis</p>
-        <h2 class="section-title">A prompt injection attempt is intercepted</h2>
-        <p class="section-ref fade-in" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: -8px;">In 2025, attackers embedded hidden SQL in support tickets that tricked an AI agent into exfiltrating private tokens. The official GitHub MCP server was hijacked via poisoned public issues. 30+ MCP CVEs followed.</p>
-      </div>
-      <div class="flow-diagram fade-in">
-        <div class="flow-step flow-step-agent">
-          <div class="flow-step-label">Your Agent</div>
-          <div class="flow-step-detail">Sends user input containing<br>hidden injection instructions:<br><code style="font-size:0.7rem;">"Ignore all previous instructions..."</code></div>
-        </div>
-        <div class="flow-arrow">&rarr;</div>
-        <div class="flow-step flow-step-altrace">
-          <div class="flow-step-label">Altrace</div>
-          <div class="flow-step-detail">Ingress scan: injection pattern detected<br>Multiple detection layers triggered<br>Request blocked pre-flight</div>
-        </div>
-        <div class="flow-arrow flow-arrow-blocked">&times;</div>
-        <div class="flow-step flow-step-result" style="border-color: var(--danger);">
-          <div class="flow-step-label" style="color: var(--danger);">Blocked</div>
-          <div class="flow-step-detail">Injection never reaches the model<br>Session risk level elevated<br>Decision recorded in audit trail</div>
-        </div>
-      </div>
-      <p class="flow-caption fade-in">Jailbreaks, prompt injections, hidden instructions, caught and blocked <strong>before</strong> they reach the model. The attacker gets nothing.</p>
-      <div class="fade-in" style="margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto;">
-        <video autoplay loop muted playsinline style="width: 100%; border-radius: 12px; border: 1px solid var(--border);">
-          <source src="/assets/videos/scenario-injection.mp4" type="video/mp4">
-        </video>
-      </div>
+      <p class="flow-caption fade-in">Eliminates the overhead of reconstructing agent behavior from scattered log files during security reviews.</p>
     </div>
   </section>
 
   <!-- CTA -->
   <section style="border-top: 1px solid var(--border); text-align: center;">
     <div class="container">
-      <h2 class="fade-in">These incidents were preventable</h2>
-      <p class="section-subtitle fade-in fade-in-delay-1" style="margin: var(--sp-3) auto var(--sp-5); max-width: 520px;">Every scenario above is running live on real AI traffic. Request a walkthrough and see Altrace stop these attacks in your environment.</p>
-      <a href="request-access.html" class="btn btn-primary btn-large fade-in fade-in-delay-2">Book a Demo</a>
+      <h2 class="fade-in">Evaluate the architecture</h2>
+      <p class="section-subtitle fade-in fade-in-delay-1" style="margin: var(--sp-3) auto var(--sp-5); max-width: 520px;">See how Altrace drops into your container network namespace and enforces boundaries in real time.</p>
+      <a href="request-access.html" class="btn btn-primary btn-large fade-in fade-in-delay-2">Book a Technical Demo</a>
     </div>
   </section>
 
@@ -319,10 +224,10 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="nav-logo">
-            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
+            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="default"/><polygon points="-68,50 -60,28 85,-32"/></svg>
             Altrace
           </a>
-          <p>Runtime governance for AI agents.</p>
+          <p>Deterministic runtime governance for AI agents.</p>
         </div>
         <div class="footer-links">
           <h4>Product</h4>
