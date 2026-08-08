@@ -337,7 +337,7 @@
       <div class="grid-3 fade-in" style="margin-top: var(--sp-7);">
         <div class="card card-accent-top">
           <h4>Kubernetes <span style="font-size: 0.7rem; color: var(--accent); font-weight: 700;">GOVERNANCE-GRADE, RECOMMENDED</span></h4>
-          <p>Altrace runs as an init container in the same pod as your agent, and kernel-level network rules (iptables, nftables, or Cilium) force all traffic through it. Agents, and anything they spawn, cannot bypass it. This is the only mode with unbypassable enforcement and full sub-agent coverage.</p>
+          <p>Altrace runs in the same pod as your agent, and network rules force all traffic through it. Agents, and anything they spawn, cannot get around it. Recommended mode for comprehensive agent coverage.</p>
         </div>
         <div class="card card-accent-top">
           <h4>Docker <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">ADVISORY</span></h4>
