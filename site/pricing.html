@@ -141,7 +141,7 @@
     <div class="container">
       <div style="max-width: 640px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);">
         <h4 style="font-size: 1rem; margin-bottom: 12px;">Does Altrace see my data?</h4>
-        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace classifies content with boolean pattern matching and returns yes or no labels, for example &ldquo;contains PII: yes,&rdquo; it never extracts or stores the matched text. HTTPS traffic uses CONNECT passthrough, so Altrace sees hostnames only. Classification is ephemeral, and your data never leaves your infrastructure.</p>
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace checks your data using simple security checks like flagging whether sensitive information is present—without ever reading, copying, or storing your actual text. All secure traffic passes straight through without exposing your content, meaning your information is never saved and never leaves your private environment.</p>
       </div>
     </div>
   </section>
