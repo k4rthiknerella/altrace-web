@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing, Altrace</title>
-  <meta name="description" content="Altrace pricing for runtime AI agent governance. Pilot, Enterprise, and Strategic tiers, enforced in your own infrastructure.">
+  <meta name="description" content="Altrace pricing for runtime AI agent governance. Pilot and Enterprise tiers, enforced in your own infrastructure.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pricing, Altrace">
-  <meta property="og:description" content="Runtime AI agent governance. Pilot, Enterprise, and Strategic tiers, enforced in your own infrastructure.">
+  <meta property="og:description" content="Runtime AI agent governance. Pilot and Enterprise tiers, enforced in your own infrastructure.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -69,70 +69,44 @@
   <!-- PRICING TIERS -->
   <section style="padding-top: 0;">
     <div class="container">
-      <div class="pricing-grid stagger-reveal" style="max-width: 1080px; margin: 0 auto;">
+      <div class="pricing-grid stagger-reveal" style="max-width: 780px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; justify-content: center;">
 
         <!-- Pilot -->
         <div class="pricing-tier">
           <div class="pricing-tier-name">Pilot</div>
           <div class="pricing-tier-price">Let's talk</div>
-          <div class="pricing-tier-desc">For initial deployments and evaluation.</div>
+          <div class="pricing-tier-desc">For initial evaluations and small test environments.</div>
           <ul class="pricing-tier-features">
             <li>Agent discovery &amp; per-agent visibility</li>
             <li>Runtime monitoring &amp; cost attribution</li>
-            <li>Core governance policies</li>
-            <li>Kill switches (global / team / agent)</li>
+            <li>Global, team, and agent kill switches</li>
             <li>Virtual keys (agents never hold real provider keys)</li>
-            <li>Advisory and governance-grade deployment</li>
-            <li>Tamper-evident audit trail</li>
+            <li>Advisory deployment mode</li>
             <li>Anthropic, OpenAI, Azure OpenAI, Gemini</li>
             <li>Email support</li>
           </ul>
           <a href="request-access.html" class="btn btn-secondary btn-large btn-full">Book a Demo</a>
         </div>
 
-        <!-- Enterprise (featured) -->
+        <!-- Enterprise -->
         <div class="pricing-tier">
           <div class="pricing-tier-name">Enterprise</div>
-          <div class="pricing-tier-price">Custom</div>
-          <div class="pricing-tier-desc">For production environments.</div>
+          <div class="pricing-tier-price">Tiered by Nodes</div>
+          <div class="pricing-tier-desc">For production environments, scaled to the number of nodes you need governed.</div>
           <ul class="pricing-tier-features">
-            <li>Everything in Pilot</li>
-            <li>Unlimited agents</li>
-            <li>Infrastructure-level enforcement (agents can't bypass)</li>
-            <li>Hard budget limits</li>
-            <li>Credential indirection (virtual keys, per-key model/tool scope, budgets)</li>
-            <li>Provider key rotation (Vault / Kubernetes secrets)</li>
-            <li>MCP governance (registry, reputation, scanner)</li>
-            <li>Advanced policy controls</li>
-            <li>Compliance reporting &amp; evidence</li>
-            <li>Mutual TLS + team-scoped operator RBAC</li>
-            <li>IP allowlisting + instant token revocation</li>
+            <li>Infrastructure-level enforcement (unbypassable)</li>
+            <li>Hard budget limits &amp; credential indirection</li>
+            <li>Provider key rotation (Vault / K8s secrets)</li>
+            <li>MCP governance, registry &amp; tool scanner</li>
+            <li>Mutual TLS &amp; team-scoped operator RBAC</li>
             <li>Native OCSF audit export to your SIEM</li>
-            <li>DSAR / right-to-erasure with audit-preserving redaction</li>
-            <li>Scriptable, audited control API (kill / budget / credential / approval)</li>
+            <li>Dedicated support &amp; custom integrations</li>
           </ul>
           <a href="request-access.html" class="btn btn-primary btn-large btn-full">Book a Demo</a>
         </div>
 
-        <!-- Strategic -->
-        <div class="pricing-tier">
-          <div class="pricing-tier-name">Strategic</div>
-          <div class="pricing-tier-price">Contact Sales</div>
-          <div class="pricing-tier-desc">For large organizations.</div>
-          <ul class="pricing-tier-features">
-            <li>Everything in Enterprise</li>
-            <li>Dedicated support with SLA</li>
-            <li>Custom integrations</li>
-            <li>Advanced governance workflows</li>
-            <li>White-glove onboarding</li>
-            <li>Multi-cluster management (hub)</li>
-            <li>Architecture &amp; deployment review</li>
-          </ul>
-          <a href="mailto:rganupa@altrace.io" class="btn btn-secondary btn-large btn-full">Contact Sales</a>
-        </div>
-
       </div>
-      <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">Pricing is tailored to your deployment. No public list price, book a demo and we'll scope it with you.</p>
+      <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">Pricing is scaled based on the number of nodes you need governed. Book a demo to scope your deployment.</p>
     </div>
   </section>
 
@@ -141,7 +115,7 @@
     <div class="container">
       <div style="max-width: 640px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface);">
         <h4 style="font-size: 1rem; margin-bottom: 12px;">Does Altrace see my data?</h4>
-        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace checks your data using simple security checks (e.g. flagging whether sensitive information is present) without ever reading, copying, or storing your actual text. All secure traffic passes straight through without exposing your content, meaning your information is never saved and never leaves your private environment.</p>
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.65;">No. Altrace checks your data using simple yes/no security checks—like flagging whether sensitive information is present—without ever reading, copying, or storing your actual text. All secure traffic passes straight through without exposing your content, meaning your information is never saved and never leaves your private environment.</p>
       </div>
     </div>
   </section>
