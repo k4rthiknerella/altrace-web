@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Layer, Runtime Governance for AI Agents | Altrace</title>
-  <meta name="description" content="The runtime governance layer for AI agents. Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces below the application where nothing can bypass it.">
+  <meta name="description" content="The runtime governance layer for AI agents. Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces behavioral policies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Layer, Runtime Governance for AI Agents | Altrace">
-  <meta property="og:description" content="Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces below the application where nothing can bypass it.">
+  <meta property="og:description" content="Runs inside your agent's own pod, sees every local action and every sub-agent it spawns, and enforces behavioral processes.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -61,7 +61,7 @@
   <section style="padding: 140px 0 80px; text-align: center;">
     <div class="container">
       <h1 style="font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; max-width: 760px; margin: 0 auto;" class="fade-in">The runtime governance layer for AI agents.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 620px; line-height: 1.6;" class="fade-in">Altrace runs inside your agent's own pod, not on the outside of it. That lets it see every local action, including sub-agents spawned at runtime, without redirecting a single packet.</p>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 620px; line-height: 1.6;" class="fade-in">Altrace runs inside the same pod as your agent. That lets you govern every local action that your agents run.</p>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in">
         <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
       </div>
@@ -74,12 +74,12 @@
       <div class="section-header fade-in">
         <p class="section-label">The difference</p>
         <h2 class="section-title">A gateway can only govern what it sees. We run where your agent runs.</h2>
-        <p class="section-subtitle">Traditional gateways sit outside your workload and watch traffic routed to them. Anything staying inside the pod—an agent calling a local tool, a script writing to disk, or an agent spinning up a sub-task—never crosses an external gateway's line of sight. Altrace injects enforcement directly into the same pod.</p>
+        <p class="section-subtitle">Traditional gateways sit outside your workload and watch traffic routed to them. Anything staying inside the pod never crosses an external gateway's line of sight. Altrace injects enforcement locally.</p>
       </div>
       <div class="grid-3 fade-in" style="margin-top: var(--sp-6); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
         <div class="card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
-          <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1.125rem;">No traffic to redirect</h4>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Nothing is rerouted through an external hop. Altrace observes and enforces from inside the pod boundary, keeping latency local to the workload.</p>
+          <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1.125rem;">All traffic redirected automatically</h4>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Nothing is rerouted manually or through an external hop.</p>
         </div>
         <div class="card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
           <h4 style="color: var(--text-primary); margin-bottom: 8px; font-size: 1.125rem;">Sub-agents included by default</h4>
@@ -123,8 +123,8 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">02 &middot; Enforce</p>
-        <h2 class="section-title">Deterministic controls below the application layer.</h2>
-        <p class="section-subtitle">Every request passes through an ordered decision chain before reaching a model, ensuring strict boundaries.</p>
+        <h2 class="section-title">Deterministic controls.</h2>
+        <p class="section-subtitle">Every request passes through an ordered decision chain before reaching a target, ensuring strict boundaries.</p>
       </div>
 
       <div class="grid-3 fade-in" style="margin-top: var(--sp-5); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
