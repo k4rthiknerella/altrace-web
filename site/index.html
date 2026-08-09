@@ -204,18 +204,6 @@
           <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Revoke in one call</h3>
           <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Revoke a key and the next request is refused, while the agent&rsquo;s kill switch fires in the same action. Two independent stops, no grace period.</p>
         </div>
-        <div class="card fade-in">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Rotates with your vault</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Rotate the underlying provider key in HashiCorp Vault or a Kubernetes secret and Altrace picks it up automatically, with no agent restarts.</p>
-        </div>
-        <div class="card fade-in fade-in-delay-1">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Expiring keys</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Issue a key that expires in an hour for a one-off task. Expiry is enforced at the proxy, not on the honor system.</p>
-        </div>
-        <div class="card fade-in fade-in-delay-2">
-          <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 500; margin-bottom: 8px;">Enforce-only mode</h3>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Lock the deployment so only Altrace-issued keys are accepted. Any request carrying a real provider key is rejected at the proxy.</p>
-        </div>
       </div>
       <p style="text-align: center; margin-top: 36px;" class="fade-in">
         <a href="product.html#credentials" style="font-size: 0.8125rem; font-weight: 600; color: var(--accent);">How credential indirection works &rarr;</a>
