@@ -26,11 +26,11 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
-            <a href="index.html" class="nav-logo">
+      <a href="index.html" class="nav-logo">
         <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
         Altrace
       </a>
-<div class="nav-links">
+      <div class="nav-links">
         <div class="nav-dropdown">
           <button class="nav-dropdown-trigger">Product</button>
           <div class="nav-dropdown-menu">
@@ -56,15 +56,49 @@
     <a href="request-access.html">Book a Demo</a>
   </div>
 
-  <!-- HERO -->
-  <section class="hero-home" style="text-align: center;">
+  <!-- HERO (F-PATTERN STRUCTURE) -->
+  <section class="hero-home" style="text-align: left; padding: 140px 0 80px;">
     <div class="container">
-      <h1 style="font-size: clamp(2.125rem, 7vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; max-width: 820px; margin: 0 auto;" class="fade-in"><span class="hero-headline-nowrap">Stop Any AI Agent.</span><br>Prove What It Did.</h1>
-      <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin: 32px auto 40px; max-width: 660px; line-height: 1.6;" class="fade-in fade-in-delay-1">Altrace runs inside your agent's own pod, enforcing on both the request and the response across the model providers you call and the proprietary models you run. Stop any agent before it acts, including the sub-agents it spawns on its own, cap what it can spend and reach, and keep a tamper-evident record of everything it did.</p>
-      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="fade-in fade-in-delay-2">
-        <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+      <div style="max-width: 820px; margin: 0 auto;">
+        
+        <!-- 5-Second Hook (Headline) -->
+        <h1 style="font-size: clamp(2.125rem, 6vw, 4.25rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px;" class="fade-in">
+          <span class="hero-headline-nowrap">Stop Any AI Agent.</span><br>Prove What It Did.
+        </h1>
+
+        <!-- Subheadline Value Prop -->
+        <p style="font-family: var(--font-body); font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 36px; line-height: 1.6;" class="fade-in fade-in-delay-1">
+          Altrace runs inside your agent's own pod, enforcing on both the request and the response across models and sub-agents. Stop unauthorized actions, cap spend, and maintain a tamper-evident audit trail.
+        </p>
+
+        <!-- Mandatory Above-the-Fold CTA -->
+        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 48px;" class="fade-in fade-in-delay-2">
+          <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
+        </div>
+
+        <!-- F-Pattern Scannable Bullets -->
+        <div class="fade-in fade-in-delay-2" style="border-top: 1px solid var(--border); padding-top: 32px; display: grid; gap: 16px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--accent-copper); font-weight: 600; font-family: var(--font-mono);">01</span>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+              <strong style="color: var(--text-primary);">In-pod deployment:</strong> Runs directly inside your agent's environment so no traffic leaves your infrastructure.
+            </p>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--accent-copper); font-weight: 600; font-family: var(--font-mono);">02</span>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+              <strong style="color: var(--text-primary);">Sub-agent &amp; model governance:</strong> Intercepts every request and response across external provider calls and self-hosted models.
+            </p>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: var(--accent-copper); font-weight: 600; font-family: var(--font-mono);">03</span>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+              <strong style="color: var(--text-primary);">Credential indirection:</strong> Issues virtual keys with hard spending limits and tool scopes so agents never hold your real API keys.
+            </p>
+          </div>
+        </div>
+
       </div>
-      <p style="font-family: var(--font-body); font-size: 0.875rem; font-style: italic; color: var(--text-muted); margin: 28px auto 0; max-width: 480px;" class="fade-in fade-in-delay-2">&ldquo;An emergency brake and a flight recorder for every AI agent you run.&rdquo;</p>
     </div>
   </section>
 
