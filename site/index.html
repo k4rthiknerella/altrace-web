@@ -26,9 +26,9 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
-        Altrace
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+        <img src="assets/logo.png" alt="Altrace Logo" style="height: 26px; width: auto; object-fit: contain;">
+        <span style="font-weight: 600; color: var(--text-primary); font-family: var(--font-heading);">Altrace</span>
       </a>
       <div class="nav-links">
         <div class="nav-dropdown">
@@ -171,14 +171,9 @@
     </div>
   </section>
 
-  <!-- ===================================================================
-    Altrace — Policy Interceptor Terminal
-    Self-contained component, scoped under .altrace-term-* so it won't
-    collide with the rest of main.css. Pure CSS animation loop, no JS.
-  =================================================================== -->
+  <!-- POLICY INTERCEPTOR TERMINAL -->
   <section class="altrace-term-section" aria-label="Product demonstration">
     <div class="altrace-term-wrap">
-
       <div
         class="altrace-term-card"
         role="img"
@@ -213,13 +208,11 @@
           <span class="foot-item">audit entry written</span>
         </div>
       </div>
-
     </div>
   </section>
 
   <style>
     .altrace-term-section {
-      /* Local tokens — aligned loosely to the page's --accent-copper */
       --at-bg: #0b0d10;
       --at-surface: #121519;
       --at-border: rgba(255, 255, 255, 0.09);
@@ -230,16 +223,10 @@
       --at-blocked: #d1574a;
       --at-ok: #7ea88a;
       --at-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-
       padding: 40px 20px 96px;
       background: transparent;
     }
-
-    .altrace-term-wrap {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
+    .altrace-term-wrap { max-width: 640px; margin: 0 auto; }
     .altrace-term-card {
       background: var(--at-bg);
       border: 1px solid var(--at-border);
@@ -248,7 +235,6 @@
       box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
       font-family: var(--at-mono);
     }
-
     .altrace-term-titlebar {
       display: flex;
       align-items: center;
@@ -257,20 +243,12 @@
       background: var(--at-surface);
       border-bottom: 1px solid var(--at-border);
     }
-
     .altrace-term-dots { display: flex; gap: 6px; }
     .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; opacity: 0.7; }
     .dot-r { background: #e0645a; }
     .dot-y { background: #e0b95a; }
     .dot-g { background: #6fae7c; }
-
-    .altrace-term-title {
-      font-size: 0.75rem;
-      color: var(--at-dim);
-      letter-spacing: 0.02em;
-      margin-left: 2px;
-    }
-
+    .altrace-term-title { font-size: 0.75rem; color: var(--at-dim); letter-spacing: 0.02em; margin-left: 2px; }
     .altrace-term-badge {
       margin-left: auto;
       font-size: 0.6875rem;
@@ -282,7 +260,6 @@
       border-radius: 999px;
       padding: 3px 9px;
     }
-
     .altrace-term-body {
       margin: 0;
       padding: 22px 20px 24px;
@@ -293,18 +270,13 @@
       word-break: break-word;
       overflow-x: auto;
     }
-
     .altrace-term-body .dim { color: var(--at-dim); }
     .altrace-term-body .str { color: #9fd0d8; }
     .altrace-term-body .num { color: #e0c27a; }
     .altrace-term-body .ident { color: var(--at-text); }
     .altrace-term-body .accent { color: var(--at-accent); }
     .altrace-term-body .ok { color: var(--at-ok); }
-    .altrace-term-body .blocked {
-      color: var(--at-blocked);
-      font-weight: 600;
-    }
-
+    .altrace-term-body .blocked { color: var(--at-blocked); font-weight: 600; }
     .altrace-term-footer {
       display: flex;
       align-items: center;
@@ -317,22 +289,10 @@
       color: var(--at-dim);
       letter-spacing: 0.02em;
     }
-
     .foot-item { display: inline-flex; align-items: center; gap: 6px; }
     .foot-sep { color: var(--at-border); }
-    .foot-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--at-ok);
-      box-shadow: 0 0 0 2px rgba(126, 168, 138, 0.18);
-    }
-
-    /* ---- Reveal + loop animation (pure CSS) ---- */
-    .ln {
-      display: block;
-      opacity: 0;
-      transform: translateY(2px);
-      animation: at-line-in 9s ease-in-out infinite;
-    }
+    .foot-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--at-ok); box-shadow: 0 0 0 2px rgba(126, 168, 138, 0.18); }
+    .ln { display: block; opacity: 0; transform: translateY(2px); animation: at-line-in 9s ease-in-out infinite; }
     .ln-1 { animation-delay: 0.0s; }
     .ln-2 { animation-delay: 0.5s; }
     .ln-3 { animation-delay: 1.0s; }
@@ -341,7 +301,6 @@
     .ln-6 { animation-delay: 2.6s; }
     .ln-7 { animation-delay: 3.3s; }
     .ln-8 { animation-delay: 3.8s; }
-
     @keyframes at-line-in {
       0%   { opacity: 0; transform: translateY(2px); }
       4%   { opacity: 1; transform: translateY(0); }
@@ -349,20 +308,13 @@
       94%  { opacity: 0; }
       100% { opacity: 0; }
     }
-
     .cursor-line { opacity: 0.85; animation: none; }
-    .caret {
-      display: inline-block;
-      animation: at-blink 1s step-end infinite;
-      color: var(--at-accent);
-    }
+    .caret { display: inline-block; animation: at-blink 1s step-end infinite; color: var(--at-accent); }
     @keyframes at-blink { 50% { opacity: 0; } }
-
     @media (prefers-reduced-motion: reduce) {
       .ln { animation: none; opacity: 1; transform: none; }
       .caret { animation: none; }
     }
-
     @media (max-width: 480px) {
       .altrace-term-body { font-size: 0.75rem; padding: 18px 14px 20px; }
       .altrace-term-badge { display: none; }
@@ -486,9 +438,9 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="nav-logo">
-            <svg class="nav-logo-svg" viewBox="-72 -56 162 110" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0,-52 L-45,48 L45,48 Z M0,-20 L-20,18 L20,18 Z" fill-rule="evenodd"/><polygon points="-68,50 -60,28 85,-32"/></svg>
-            Altrace
+          <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-bottom: 12px;">
+            <img src="assets/logo.png" alt="Altrace Logo" style="height: 24px; width: auto; object-fit: contain;">
+            <span style="font-weight: 600; color: var(--text-primary); font-family: var(--font-heading);">Altrace</span>
           </a>
           <p>Runtime governance for AI agents.</p>
         </div>
