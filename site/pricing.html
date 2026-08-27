@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing, Altrace</title>
-  <meta name="description" content="Altrace pricing for runtime AI agent governance. Pilot and Enterprise tiers, enforced in your own infrastructure.">
+  <meta name="description" content="Altrace pricing for runtime AI agent governance. Free community tier for up to 10 nodes, team plans for 11-50 nodes, and enterprise-grade deployment.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pricing, Altrace">
-  <meta property="og:description" content="Runtime AI agent governance. Pilot and Enterprise tiers, enforced in your own infrastructure.">
+  <meta property="og:description" content="Runtime AI agent governance. Free tier for up to 10 nodes, team plans, and custom enterprise deployments.">
   <meta property="og:site_name" content="Altrace">
   <meta property="og:image" content="https://altrace.io/assets/logo.png">
   <meta property="og:image:width" content="1200">
@@ -19,11 +18,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://altrace.io/assets/logo.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
-  <link rel="stylesheet" href="css/main.css?v=7">
+  <link rel="stylesheet" href="css/main.css?v=9">
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
@@ -57,58 +55,68 @@
     <a href="request-access.html">Book a Demo</a>
   </div>
 
-  <!-- HERO -->
   <section style="padding: 160px 0 80px; text-align: center;">
     <div class="container">
       <p class="section-label fade-in">Pricing</p>
-      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in">Governance that scales with you.</h1>
-      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in">Start with a Pilot. Move to production-grade enforcement when you're ready. Your data and governance decisions never leave your infrastructure.</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; max-width: 700px; margin: 16px auto 0;" class="fade-in">Governance that scales with your nodes.</h1>
+      <p style="font-size: 1.0625rem; color: var(--text-secondary); margin: 24px auto 40px; max-width: 560px; line-height: 1.6;" class="fade-in">Start free on your local workflows. Scale up to team and production environments as your multi-agent topology grows. Your data and governance decisions never leave your infrastructure.</p>
     </div>
   </section>
 
-  <!-- PRICING TIERS -->
   <section style="padding-top: 0;">
     <div class="container">
-      <div class="pricing-grid stagger-reveal" style="max-width: 780px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; justify-content: center;">
+      <div class="pricing-grid stagger-reveal" style="max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; justify-content: center;">
 
-        <!-- Pilot -->
-        <div class="pricing-tier" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px;">
-          <div class="pricing-tier-name" style="font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 8px;">Pilot</div>
-          <div class="pricing-tier-price" style="font-size: 2rem; font-weight: 500; margin-bottom: 16px;">Let's talk</div>
-          <div class="pricing-tier-desc" style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px;">For initial evaluations and small test environments.</div>
-          <ul class="pricing-tier-features" style="list-style: none; padding: 0; margin: 0 0 32px 0; font-size: 0.9375rem; color: var(--text-primary);">
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Agent discovery &amp; per-agent visibility</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Runtime monitoring &amp; cost attribution</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Hard enforcement for up to 5 agents</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Virtual keys</li>
+        <div class="pricing-tier" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; display: flex; flex-direction: column;">
+          <div class="pricing-tier-name" style="font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 8px;">Community</div>
+          <div class="pricing-tier-price" style="font-size: 2rem; font-weight: 500; margin-bottom: 4px;">$0</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Up to 10 nodes governed free</div>
+          <div class="pricing-tier-desc" style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px;">For individual builders and local multi-agent debugging.</div>
+          <ul class="pricing-tier-features" style="list-style: none; padding: 0; margin: 0 0 32px 0; font-size: 0.9375rem; color: var(--text-primary); flex-grow: 1;">
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Up to 10 nodes governed</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Local CLI &amp; runtime tracing</li>
             <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Advisory deployment mode</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Agent framework and model provider agnostic</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Email support</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Framework &amp; model provider agnostic</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Community Discord support</li>
           </ul>
-          <a href="request-access.html" class="btn btn-secondary btn-large btn-full" style="width: 100%; text-align: center;">Book a Demo</a>
+          <a href="https://github.com/altrace/altrace" class="btn btn-secondary btn-large btn-full" style="width: 100%; text-align: center;">Get Started Free</a>
         </div>
 
-        <!-- Enterprise -->
-        <div class="pricing-tier" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px;">
+        <div class="pricing-tier" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; display: flex; flex-direction: column;">
+          <div class="pricing-tier-name" style="font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 8px;">Developer Team</div>
+          <div class="pricing-tier-price" style="font-size: 2rem; font-weight: 500; margin-bottom: 4px;">$25<span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400;"> / node / mo</span></div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">11 to 50 nodes governed</div>
+          <div class="pricing-tier-desc" style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px;">For growing teams scaling multi-agent workflows into staging and early production.</div>
+          <ul class="pricing-tier-features" style="list-style: none; padding: 0; margin: 0 0 32px 0; font-size: 0.9375rem; color: var(--text-primary); flex-grow: 1;">
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; 11 to 50 nodes governed</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Agent discovery &amp; per-agent visibility</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Runtime monitoring &amp; cost attribution</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Virtual keys &amp; hard enforcement</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Priority email support</li>
+          </ul>
+          <a href="request-access.html" class="btn btn-primary btn-large btn-full" style="width: 100%; text-align: center;">Start Team Plan</a>
+        </div>
+
+        <div class="pricing-tier" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; display: flex; flex-direction: column;">
           <div class="pricing-tier-name" style="font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 8px;">Enterprise</div>
-          <div class="pricing-tier-price" style="font-size: 2rem; font-weight: 500; margin-bottom: 16px;">Tiered by Nodes</div>
-          <div class="pricing-tier-desc" style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px;">For production environments, scaled to the number of nodes you need governed.</div>
-          <ul class="pricing-tier-features" style="list-style: none; padding: 0; margin: 0 0 32px 0; font-size: 0.9375rem; color: var(--text-primary);">
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Everything in Pilot</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Enforcement on scale-based agent coverage</li>
+          <div class="pricing-tier-price" style="font-size: 2rem; font-weight: 500; margin-bottom: 4px;">Custom</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">51+ nodes governed</div>
+          <div class="pricing-tier-desc" style="color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px;">For complex production environments with rigorous security and compliance requirements.</div>
+          <ul class="pricing-tier-features" style="list-style: none; padding: 0; margin: 0 0 32px 0; font-size: 0.9375rem; color: var(--text-primary); flex-grow: 1;">
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; 51+ nodes governed (custom volume pricing)</li>
             <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; MCP governance, registry &amp; tool scanner</li>
             <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Native OCSF audit export to your SIEM</li>
-            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Dedicated support &amp; custom integrations</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; VPC deployment &amp; custom security policies</li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">&check; Dedicated support &amp; custom onboarding</li>
           </ul>
-          <a href="request-access.html" class="btn btn-primary btn-large btn-full" style="width: 100%; text-align: center;">Book a Demo</a>
+          <a href="request-access.html" class="btn btn-secondary btn-large btn-full" style="width: 100%; text-align: center;">Contact Sales</a>
         </div>
 
       </div>
-      <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">Pricing is scaled based on the number of nodes you need governed. Book a demo to scope your deployment.</p>
+      <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: var(--sp-5);" class="fade-in">A node represents an active execution endpoint or agent instance in your topology. Book a demo to scope your exact node architecture.</p>
     </div>
   </section>
 
-  <!-- DATA PRIVACY CALLOUT -->
   <section style="border-top: 1px solid var(--border);">
     <div class="container">
       <div style="max-width: 640px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);">
@@ -118,18 +126,16 @@
     </div>
   </section>
 
-  <!-- CTA -->
   <section style="padding: 96px 0; text-align: center; border-top: 1px solid var(--border);">
     <div class="container">
       <h2 style="font-weight: 500;" class="fade-in">Ready to get started?</h2>
-      <p style="font-size: 1rem; color: var(--text-secondary); margin: 16px auto 32px; max-width: 460px; line-height: 1.6;" class="fade-in">Book a demo on your own traffic.</p>
+      <p style="font-size: 1rem; color: var(--text-secondary); margin: 16px auto 32px; max-width: 460px; line-height: 1.6;" class="fade-in">Start free on your local loop or book a demo for your team.</p>
       <div class="fade-in" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
         <a href="request-access.html" class="btn btn-primary btn-large">Book a Demo</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -158,7 +164,6 @@
   </footer>
 
   <script src="js/main.js?v=6"></script>
-  <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
