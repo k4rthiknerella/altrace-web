@@ -19,7 +19,59 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://altrace.io/assets/logo.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
-  <link rel="stylesheet" href="css/main.css?v=7">
+  <link rel="stylesheet" href="css/main.css?v=8">
+  <style>
+    .demo-page-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      max-width: 1120px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .demo-info-col {
+      padding-top: 12px;
+    }
+    .demo-info-col h1 {
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .demo-info-col p {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .demo-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px 0;
+    }
+    .demo-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+    }
+    .demo-bullets svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: var(--text-primary);
+      margin-top: 3px;
+    }
+    @media (max-width: 900px) {
+      .demo-page-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
 </head>
 <body class="form-page">
 
@@ -57,65 +109,96 @@
     <a href="request-access.html">Book a Demo</a>
   </div>
 
-  <!-- FORM -->
-  <section class="form-section">
+  <!-- SPLIT DEMO SECTION -->
+  <section class="form-section" style="padding: 140px 0 96px;">
     <div class="container">
-      <div class="form-card card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 48px;">
-        <h1 class="fade-in" style="font-weight: 500;">Book a Demo</h1>
-        <p class="form-subtitle fade-in fade-in-delay-1" style="color: var(--text-secondary); margin-bottom: 32px;">See Altrace running on your own traffic. We respond within 24 hours.</p>
+      <div class="demo-page-layout">
+        
+        <!-- Left Column: Value Prop & What to Expect -->
+        <div class="demo-info-col fade-in">
+          <h1>Secure your agent architecture.</h1>
+          <p>See Altrace running live on your own multi-agent traffic. We'll map out your node topology, audit your tool pathways, and configure deterministic runtime governance.</p>
+          
+          <h4 style="font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;">What to expect on the call:</h4>
+          <ul class="demo-bullets">
+            <li>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span><strong>Topology Review:</strong> Walk through your active multi-agent workflows and execution loops.</span>
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span><strong>Live Proxy Setup:</strong> See how our proxy layer enforces hard runtime boundaries without latency.</span>
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span><strong>Custom Scoping:</strong> Discuss custom integrations and spinning up a local sandbox for your team.</span>
+            </li>
+          </ul>
 
-        <form id="access-form" class="fade-in fade-in-delay-2">
-          <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div class="form-group">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" placeholder="Smith" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Work email</label>
-            <input type="email" id="email" name="email" placeholder="jane@company.com" required>
-          </div>
-
-          <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text" id="company" name="company" placeholder="Acme Corp" required>
-          </div>
-
-          <div class="form-group">
-            <label for="role">Role</label>
-            <select id="role" name="role" required>
-              <option value="" disabled selected>Select your role</option>
-              <option value="CISO">CISO</option>
-              <option value="CTO">CTO</option>
-              <option value="VP Engineering">VP Engineering</option>
-              <option value="Security Engineer">Security Engineer</option>
-              <option value="AI/ML Engineer">AI/ML Engineer</option>
-              <option value="Platform Engineer">Platform Engineer</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="useCase">What problem are you trying to solve? <span style="color: var(--text-muted);">(optional)</span></label>
-            <textarea id="useCase" name="useCase" placeholder="e.g., We're deploying autonomous agents in production and need governance controls for budget, model access, and audit..."></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-large btn-full" style="width: 100%;">Book a Demo</button>
-        </form>
-
-        <div id="form-success" class="form-success" style="display: none;">
-          <div class="success-icon" style="font-size: 3rem; color: #27c93f; margin-bottom: 16px;">&#x2713;</div>
-          <h2 style="font-weight: 500;">Thank you!</h2>
-          <p style="margin-top: var(--sp-2); color: var(--text-secondary);">We've received your request. Our team will be in touch within 24 hours.</p>
-          <a href="index.html" class="btn btn-secondary" style="margin-top: var(--sp-5);">Back to Home</a>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">
+            Prefer direct contact? Reach out to our founding team at <a href="mailto:rishi@altrace.io" style="color: var(--text-primary); text-decoration: underline;">rishi@altrace.io</a>
+          </p>
         </div>
 
-        <p class="form-footer" style="margin-top: 32px; font-size: 0.75rem; color: var(--text-muted);">Patent Pending &middot; We don't share your information.</p>
+        <!-- Right Column: Original Form Card -->
+        <div class="form-card card fade-in fade-in-delay-1" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 40px;">
+          <h2 style="font-weight: 500; font-size: 1.5rem; margin-bottom: 8px;">Book a Demo</h2>
+          <p class="form-subtitle" style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.9375rem;">See Altrace running on your own traffic. We respond within 24 hours.</p>
+
+          <form id="access-form">
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Smith" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Work email</label>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Acme Corp" required>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Role</label>
+              <select id="role" name="role" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="CISO">CISO</option>
+                <option value="CTO">CTO</option>
+                <option value="VP Engineering">VP Engineering</option>
+                <option value="Security Engineer">Security Engineer</option>
+                <option value="AI/ML Engineer">AI/ML Engineer</option>
+                <option value="Platform Engineer">Platform Engineer</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="useCase">What problem are you trying to solve? <span style="color: var(--text-muted);">(optional)</span></label>
+              <textarea id="useCase" name="useCase" placeholder="e.g., We're deploying autonomous agents in production and need governance controls for budget, model access, and audit..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large btn-full" style="width: 100%;">Book a Demo</button>
+          </form>
+
+          <div id="form-success" class="form-success" style="display: none;">
+            <div class="success-icon" style="font-size: 3rem; color: #27c93f; margin-bottom: 16px;">&#x2713;</div>
+            <h2 style="font-weight: 500;">Thank you!</h2>
+            <p style="margin-top: var(--sp-2); color: var(--text-secondary);">We've received your request. Our team will be in touch within 24 hours.</p>
+            <a href="index.html" class="btn btn-secondary" style="margin-top: var(--sp-5);">Back to Home</a>
+          </div>
+
+          <p class="form-footer" style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted);">Patent Pending &middot; We don't share your information.</p>
+        </div>
+
       </div>
     </div>
   </section>
