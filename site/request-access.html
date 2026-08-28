@@ -19,7 +19,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://altrace.io/assets/logo.png">
   <link rel="icon" type="image/png" href="/assets/logo.png">
-  <link rel="stylesheet" href="css/main.css?v=8">
+  <link rel="stylesheet" href="css/main.css?v=9">
   <style>
     .demo-page-layout {
       display: grid;
@@ -39,31 +39,49 @@
       line-height: 1.1;
       margin-bottom: 20px;
     }
-    .demo-info-col p {
+    .demo-info-col > p {
       font-size: 1.0625rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
-    .demo-bullets {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 32px 0;
-    }
-    .demo-bullets li {
+    .demo-process-list {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
-      font-size: 0.9375rem;
-      color: var(--text-primary);
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 36px;
     }
-    .demo-bullets svg {
+    .demo-process-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .demo-process-num {
       flex-shrink: 0;
-      width: 18px;
-      height: 18px;
+      width: 28px;
+      height: 28px;
+      background: var(--surface-raised, rgba(255, 255, 255, 0.05));
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 600;
       color: var(--text-primary);
-      margin-top: 3px;
+      font-family: var(--font-mono, monospace);
+      margin-top: 2px;
+    }
+    .demo-process-text h4 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .demo-process-text p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
     }
     @media (max-width: 900px) {
       .demo-page-layout {
@@ -114,33 +132,41 @@
     <div class="container">
       <div class="demo-page-layout">
         
-        <!-- Left Column: Value Prop & What to Expect -->
+        <!-- Left Column: Value Prop & 3-Step Process -->
         <div class="demo-info-col fade-in">
           <h1>Secure your agent architecture.</h1>
-          <p>See Altrace running live on your own multi-agent traffic. We'll map out your node topology, audit your tool pathways, and configure deterministic runtime governance.</p>
+          <p>Tell us where your agent security concerns are and where you are in the agent deployment process. One conversation, one live project on the table—we’ll show you what runtime governance alongside your stack actually looks like.</p>
           
-          <h4 style="font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;">What to expect on the call:</h4>
-          <ul class="demo-bullets">
-            <li>
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span><strong>Topology Review:</strong> Walk through your active multi-agent workflows and execution loops.</span>
-            </li>
-            <li>
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span><strong>Live Proxy Setup:</strong> See how our proxy layer enforces hard runtime boundaries without latency.</span>
-            </li>
-            <li>
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span><strong>Custom Scoping:</strong> Discuss custom integrations and spinning up a local sandbox for your team.</span>
-            </li>
-          </ul>
+          <div class="demo-process-list">
+            <div class="demo-process-item">
+              <div class="demo-process-num">1</div>
+              <div class="demo-process-text">
+                <h4>We reply within one business day.</h4>
+                <p>A real person from our founding team, not an automated sequence.</p>
+              </div>
+            </div>
+            <div class="demo-process-item">
+              <div class="demo-process-num">2</div>
+              <div class="demo-process-text">
+                <h4>A 30-minute working session.</h4>
+                <p>Bring one live agent workflow or deployment challenge — we work through it together.</p>
+              </div>
+            </div>
+            <div class="demo-process-item">
+              <div class="demo-process-num">3</div>
+              <div class="demo-process-text">
+                <h4>You leave with a concrete governance plan.</h4>
+                <p>Useful whether or not we end up working together.</p>
+              </div>
+            </div>
+          </div>
 
           <p style="font-size: 0.875rem; color: var(--text-muted);">
             Prefer direct contact? Reach out to our founding team at <a href="mailto:rishi@altrace.io" style="color: var(--text-primary); text-decoration: underline;">rishi@altrace.io</a>
           </p>
         </div>
 
-        <!-- Right Column: Original Form Card -->
+        <!-- Right Column: Form Card -->
         <div class="form-card card fade-in fade-in-delay-1" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 40px;">
           <h2 style="font-weight: 500; font-size: 1.5rem; margin-bottom: 8px;">Book a Demo</h2>
           <p class="form-subtitle" style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.9375rem;">See Altrace running on your own traffic. We respond within 24 hours.</p>
