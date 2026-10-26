@@ -1,5 +1,15 @@
 # Altrace Web Console
 
+## Marketing contact form
+
+The public **Chat with team** form is served by `site/api/contact.js` on Vercel. Configure these Vercel environment variables before enabling form delivery:
+
+- `RESEND_API_KEY` (required)
+- `CONTACT_FROM_EMAIL` (optional; defaults to Resend's onboarding sender)
+- `CONTACT_TO_EMAIL` (optional; defaults to `rishi@altrace.io`)
+
+The public marketing Teams page is `/for-teams`. The existing `/teams` console page remains unchanged.
+
 Management console and marketing site for the Altrace governance platform. 24 HTML pages (16 authenticated console pages, 8 public pages). Built with vanilla JavaScript -- no framework dependencies.
 
 ## Console Pages (Authenticated)
