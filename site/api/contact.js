@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   const email = value(body.email, 320);
   const company = value(body.company, 200);
   if (!name || !EMAIL_PATTERN.test(email)) return res.status(400).json({ error: 'Please check your name and email.' });
-  if (!process.env.RESEND_API_KEY) return res.status(503).json({ error: 'Contact form is not configured yet. Email us on Discord or GitHub.' });
+  if (!process.env.RESEND_API_KEY) return res.status(503).json({ error: 'Contact form is not configured yet. Email us at rishi@altrace.io.' });
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
