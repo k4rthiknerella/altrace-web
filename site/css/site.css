@@ -178,8 +178,6 @@ code, pre, kbd { font-family: var(--font-mono); font-size: 14px; }
 .teams-hero h1 { max-width: 22ch; }
 .teams-hero .prose { margin-top: 24px; }
 .expect { margin-top: 16px; max-width: 56ch; font-size: 14px; line-height: 1.57; color: var(--text-secondary); }
-.or-email { margin-top: 16px; font-size: 15px; color: var(--text-secondary); }
-.or-email a { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--ink-500); background: var(--ink-900); }

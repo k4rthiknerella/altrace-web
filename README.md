@@ -24,15 +24,9 @@ To preview locally:
 npx serve site
 ```
 
-## Booking and contact
+## Booking
 
-Booking buttons link to Calendly (`site/js/calendly-booking.js` opens Calendly's popup once its script has loaded, otherwise the link opens in a new tab).
-
-`site/api/contact.js` is a Vercel function that sends a contact request by email. Configure:
-
-- `RESEND_API_KEY` (required)
-- `CONTACT_FROM_EMAIL` (optional; defaults to Resend's onboarding sender)
-- `CONTACT_TO_EMAIL` (optional; defaults to `rishi@altrace.io`)
+The only contact path is the Calendly booking button on `/for-teams`. `site/js/calendly-booking.js` opens Calendly's popup once its script has loaded; otherwise the link opens in a new tab.
 
 ## Brand
 
