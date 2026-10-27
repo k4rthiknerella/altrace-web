@@ -169,9 +169,6 @@ code, pre, kbd { font-family: var(--font-mono); font-size: 14px; }
 .status-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 5px 10px; border: 1px dashed var(--ink-400); border-radius: 999px; color: var(--text-secondary); }
 .roadmap a { color: var(--text-secondary); display: inline-flex; align-items: center; min-height: 44px; }
 
-.people { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 16px 0 0; padding: 0; list-style: none; }
-.people li { font-size: 18px; }
-.people-note { margin-top: 8px; }
 .install-note { margin-top: 16px; }
 
 .closing .actions { margin-top: 24px; }
