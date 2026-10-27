@@ -7,7 +7,7 @@ The public site at https://www.altrace.io: a static homepage for Rashomon and a 
 | Path | File | |
 |---|---|---|
 | `/` | `site/index.html` | Rashomon: what it does today, the README's example report, how it works, install |
-| `/for-teams` | `site/for-teams.html` | Team workflows in development; Calendly booking |
+| `/for-teams` | `site/for-teams.html` | Team workflows in development; links to Discord |
 | 404 | `site/404.html` | |
 
 Retired URLs from the earlier product redirect to `/` (see `site/vercel.json`).
@@ -16,7 +16,7 @@ Retired URLs from the earlier product redirect to `/` (see `site/vercel.json`).
 
 Vercel, with the project's root directory set to `site/`. The deploy reads `site/vercel.json` (redirects, security headers, cache rules); the root `vercel.json` is not used.
 
-CSS and JS under `/css` and `/js` are cached for 30 days as immutable: when you change one, bump its `?v=` query in every page that loads it.
+CSS under `/css` is cached for 30 days as immutable: when you change it, bump its `?v=` query in every page that loads it.
 
 To preview locally:
 
@@ -24,9 +24,9 @@ To preview locally:
 npx serve site
 ```
 
-## Booking
+## Contact
 
-The only contact path is the Calendly booking button on `/for-teams`. `site/js/calendly-booking.js` opens Calendly's popup once its script has loaded; otherwise the link opens in a new tab.
+The only contact path is Discord: the Teams page's "Talk to us on Discord" button and the footer link, both to the Rashomon server's permanent invite. The site loads no third-party scripts.
 
 ## Brand
 
