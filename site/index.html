@@ -1,7 +1,168 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Altrace — Coding agents that learn from corrections</title><meta name="description" content="Open-source tools that help coding agents learn from developer corrections and apply relevant lessons in future work."><meta property="og:type" content="website"><meta property="og:title" content="Altrace"><meta property="og:description" content="Coding agents that learn from the corrections you already make."><link rel="icon" type="image/png" href="assets/logo.png"><link rel="stylesheet" href="css/marketing-redesign.css"><link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css"></head>
-<body><header class="site-header"><a class="brand" href="/"><img src="assets/logo.png" alt="Altrace"><span>Altrace</span></a><nav aria-label="Main navigation"><a href="/for-teams">Teams</a><a href="https://discord.gg/B37GwwEqS" target="_blank" rel="noopener noreferrer">Discord</a><a href="https://github.com/altrace-dev-role/rashomon" target="_blank" rel="noopener noreferrer">GitHub</a><a class="button button-small" href="https://calendly.com/rganupa-altrace/30min" target="_blank" rel="noopener noreferrer" data-calendly>Book a call</a></nav></header>
-<main><section class="hero"><p class="eyebrow sky">Open source</p><h1>Coding agents that learn from the corrections you already make.</h1><div class="lede"><p>Altrace builds tools that capture what you fix during review, turn it into durable guidance, and surface the right lessons when an agent works on similar code again.</p><p class="strong">Fewer repeats of the same mistakes.</p></div><div class="actions"><a class="button" href="https://github.com/altrace-dev-role/rashomon" target="_blank" rel="noopener noreferrer">View on GitHub</a><a class="button secondary" href="https://discord.gg/B37GwwEqS" target="_blank" rel="noopener noreferrer">Join Discord</a><a class="text-link" href="https://calendly.com/rganupa-altrace/30min" target="_blank" rel="noopener noreferrer" data-calendly>Book a 30-minute call <span>→</span></a></div></section>
-<section class="feature-card"><p class="eyebrow green">Available now</p><h2>Independent verification for Claude Code</h2><p>Our open-source tool keeps an independent verification record while you work with Claude Code. When an agent&apos;s claim doesn&apos;t match ground truth, you get notified so you can catch mismatches before they ship.</p><a class="text-link" href="https://github.com/altrace-dev-role/rashomon" target="_blank" rel="noopener noreferrer">Explore on GitHub <span>→</span></a></section>
-<section class="upcoming"><p class="eyebrow violet">In development</p><h2>AutoSteer</h2><p>AutoSteer is the next release: lightweight steering for coding agents so relevant lessons from past corrections show up in context. Not generic prompts, but guidance tied to your repo and workflow.</p><p>Follow development on <a href="https://github.com/altrace-dev-role/rashomon" target="_blank" rel="noopener noreferrer">GitHub</a> or <a href="https://discord.gg/B37GwwEqS" target="_blank" rel="noopener noreferrer">Discord</a>.</p></section></main>
-<footer><span>Open-source tools for coding agents.</span><span><a href="https://github.com/altrace-dev-role/rashomon" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://discord.gg/B37GwwEqS" target="_blank" rel="noopener noreferrer">Discord</a></span></footer><script src="https://assets.calendly.com/assets/external/widget.js" async></script><script src="js/calendly-booking.js?v=1" defer></script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rashomon by Altrace — what your coding agent actually ran</title>
+<meta name="description" content="Rashomon keeps a local record of Claude Code's tool calls, failed commands and subagent activity, and flags failures the agent's final summary leaves out. Open source, macOS and Linux.">
+<link rel="canonical" href="https://www.altrace.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.altrace.io/">
+<meta property="og:site_name" content="Altrace">
+<meta property="og:title" content="Your coding agent says the tests passed. What actually ran?">
+<meta property="og:description" content="Rashomon keeps a local record of Claude Code's tool calls, failed commands and subagent activity, and flags failures the agent's final summary leaves out.">
+<meta name="theme-color" content="#0b1017">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preload" href="fonts/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Geist-Light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/site.css?v=1">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Altrace home"><img src="assets/mark.webp" width="38" height="24" alt=""><span>Altrace</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#how-it-works">How it works</a>
+      <a href="https://github.com/altrace-dev-role/rashomon">GitHub</a>
+      <a href="/for-teams">Teams</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Available now · Open source</p>
+        <h1 id="hero-title">Your coding agent says the tests passed. What actually ran?</h1>
+        <p class="subhead">Rashomon keeps a local record of Claude Code’s tool calls, failed commands and subagent activity. It flags failures the agent’s final summary leaves out.</p>
+        <ul class="facts" aria-label="Scope">
+          <li>Open source</li>
+          <li>Claude Code on macOS and Linux</li>
+          <li>Local records</li>
+          <li>No telemetry</li>
+        </ul>
+        <a class="facts-link" href="https://github.com/altrace-dev-role/rashomon#common-questions">What it records, and what it never sends</a>
+        <div class="actions">
+          <a class="button button-primary" href="https://github.com/altrace-dev-role/rashomon#get-started">Install Rashomon</a>
+          <a class="button" href="#example">See a real report <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div id="example">
+        <figure class="evidence" aria-labelledby="example-caption">
+          <div class="evidence-part">
+            <p class="label">Agent’s account</p>
+            <blockquote class="evidence-quote">“Done. I refactored ParseConfig and all tests pass.”</blockquote>
+          </div>
+          <div class="evidence-part">
+            <p class="label"><span class="shape-ring" aria-hidden="true"></span>Recorded</p>
+<pre class="evidence-lines">failed calls: 1
+test runs: 1 (0 ok, 1 failed)
+subagents: 1
+  agent-a41f (Explore): 3 declarations, 3 executions, 1 Bash
+  <span class="dim">(these calls do not appear in the main transcript)</span></pre>
+          </div>
+          <div class="evidence-part evidence-flagged">
+            <p class="label"><span class="shape-square" aria-hidden="true"></span>Flagged</p>
+<pre class="evidence-lines">the final message contains none of these 43 words: fail, failed, failing, error, errors, couldn't, could not, unable, not able, didn't, did not, blocked and 31 more of 43 (--json lists them all)</pre>
+            <p class="evidence-note">A call failed and the test run failed, and the summary uses none of Rashomon’s 43 failure words. The report lists the words that are absent. It does not guess why.</p>
+          </div>
+          <details class="evidence-raw">
+            <summary>Show the excerpt exactly as rendered</summary>
+<pre tabindex="0" aria-label="rashomon report excerpt">  the agent's account:
+    "Done. I refactored ParseConfig and all tests pass."
+  subagents: 1
+    agent-a41f (Explore): 3 declarations, 3 executions, 1 Bash
+    (these calls do not appear in the main transcript)
+  failed calls: 1
+    the final message contains none of these 43 words: fail, failed, failing, error, errors, couldn't, could not, unable, not able, didn't, did not, blocked and 31 more of 43 (--json lists them all)
+  test runs: 1 (0 ok, 1 failed)</pre>
+          </details>
+        </figure>
+        <p class="evidence-caption" id="example-caption">Example from Rashomon’s documentation, rendered by <code>rashomon report</code>.<br><a href="https://github.com/altrace-dev-role/rashomon#what-a-disagreement-looks-like">See it in the README</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works" aria-labelledby="how-title">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2 id="how-title">Record. Compare. Inspect.</h2>
+      <ol class="steps">
+        <li>
+          <span class="label">01</span>
+          <h3>Record</h3>
+          <p>Hooks record each step Claude Code takes, its subagents’ included, and whether it worked, in a folder on your machine.</p>
+        </li>
+        <li>
+          <span class="label">02</span>
+          <h3>Compare</h3>
+          <p>At the end of a turn, recorded failures are checked against the agent’s final message. When something is off, one line says so.</p>
+        </li>
+        <li>
+          <span class="label">03</span>
+          <h3>Inspect</h3>
+          <p><code>rashomon report</code> shows the full record: subagent calls, failed steps, test runs, and what Rashomon could not see.</p>
+        </li>
+      </ol>
+      <ul class="not-list" aria-label="What it is not">
+        <li><strong>Not a sandbox.</strong> It never stops or contains the agent.</li>
+        <li><strong>Not exhaustive claim checking.</strong> It looks for 43 failure words in the summary and lists the ones that are absent.</li>
+        <li><strong>Claude Code only today,</strong> on macOS and Linux. Open-source alpha.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="roadmap" aria-labelledby="roadmap-title">
+    <div class="wrap">
+      <p class="status-tag label"><span class="shape-ring" aria-hidden="true"></span>In development</p>
+      <h2 id="roadmap-title">AutoSteer</h2>
+      <p class="prose">Today: inspect what your agent did. Next: AutoSteer turns your corrections into guidance for future runs. Not yet shipped.</p>
+      <a href="https://github.com/altrace-dev-role/rashomon">Follow on GitHub</a>
+    </div>
+  </section>
+
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <p class="kicker">About</p>
+      <h2 id="about-title">Who’s building this</h2>
+      <ul class="people" aria-label="Co-founders">
+        <li>Rishi Ganupa</li>
+        <li>Karthik Nerella</li>
+        <li>Luis Ticas</li>
+      </ul>
+      <p class="small people-note">Co-founders of Altrace.</p>
+    </div>
+  </section>
+
+  <section class="section install closing" id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <p class="kicker">Get started</p>
+      <h2 id="install-title">Install it as a Claude Code plugin.</h2>
+<pre><span class="prompt">$ </span>claude plugin marketplace add altrace-dev-role/rashomon
+<span class="prompt">$ </span>claude plugin install rashomon@rashomon
+<span class="prompt">$ </span>claude plugin enable rashomon@rashomon</pre>
+      <p class="prose install-note">Start a new Claude Code session, then run <code>/rashomon:report</code>. The README also covers a command-line install.</p>
+      <div class="actions">
+        <a class="button button-primary" href="https://github.com/altrace-dev-role/rashomon#get-started">Install Rashomon</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="https://github.com/altrace-dev-role/rashomon">GitHub</a>
+      <a href="https://discord.gg/Qg3hybAHpU">Discord</a>
+      <a href="/for-teams">Teams</a>
+      <a href="mailto:rishi@altrace.io">rishi@altrace.io</a>
+    </nav>
+    <p class="small">Altrace</p>
+  </div>
+</footer>
+</body>
+</html>
