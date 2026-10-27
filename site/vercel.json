@@ -7,7 +7,11 @@
       "has": [{ "type": "host", "value": "altrace.io" }],
       "destination": "https://www.altrace.io/:path*",
       "permanent": true
-    }
+    },
+    { "source": "/how-it-works", "destination": "/#how-it-works", "permanent": true },
+    { "source": "/teams", "destination": "/for-teams", "permanent": true },
+    { "source": "/:page(product|pricing|demo|request-access|why-altrace|og-image|approvals|audit|console-docs|cost|credentials|dashboard|fleet|kill-switches|login|metrics|policies|settings|setup|virtualkeys)", "destination": "/", "permanent": true },
+    { "source": "/:page(product|pricing|demo|request-access|why-altrace|og-image|how-it-works|teams|approvals|audit|console-docs|cost|credentials|dashboard|fleet|kill-switches|login|metrics|policies|settings|setup|virtualkeys).html", "destination": "/", "permanent": true }
   ],
   "headers": [
     {
@@ -18,7 +22,7 @@
         { "key": "X-XSS-Protection", "value": "0" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net https://assets.calendly.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com https://assets.calendly.com; font-src 'self' fonts.gstatic.com; connect-src 'self' *.supabase.co; img-src 'self' data: https://assets.calendly.com; frame-src https://calendly.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://assets.calendly.com; font-src 'self'; connect-src 'self'; img-src 'self' data: https://assets.calendly.com; frame-src https://calendly.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     },
